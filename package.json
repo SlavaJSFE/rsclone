@@ -1,0 +1,46 @@
+{
+  "name": "rsclone",
+  "version": "1.0.0",
+  "description": "rsclone team project",
+  "main": "index.js",
+  "scripts": {
+    "build-dev": "webpack --mode development",
+    "build-prod": "webpack --mode production",
+    "start": "webpack serve --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SlavaJSFE/rsclone.git"
+  },
+  "keywords": [
+    "travel",
+    "rsclone"
+  ],
+  "author": "Viachaslau Shpileuski <viachaslau.shpileuski@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SlavaJSFE/rsclone/issues"
+  },
+  "homepage": "https://github.com/SlavaJSFE/rsclone#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^5.0.1",
+    "eslint": "^7.16.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^4.5.0",
+    "sass": "^1.30.0",
+    "sass-loader": "^10.1.0",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.0",
+    "webpack-dev-server": "^3.11.1"
+  }
+}
