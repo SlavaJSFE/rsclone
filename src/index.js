@@ -1,4 +1,4 @@
-import TravelPlaningApp from './scripts/TravelPlaningApp.js';
 import './styles/style.scss';
+import Currency from './scripts/Currency';
 
-TravelPlaningApp.init();
+new Currency().handleMethods();
