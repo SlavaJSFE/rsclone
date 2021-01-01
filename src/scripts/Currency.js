@@ -2,7 +2,7 @@ import 'regenerator-runtime/runtime';
 import { getCountriesInfoData, getCurrencyInfoData } from './Data';
 import create from './create';
 
-const CURRENCY_RATES = ['RUB', 'EUR', 'BYN', 'GBP', 'AUD', 'BRL', 'CNY', 'CAD', 'CHF', 'JPY'];
+const CURRENCY_RATES = ['EUR', 'RUB', 'BYN', 'GBP', 'AUD', 'BRL', 'CNY', 'CAD', 'JPY'];
 
 export default class Currency {
   constructor() {
@@ -32,30 +32,33 @@ export default class Currency {
   createCurrencyTitle = () => {
     const table = document.querySelector('.table-currency');
 
-    create('div', 'currency-title', 'USD exchange rate data', table);
+    create(
+      'div',
+      'currency-title',
+      `${this.currencyData.base} exchange rate ${this.currencyData.date}`,
+      table
+    );
   };
 
   createCurrencyInfo = () => {
     const table = document.querySelector('.table-currency');
 
-    Object.keys(this.currencyData.rates).map((currencyCode) => {
-      let currentData;
+    CURRENCY_RATES.forEach((currencyCode) => {
       let flag;
 
-      if (currencyCode === 'USD') {
-        currentData = this.findCountryData(currencyCode);
-        flag = './assets/img/us_flag.svg';
-      } else if (currencyCode === 'EUR') {
-        currentData = this.findCountryData(currencyCode);
-        flag = './assets/img/eu_flag.svg';
+      if (currencyCode === 'EUR') {
+        flag = 'img/eu_flag.svg';
+      } else if (currencyCode === 'BYN') {
+        flag = 'img/by_flag.svg';
+      } else if (currencyCode === 'GBP') {
+        flag = 'img/gb_flag.svg';
+      } else if (currencyCode === 'AUD') {
+        flag = 'img/aus_flag.svg';
       } else {
-        currentData = this.findCountryData(currencyCode);
-        flag = currentData.flag;
+        flag = this.findCountryData(currencyCode).flag;
       }
 
-      const rate = this.currencyData.rates[currencyCode];
-
-      if (!currentData) return;
+      // if (!currentData) return;
 
       create(
         'div',
@@ -65,7 +68,11 @@ export default class Currency {
             create('img', 'currency-info__flag', null, null, ['src', `${flag}`]),
             create('div', 'currency-info__name', `${currencyCode}`),
           ]),
-          create('div', 'currency-rate', `${rate}`),
+          create(
+            'div',
+            'currency-rate',
+            `${Number(this.currencyData.rates[currencyCode]).toFixed(2)}`
+          ),
         ],
         table
       );
@@ -75,4 +82,11 @@ export default class Currency {
   findCountryData = (currencyCode) => {
     return this.countriesInfoData.find((item) => item.currencies[0].code === currencyCode);
   };
+
+  // findCurrencyRate = (currencyCode) => {
+  //   const rate = Object.keys(this.currencyData.rates).find(
+  //     (item) => this.currencyData.rates[currencyCode]
+  //   );
+  //   console.log(rate);
+  // };
 }

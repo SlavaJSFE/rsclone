@@ -18,28 +18,38 @@
   font-size: 2rem;
   width: 100%;
   max-width: 320px;
+  color: white;
 
   .currency-title {
     text-align: center;
     border: 1px solid black;
+    padding: 10px;
   }
   .currency-container {
     display: flex;
     justify-content: space-between;
-
-    &:first-child {
-      margin: 7px 0;
+    background-color: rgb(116, 94, 238);
+    align-items: center;
+    padding: 7px 5px;
+    padding-top: 7px;
+    cursor: pointer;
+    &:hover {
+      background-color: #4f4f4f;
     }
-    margin-top: 7px;
 
     .currency-info {
       display: flex;
+      align-items: center;
+
       &__flag {
-        width: 20px;
+        width: 50px;
       }
+
       &__name {
+        margin-left: 10px;
       }
     }
+
     .currency-rate {
     }
   }
