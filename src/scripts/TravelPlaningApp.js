@@ -1,5 +1,8 @@
+import TravelPlaningAppView from './TravelPlanningApp-view.js';
+
 export default class TravelPlaningApp {
   static init() {
-    throw new Error('not implemented yet');
+    const view = new TravelPlaningAppView();
+    view.init();
   }
 }
