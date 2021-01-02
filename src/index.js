@@ -1,5 +1,4 @@
 import './styles/style.scss';
-import './styles/currency.scss';
-import Currency from './scripts/Currency';
+import Currency from '/scripts/Currency_module/Currency';
 
 new Currency().handleMethods();

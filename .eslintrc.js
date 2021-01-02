@@ -9,5 +9,11 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  rules: {},
+  rules: {
+    'linebreak-style': ['error', 'windows'],
+  },
+  dispatch({
+    type: LOGIN_USER,
+    payload: credentials,
+  });
 };

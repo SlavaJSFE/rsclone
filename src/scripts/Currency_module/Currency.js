@@ -22,8 +22,7 @@ export default class Currency {
     console.log(this.countriesInfoData);
     console.log(this.currencyData);
 
-    console.log(Object.keys(this.currencyData.rates));
-
+    this.createCurrencySearch();
     this.createCurrencyTitle();
     this.createCurrencyInfo();
     return this;
@@ -32,12 +31,9 @@ export default class Currency {
   createCurrencyTitle = () => {
     const table = document.querySelector('.table-currency');
 
-    create(
-      'div',
-      'currency-title',
-      `${this.currencyData.base} exchange rate ${this.currencyData.date}`,
-      table
-    );
+    const data = this.currencyData.date.slice(0, 10);
+
+    create('div', 'currency-title', `${this.currencyData.base} exchange rate ${data}`, table);
   };
 
   createCurrencyInfo = () => {
@@ -81,6 +77,11 @@ export default class Currency {
 
   findCountryData = (currencyCode) => {
     return this.countriesInfoData.find((item) => item.currencies[0].code === currencyCode);
+  };
+
+  createCurrencySearch = () => {
+    const table = document.querySelector('.table-currency');
+    create('input', 'currency-search', null, table, ['placeholder', 'Search you currency rate']);
   };
 
   // findCurrencyRate = (currencyCode) => {
