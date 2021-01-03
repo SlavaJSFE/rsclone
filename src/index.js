@@ -3,4 +3,4 @@ import './styles/style.scss';
 import Clock from '/scripts/Clock_module/Clock';
 
 // new Currency().handleMethods();
-new Clock().launchClock();
+new Clock().createClock().launchClock();

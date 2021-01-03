@@ -13,14 +13,16 @@ body {
   height: 100vh;
   background: #091921;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .clock {
-  width: 350px;
-  height: 350px;
+  width: 120px;
+  height: 120px;
   display: flex;
+  margin: 10px 0;
   justify-content: center;
   align-items: center;
   background: url(../assets/clock.png);
@@ -33,8 +35,8 @@ body {
   &::before {
     content: "";
     position: absolute;
-    width: 15px;
-    height: 15px;
+    width: 10px;
+    height: 10px;
     background: #fff;
     border-radius: 50%;
     z-index: 10000;
@@ -55,45 +57,55 @@ body {
   }
 
   .hr {
-    width: 160px;
-    height: 160px;
+    width: 60px;
+    height: 60px;
 
     &::before {
       content: "";
       position: absolute;
-      width: 8px;
-      height: 80px;
+      width: 5px;
+      height: 30px;
       background: #ff105e;
       z-index: 10;
       border-radius: 6px 6px 0 0;
     }
   }
   .mn {
-    width: 190px;
-    height: 190px;
+    width: 80px;
+    height: 80px;
 
     &::before {
       content: "";
       position: absolute;
-      width: 4px;
-      height: 90px;
+      width: 3px;
+      height: 40px;
       background: #ffffff;
       z-index: 11;
       border-radius: 6px 6px 0 0;
     }
   }
   .sc {
-    width: 230px;
-    height: 230px;
+    width: 90px;
+    height: 90px;
 
     &::before {
       content: "";
       position: absolute;
       width: 2px;
-      height: 150px;
+      height: 60px;
       background: #ffffff;
       z-index: 12;
       border-radius: 6px 6px 0 0;
     }
   }
+}
+
+.time {
+  font-size: 2rem;
+  color: white;
+}
+
+.clock-title {
+  font-size: 2.5rem;
+  color: white;
 }
