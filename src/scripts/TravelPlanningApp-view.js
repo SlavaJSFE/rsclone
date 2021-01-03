@@ -74,7 +74,7 @@ export default class TravelPlaningAppView {
       createDOMElement('a', 'gh-link', 'Roman', '', ['href', statement.roman]),
       createDOMElement('a', 'gh-link', 'Maria', '', ['href', statement.maria]),
       createDOMElement('a', 'gh-link', 'Yulia', '', ['href', statement.julia]),
-      createDOMElement('a', 'gh-link', 'Slava', '', ['href', statement.slava])
+      createDOMElement('a', 'gh-link', 'Slava', '', ['href', statement.slava]),
     ];
     const authors = createDOMElement('div', 'authors', authorsArray);
     const rssLogo = createDOMElement('img', 'rss-logo', '', '', ['src', statement.rssLogo]);

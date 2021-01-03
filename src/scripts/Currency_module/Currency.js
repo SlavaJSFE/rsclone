@@ -43,13 +43,13 @@ export default class Currency {
       let flag;
 
       if (currencyCode === 'EUR') {
-        flag = 'img/eu_flag.svg';
+        flag = './assets/images/eu_flag.svg';
       } else if (currencyCode === 'BYN') {
-        flag = 'img/by_flag.svg';
+        flag = './assets/images/by_flag.svg';
       } else if (currencyCode === 'GBP') {
-        flag = 'img/gb_flag.svg';
+        flag = './assets/images/gb_flag.svg';
       } else if (currencyCode === 'AUD') {
-        flag = 'img/aus_flag.svg';
+        flag = './assets/images/aus_flag.svg';
       } else {
         flag = this.findCountryData(currencyCode).flag;
       }
