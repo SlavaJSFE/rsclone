@@ -12,8 +12,4 @@ module.exports = {
   rules: {
     'linebreak-style': ['error', 'windows'],
   },
-  dispatch({
-    type: LOGIN_USER,
-    payload: credentials,
-  });
 };
