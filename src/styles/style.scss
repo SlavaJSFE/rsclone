@@ -1,1 +1,58 @@
 @import "currency.scss";
+$main-color: white;
+* {
+  box-sizing: border-box;
+}
+.title {
+  color: $main-color;
+  margin: 0;
+}
+.header {
+  background-color: black;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+.options {
+  display: flex;
+}
+.main {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  background-color: yellowgreen;
+  height: 80vh;
+}
+.nav {
+  background-color: hotpink;
+  width: 200px;
+  text-align: center;
+  padding-top: 30px;
+}
+.nav-item {
+  margin: 10px auto 0 auto;
+  width: max-content;
+}
+.nav-item:hover {
+  cursor: pointer;
+}
+.side-bar {
+  background-color: khaki;
+}
+.footer {
+  background-color: limegreen;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+  color: black;
+}
+.authors {
+  margin: 0 40px 0 5px;
+}
+.gh-link {
+  margin: 0 10px;
+}
+.rss-logo {
+  height: 22px;
+}
