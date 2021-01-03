@@ -29,7 +29,7 @@ export default class Currency {
   }
 
   createCurrencyTitle = () => {
-    const table = document.querySelector('.table-currency');
+    const table = document.querySelector('.currency');
 
     const data = this.currencyData.date.slice(0, 10);
 
@@ -37,7 +37,7 @@ export default class Currency {
   };
 
   createCurrencyInfo = () => {
-    const table = document.querySelector('.table-currency');
+    const table = document.querySelector('.currency');
 
     CURRENCY_RATES.forEach((currencyCode) => {
       let flag;
@@ -80,7 +80,7 @@ export default class Currency {
   };
 
   createCurrencySearch = () => {
-    const table = document.querySelector('.table-currency');
+    const table = document.querySelector('.currency');
     create('input', 'currency-search', null, table, ['placeholder', 'Search you currency rate']);
   };
 
