@@ -1,6 +1,6 @@
 import 'regenerator-runtime/runtime';
 import { getCountriesInfoData, getCurrencyInfoData } from './Data';
-import create from './create';
+import createDOMElement from '../services/createDOMElement';
 
 const CURRENCY_RATES = ['EUR', 'RUB', 'BYN', 'GBP', 'AUD', 'BRL', 'CNY', 'CAD', 'JPY'];
 
@@ -22,7 +22,7 @@ export default class Currency {
     console.log(this.countriesInfoData);
     console.log(this.currencyData);
 
-    this.createCurrencySearch();
+    // this.createCurrencySearch();
     this.createCurrencyTitle();
     this.createCurrencyInfo();
     return this;
@@ -33,7 +33,12 @@ export default class Currency {
 
     const data = this.currencyData.date.slice(0, 10);
 
-    create('div', 'currency-title', `${this.currencyData.base} exchange rate ${data}`, table);
+    createDOMElement(
+      'div',
+      'currency-title',
+      `${this.currencyData.base} exchange rate ${data}`,
+      table
+    );
   };
 
   createCurrencyInfo = () => {
@@ -56,15 +61,15 @@ export default class Currency {
 
       // if (!currentData) return;
 
-      create(
+      createDOMElement(
         'div',
         'currency-container',
         [
-          create('div', 'currency-info', [
-            create('img', 'currency-info__flag', null, null, ['src', `${flag}`]),
-            create('div', 'currency-info__name', `${currencyCode}`),
+          createDOMElement('div', 'currency-info', [
+            createDOMElement('img', 'currency-info__flag', null, null, ['src', `${flag}`]),
+            createDOMElement('div', 'currency-info__name', `${currencyCode}`),
           ]),
-          create(
+          createDOMElement(
             'div',
             'currency-rate',
             `${Number(this.currencyData.rates[currencyCode]).toFixed(2)}`
@@ -79,10 +84,13 @@ export default class Currency {
     return this.countriesInfoData.find((item) => item.currencies[0].code === currencyCode);
   };
 
-  createCurrencySearch = () => {
-    const table = document.querySelector('.currency');
-    create('input', 'currency-search', null, table, ['placeholder', 'Search you currency rate']);
-  };
+  // createCurrencySearch = () => {
+  //   const table = document.querySelector('.currency');
+  //   createDOMElement('input', 'currency-search', null, table, [
+  //     'placeholder',
+  //     'Search you currency rate',
+  //   ]);
+  // };
 
   // findCurrencyRate = (currencyCode) => {
   //   const rate = Object.keys(this.currencyData.rates).find(

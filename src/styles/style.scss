@@ -1,9 +1,12 @@
 @import "currency.scss";
+@import "clock.scss";
 
 $main-color: white;
+
 * {
   box-sizing: border-box;
 }
+
 .title {
   color: $main-color;
   margin: 0;
