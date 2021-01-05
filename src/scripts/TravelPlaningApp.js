@@ -10,7 +10,7 @@ export default class TravelPlaningApp {
     const clock1 = new Clock(null, 1, 'Minsk');
     clock1.createClockView().launchClock();
 
-    const clock2 = new Clock(13, 2, 'London');
+    const clock2 = new Clock(-3, 2, 'London');
     clock2.createClockView().launchClock();
 
     const currency = new Currency();

@@ -76,6 +76,9 @@ export default class Clock {
     let date = new Date();
 
     let hh = date.getHours() + this.date;
+    if (hh > 24) {
+      hh = hh - 24;
+    }
     let mn = date.getMinutes();
     let sc = date.getSeconds();
 
@@ -98,7 +101,7 @@ export default class Clock {
   changeClockView = (hour) => {
     const tableBody = document.querySelector(`#${this.body}`);
 
-    if (hour > 18 || hour < 6) {
+    if (hour >= 18 || hour <= 6) {
       tableBody.dataset.clockNight = true;
     } else {
       tableBody.dataset.clockNight = false;

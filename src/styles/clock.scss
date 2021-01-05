@@ -1,3 +1,8 @@
+// === Variable ===
+$black-color: #000000;
+// === /Variable ===
+
+// === Common ===
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,6 +12,8 @@
 :root {
   font-size: 10px;
 }
+
+// === /Common ===
 
 .clock {
   display: flex;
@@ -106,15 +113,26 @@
 
 .time {
   font-size: 1.5rem;
-  color: white;
+  color: $black-color;
 }
 
 .clock-title {
   font-size: 1.8rem;
-  color: white;
+  color: $black-color;
 }
 
 [data-clock-night="false"] {
   background: url(../assets/clock.png) #ffffff no-repeat;
   background-size: cover;
+
+  .hr {
+    &::before {
+      background: $black-color;
+    }
+  }
+  .mn {
+    &::before {
+      background: $black-color;
+    }
+  }
 }
