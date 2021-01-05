@@ -136,3 +136,9 @@ $black-color: #000000;
     }
   }
 }
+
+@media (max-width: 900px) {
+  .clock {
+    flex-direction: column;
+  }
+}

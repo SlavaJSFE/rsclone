@@ -43,7 +43,7 @@ export default class Currency {
 
   createCurrencyInfo = () => {
     const table = document.querySelector('.currency');
-
+    const tableBody = createDOMElement('div', 'currency-body', null, table);
     CURRENCY_RATES.forEach((currencyCode) => {
       let flag;
 
@@ -60,7 +60,6 @@ export default class Currency {
       }
 
       // if (!currentData) return;
-
       createDOMElement(
         'div',
         'currency-container',
@@ -75,7 +74,7 @@ export default class Currency {
             `${Number(this.currencyData.rates[currencyCode]).toFixed(2)}`
           ),
         ],
-        table
+        tableBody
       );
     });
   };

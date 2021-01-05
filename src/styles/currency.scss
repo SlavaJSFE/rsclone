@@ -1,3 +1,7 @@
+// === Variable ===
+$black-color: #000000;
+// === /Variable ===
+
 // === Common ===
 * {
   box-sizing: border-box;
@@ -17,46 +21,91 @@
   flex-direction: column;
   font-size: 2rem;
   width: 100%;
-  max-width: 320px;
-  color: white;
-
-  .currency-search {
-    font-size: 2rem;
-    padding: 10px;
-  }
+  color: $black-color;
 
   .currency-title {
     text-align: center;
-    border: 1px solid black;
     padding: 10px;
-    background-color: black;
+    // background-color: black;
   }
-  .currency-container {
-    display: flex;
-    justify-content: space-between;
-    background-color: rgb(116, 94, 238);
-    align-items: center;
-    padding: 7px 5px;
-    padding-top: 7px;
-    cursor: pointer;
-    &:hover {
-      background-color: #4f4f4f;
-    }
-
-    .currency-info {
+  .currency-body {
+    overflow: hidden;
+    .currency-container {
       display: flex;
+      justify-content: space-around;
+      // background-color: rgb(116, 94, 238);
       align-items: center;
-
-      &__flag {
-        width: 50px;
+      padding: 7px 5px;
+      padding-top: 7px;
+      cursor: pointer;
+      &:hover {
+        background-color: #4f4f4f;
       }
 
-      &__name {
-        margin-left: 10px;
+      .currency-info {
+        display: flex;
+        align-items: center;
+
+        &__flag {
+          width: 50px;
+        }
+
+        &__name {
+          margin-left: 10px;
+        }
+      }
+
+      .currency-rate {
       }
     }
+  }
+}
 
-    .currency-rate {
+@media (max-width: 850px) {
+  .currency {
+    font-size: 1.8rem;
+    .currency-body {
+      .currency-container {
+        .currency-info {
+          &__flag {
+            width: 30px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .currency {
+    font-size: 1.5rem;
+    .currency-body {
+      .currency-container {
+        .currency-info {
+          &__flag {
+            width: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .currency {
+    font-size: 1.2rem;
+    .currency-body {
+      .currency-container {
+        .currency-info {
+          &__flag {
+            display: none;
+            width: 20px;
+          }
+          &__name {
+            margin-left: 0;
+          }
+        }
+      }
     }
   }
 }

@@ -101,7 +101,7 @@ export default class Clock {
   changeClockView = (hour) => {
     const tableBody = document.querySelector(`#${this.body}`);
 
-    if (hour >= 18 || hour <= 6) {
+    if (hour >= 17 || hour <= 6) {
       tableBody.dataset.clockNight = true;
     } else {
       tableBody.dataset.clockNight = false;
