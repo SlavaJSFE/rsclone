@@ -1,12 +1,5 @@
 import { Loader } from '@googlemaps/js-api-loader';
-// import { google } from 'google-maps';
-import MarkerClusterer from '@googlemaps/markerclustererplus';
-// import mapboxgl from 'mapbox-gl';
 import { getDataTrip, getDataProperties } from './Data';
-
-const locations = [];
-const title = [];
-const description = [];
 
 const shape = {
   coords: [1, 1, 1, 20, 18, 20, 18, 1],
@@ -22,59 +15,76 @@ export default class Map {
       coordinates: [],
       name: [],
     };
+    this.location;
+    this.service;
+    this.infowindow;
   }
 
-  handleMethods() {
-    getDataTrip().then((data) => {
-      data.results.forEach((item) => {
-        this.data.icon.push(item.icon);
-        this.data.coordinates.push(item.geometry.location);
-        this.data.name.push(item.name);
-      });
-      console.log(this.data);
+  // handleMethods() {
+  //   getDataTrip().then((data) => {
+  //     data.results.forEach((item) => {
+  //       this.data.icon.push(item.icon);
+  //       this.data.coordinates.push(item.geometry.location);
+  //       this.data.name.push(item.name);
+  //     });
+  //     console.log(this.data);
 
-      this.initMap();
-    });
+  //     this.initMap();
+  //   });
 
-    return this;
-  }
+  //   return this;
+  // }
 
   initMap() {
     const loader = new Loader({
       apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
+      libraries: ['places'],
       version: 'weekly',
     });
+
     loader.load().then(() => {
+      this.location = new google.maps.LatLng(53.9006, 27.567444);
+      this.infowindow = new google.maps.InfoWindow();
+
       this.map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 53.9006, lng: 27.567444 },
+        center: this.location,
         zoom: 12,
       });
 
-      this.createMarker();
+      this.createPlacesService();
     });
     return this;
   }
 
-  createMarker = () => {
-    this.markers = this.data.coordinates.map((item, index) => {
-      const image = {
-        url: this.data.icon[index],
-        // This marker is 20 pixels wide by 32 pixels high.
-        size: new google.maps.Size(20, 32),
-        // The origin for this image is (0, 0).
-        origin: new google.maps.Point(0, 0),
-        // The anchor for this image is the base of the flagpole at (0, 32).
-        anchor: new google.maps.Point(0, 32),
-        scaledSize: new google.maps.Size(20, 20),
-      };
+  createPlacesService = () => {
+    this.service = new google.maps.places.PlacesService(this.map);
 
-      new google.maps.Marker({
-        position: this.data.coordinates[index],
-        icon: image,
-        shape: shape,
-        title: this.data.name,
-        map: this.map,
-      });
+    const request = {
+      location: this.location,
+      radius: 2500,
+      type: ['restaurant'],
+    };
+
+    this.service.nearbySearch(request, this.isReadyToCreateMarker);
+  };
+
+  isReadyToCreateMarker = (results, status) => {
+    console.log(results);
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      for (let i = 0; i < results.length; i++) {
+        this.createMarker(results[i]);
+      }
+    }
+  };
+
+  createMarker = (place) => {
+    const marker = new google.maps.Marker({
+      map: this.map,
+      position: place.geometry.location,
+    });
+    google.maps.event.addListener(marker, 'click', () => {
+      this.infowindow.setContent(place.name);
+      this.infowindow.open(this.map);
     });
   };
 }
