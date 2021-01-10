@@ -1,4 +1,4 @@
-import TravelPlaningApp from './scripts/TravelPlaningApp.js';
+import TravelPlaningApp from './scripts/TravelPlaningApp-controller.js';
 import 'normalize.css';
 import './styles/style.scss';
 

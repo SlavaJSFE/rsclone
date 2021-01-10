@@ -1,22 +1,27 @@
+import services from './services/viewServices.js';
 import createDOMElement from './services/createDOMElement.js';
 import statement from './constants/TravelPlaningApp-constants.js';
+import TripCard from './services/TripCard.js';
 
 export default class TravelPlaningAppView {
+  constructor(model) {
+    this.model = model;
+  }
+
   init() {
     this.appWrapper = createDOMElement('div', 'app-wrapper');
     document.body.prepend(this.appWrapper);
 
     this.createHeader();
-    this.createMainBlock();
+    this.createMain();
     this.createFooter();
+
+    this.fillMainContentSection('my-trips');
   }
 
   createHeader() {
-    this.header = createDOMElement('header', 'header');
+    this.header = services.createHeader();
     this.appWrapper.appendChild(this.header);
-    this.title = createDOMElement('h1', 'title', 'Travel Planning App');
-
-    this.header.appendChild(this.title);
 
     this.createHeaderOptions();
   }
@@ -30,7 +35,7 @@ export default class TravelPlaningAppView {
     this.header.appendChild(this.options);
   }
 
-  createMainBlock() {
+  createMain() {
     this.main = createDOMElement('main', 'main');
     this.appWrapper.appendChild(this.main);
 
@@ -40,19 +45,13 @@ export default class TravelPlaningAppView {
   }
 
   createNavigation() {
-    this.navigation = createDOMElement('nav', 'nav');
+    this.navigation = services.createNavigation();
     this.main.appendChild(this.navigation);
-
-    const menuItem1 = createDOMElement('div', 'nav-item nav1', 'menu1');
-    const menuItem2 = createDOMElement('div', 'nav-item nav2', 'menu2');
-    const menuItem3 = createDOMElement('div', 'nav-item nav3', 'menu3');
-
-    this.navigation.append(menuItem1, menuItem2, menuItem3);
   }
 
   createMainContentBlock() {
-    this.mainContentBlock = createDOMElement('section', 'main-content-block');
-    this.main.appendChild(this.mainContentBlock);
+    this.mainContentSection = createDOMElement('section', 'main-content-section');
+    this.main.appendChild(this.mainContentSection);
   }
 
   createSideBar() {
@@ -67,21 +66,63 @@ export default class TravelPlaningAppView {
   }
 
   createFooter() {
-    const footer = createDOMElement('footer', 'footer');
-    const githubLogo = createDOMElement('img', 'gh-logo', '', '', ['src', statement.githubLogo]);
+    this.footer = services.createFooter();
+    this.appWrapper.appendChild(this.footer);
+  }
 
-    const authorsArray = [
-      createDOMElement('a', 'gh-link', 'Roman', '', ['href', statement.roman]),
-      createDOMElement('a', 'gh-link', 'Maria', '', ['href', statement.maria]),
-      createDOMElement('a', 'gh-link', 'Yulia', '', ['href', statement.julia]),
-      createDOMElement('a', 'gh-link', 'Slava', '', ['href', statement.slava]),
-    ];
-    const authors = createDOMElement('div', 'authors', authorsArray);
-    const rssLogo = createDOMElement('img', 'rss-logo', '', '', ['src', statement.rssLogo]);
-    const rsschoolLink = createDOMElement('a', 'rss-link', '', '', ['href', statement.rssLink]);
+  fillMainContentSection(content) {
+    if (content === 'my-trips') {
+      this.showMyTrips();
+    }
+    if (content === 'map') {
+      this.showMap();
+    }
+    if (content === 'notes') {
+      this.showNotes();
+    }
+  }
 
-    rsschoolLink.appendChild(rssLogo);
-    footer.append(githubLogo, authors, rsschoolLink);
-    this.appWrapper.appendChild(footer);
+  showMyTrips() {
+    this.mainContentSection.innerHTML = '';
+    this.myTripsContainer = createDOMElement('div', 'trips-container');
+    this.newTripBtn = createDOMElement('button', 'new-trip-btn', 'New Trip');
+
+    this.myTripsContainer.appendChild(this.newTripBtn);
+
+    this.mainContentSection.appendChild(this.myTripsContainer);
+
+    this.createTripsModalWindow();
+  }
+
+  createTripsModalWindow() {
+    this.modalWindow = createDOMElement('div', 'trips-modal');
+    this.closeSpan = createDOMElement('span', 'trip-modal-close');
+    this.closeCircle = createDOMElement('div', 'trip-close-circle', this.closeSpan);
+    const input = `<div class="select">
+                      <p>Enter destination</p>
+                      <input class="destination-input" type="text" name="destination" value=""><br>
+                      <button class="submit-btn">Submit</button>
+                    </div>`;
+
+    this.modalWindow.innerHTML = input;
+    this.modalWindow.prepend(this.closeCircle);
+    this.myTripsContainer.appendChild(this.modalWindow);
+  }
+
+  createTripCard(destination) {
+    const tripCard = new TripCard(destination);
+    this.myTripsContainer.appendChild(tripCard);
+  }
+
+  showMap() {
+    const mapImage = createDOMElement('img', 'map-image', '', '', ['src', statement.map]);
+    this.mainContentSection.innerHTML = '';
+    this.mainContentSection.appendChild(mapImage);
+  }
+
+  showNotes() {
+    const notesImage = createDOMElement('img', 'notes-image', '', '', ['src', statement.notes]);
+    this.mainContentSection.innerHTML = '';
+    this.mainContentSection.appendChild(notesImage);
   }
 }
