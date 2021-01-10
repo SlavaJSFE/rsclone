@@ -17,8 +17,9 @@ const services = {
     const menuItem1 = createDOMElement('div', 'nav-item my-trips', 'My Trips');
     const menuItem2 = createDOMElement('div', 'nav-item map', 'Map');
     const menuItem3 = createDOMElement('div', 'nav-item notes', 'Notes');
+    const menuItem4 = createDOMElement('div', 'nav-item attractions', 'Attractions');
 
-    navigation.append(menuItem1, menuItem2, menuItem3);
+    navigation.append(menuItem1, menuItem2, menuItem3, menuItem4);
 
     return navigation;
   },

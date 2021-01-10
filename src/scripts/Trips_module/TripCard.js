@@ -1,4 +1,4 @@
-import createDOMElement from './createDOMElement.js';
+import createDOMElement from '../services/createDOMElement.js';
 
 export default class TripCard {
   constructor(destination) {
@@ -7,7 +7,7 @@ export default class TripCard {
   }
 
   createTripCard() {
-    const tripCardContainer = createDOMElement('div', 'trip-card-container', this.destination);
+    const tripCardContainer = createDOMElement('div', `trip-card-container ${this.destination}`, this.destination);
     return tripCardContainer;
   }
 }
