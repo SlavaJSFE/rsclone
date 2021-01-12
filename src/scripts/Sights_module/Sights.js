@@ -146,7 +146,7 @@ export default class Sights {
 	}
 
 	onShowPOI(data) {
-		// console.log(data)
+		console.log(data)
 		let poi = document.querySelector("#poi");
 		// console.log(poi)
 		poi.innerHTML = "";
@@ -164,6 +164,9 @@ export default class Sights {
 
 	createSearcher() {
 		const main_content_block = document.querySelector('.main-content-section');
+
+		const sights_container = document.createElement('div');
+		sights_container.classList.add('sights-container');
 
 		const form = document.createElement('form');
 		form.setAttribute('id', 'search_form');
@@ -227,9 +230,10 @@ export default class Sights {
 		mainBlockRow.appendChild(mainBlockRow_left);
 		mainBlockRow.appendChild(mainBlockRow_right);
 
-		main_content_block.appendChild(form);
-		main_content_block.appendChild(info);
-		main_content_block.appendChild(mainBlockRow);
+		sights_container.appendChild(form);
+		sights_container.appendChild(info);
+		sights_container.appendChild(mainBlockRow);
+		main_content_block.appendChild(sights_container);
 	}
 
 	search() {
