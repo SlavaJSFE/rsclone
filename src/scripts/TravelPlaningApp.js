@@ -15,6 +15,7 @@ export default class TravelPlaningApp {
     // currency.handleMethods();
 
     const map = new Map();
-    map.initMap();
+    // map.initMap();
+    map.handleMethods();
   }
 }
