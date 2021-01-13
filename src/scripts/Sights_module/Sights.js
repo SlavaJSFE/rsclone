@@ -1,5 +1,6 @@
 import 'regenerator-runtime/runtime';
 import { isoCountries, layer_names } from './constants';
+import { getLang } from './utilsSights';
 
 export default class Sights {
 
@@ -128,11 +129,17 @@ export default class Sights {
 	}
 
 	createListItem(item) {
+		// console.log(item);
+		// console.log('item');
 		let a = document.createElement("a");
 		a.className = "list-group-item list-group-item-action";
 		a.setAttribute("data-id", item.xid);
-		a.innerHTML = `<h5 class="list-group-item-heading">${item.name}</h5>
-				<p class="list-group-item-text">${this.getCategoryName(item.kinds)}</p>`;
+		this.apiGet("xid/" + item.xid).then((data) => {
+			let lang = getLang(data.wikipedia);
+			a.innerHTML = `<h5 class="list-group-item-heading">${item.name}</h5>
+			<p class="list-group-item-text">${this.getCategoryName(item.kinds)}</p>
+			<p class="list-group-item-text-lang">(${lang})</p>`;
+		});
 
 		a.addEventListener("click", () => {
 			document.querySelectorAll("#list a").forEach((item) => {
@@ -147,6 +154,7 @@ export default class Sights {
 
 	onShowPOI(data) {
 		console.log(data)
+		console.log(getLang(data.wikipedia));
 		let poi = document.querySelector("#poi");
 		// console.log(poi)
 		poi.innerHTML = "";
