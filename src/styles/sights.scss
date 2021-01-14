@@ -35,7 +35,7 @@
 
 .p-1 {
 	padding: .25rem!important;
-	margin-top: 1.5rem;
+	margin-top: 2rem;
 }
 
 .input-group-prepend {
@@ -248,7 +248,8 @@ button:focus{
     margin-bottom: 1rem;
 }
 .text-center {
-    text-align: center!important;
+	text-align: center!important;
+	margin-bottom: 1rem;
 }
 
 #next_button {
@@ -318,6 +319,33 @@ btn-primary:hover {
   }
   ::-webkit-scrollbar-thumb:hover {
 	background: #555; 
+  }
+
+  .form_divChangeLang{
+	display: flex;
+	justify-content: space-between;
+	column-gap: 2rem;
+	margin-top: 1rem;
+  }
+
+  .divChangeLang span{
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+
+  .select-sights{
+	padding: 0.5rem 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	outline: none;
+	cursor: pointer;
   }
 
 @media (min-width: 992px){

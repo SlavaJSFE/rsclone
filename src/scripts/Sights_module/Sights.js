@@ -173,6 +173,35 @@ export default class Sights {
 	createSearcher() {
 		const main_content_block = document.querySelector('.main-content-section');
 
+		const selectName = document.createElement("span");
+		selectName.innerHTML = "Choose language of article: ";
+		const options = [];
+		const languages = {
+			all: 'All languages',
+			ru: 'Russian',
+			en: 'English',
+			pl: 'Poland'
+		};
+		let i = 0;
+		const select = document.createElement("select");
+		select.classList.add('select-sights');
+		for (let key in languages) {
+			options[i] = document.createElement("option");
+			options[i].innerHTML = languages[key];
+			options[i].value = key;
+			select.appendChild(options[i]);
+			i++;
+		}
+		options[0].selected = true;
+
+		const form_divChangeLang = document.createElement('div');
+		form_divChangeLang.classList.add('form_divChangeLang');
+
+		const divChangeLang = document.createElement("div");
+		divChangeLang.classList.add("divChangeLang");
+		divChangeLang.appendChild(selectName);
+		divChangeLang.appendChild(select);
+
 		const sights_container = document.createElement('div');
 		sights_container.classList.add('sights-container');
 
@@ -238,9 +267,14 @@ export default class Sights {
 		mainBlockRow.appendChild(mainBlockRow_left);
 		mainBlockRow.appendChild(mainBlockRow_right);
 
-		sights_container.appendChild(form);
+		form_divChangeLang.appendChild(form);
+		form_divChangeLang.appendChild(divChangeLang);
+		sights_container.appendChild(form_divChangeLang);
 		sights_container.appendChild(info);
 		sights_container.appendChild(mainBlockRow);
+
+
+
 		main_content_block.appendChild(sights_container);
 	}
 
