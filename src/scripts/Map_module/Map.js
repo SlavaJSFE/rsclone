@@ -40,10 +40,9 @@ export default class Map {
     this.place_LAT;
     this.map;
     this.data = [];
-    this.place_id = [];
     this.markers = [];
     this.filterData;
-    this.icons = [];
+    this.isFirstLaunch = true;
   }
 
   handleApi(town) {
@@ -94,11 +93,14 @@ export default class Map {
       });
 
       this.createMarkerClusterer();
-      this.createLegend();
-      this.createTownSearch();
 
-      const button = document.querySelector('.search-button');
-      button.addEventListener('click', this.handleSearchButton);
+      if (this.isFirstLaunch === true) {
+        this.createLegend();
+        this.createTownSearch();
+        const button = document.querySelector('.search-button');
+        button.addEventListener('click', this.handleSearchButton);
+        this.isFirstLaunch = false;
+      }
     });
     return this;
   }
@@ -118,7 +120,7 @@ export default class Map {
     const marker = createHTMLMapMarker({
       latlng: coord,
       map: this.map,
-      html: `<div id="marker" data-category=${index} data-selected='false'>${icon}</div>`,
+      html: `<div id="marker" data-category=${index} data-selected='false'><div class="marker-icon">${icon}</div></div>`,
     });
 
     //array of markers for clusterer
@@ -127,15 +129,15 @@ export default class Map {
     google.maps.event.addListener(marker, 'click', (event) => {
       getXIdData(place.xid)
         .then((place) => {
-          const { target } = event;
           // current marker info
-          this.target = target;
+          const { target } = event;
 
           this.createInfoWindow(place);
 
           this.infoWindow.open(this.map, marker);
 
           this.infoWindow.addListener('domready', () => {
+            this.target = target;
             const button = document.querySelector('.iw-button');
             button.addEventListener('click', this.addToTODOList);
           });
@@ -282,13 +284,43 @@ export default class Map {
       this.target.dataset.selected = false;
     }
 
-    return title.innerHTML; // for example London Tower
+    // return title.innerHTML; // for example London Tower
   };
 
   handleSearchButton = () => {
     const search = document.querySelector('.search-input');
+    const value = search.value.toLowerCase();
+    // console.log(value);
+    // if (value === '') return;
+    getPlaceCoord(value).then((coord) => {
+      this.place_LON = coord.lon;
+      this.place_LAT = coord.lat;
 
-    console.log(search.value.toLowerCase());
-    // this.handleApi('Minsk');
+      const pos = {
+        lat: this.place_LAT,
+        lng: this.place_LON,
+      };
+
+      this.map.setCenter(pos);
+      this.map.getCenter();
+
+      const promiseArr = requests.map((request) => {
+        return getPlaceData(this.place_LON, this.place_LAT, request).then((data) => {
+          this.data.push(data);
+        });
+      });
+
+      Promise.all(promiseArr).then(() => {
+        this.createFilterData(this.data);
+
+        console.log(this.filterData);
+
+        this.filterData.forEach((place) => {
+          this.createMarker(place);
+        });
+
+        this.createMarkerClusterer();
+      });
+    });
   };
 }
