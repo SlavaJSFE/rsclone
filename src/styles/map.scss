@@ -35,12 +35,14 @@ $color_purple: #ef2fa2;
 
 .iw-container {
   font-size: 15px;
+
   .iw-title {
     font-size: 22px;
     font-weight: bold;
     text-align: center;
     padding: 10px;
   }
+
   .iw-content {
     max-height: 200px;
     overflow-y: auto;
@@ -51,6 +53,7 @@ $color_purple: #ef2fa2;
       border-radius: 20px;
       margin: 10px;
     }
+
     .iw-info {
       cursor: pointer;
     }
@@ -97,7 +100,32 @@ $color_purple: #ef2fa2;
     padding: 3px;
     margin-right: 10px;
   }
+
   &-description {
+  }
+}
+
+.search-container {
+  display: flex;
+  padding: 5px;
+}
+
+.search-input {
+  font-size: 16px;
+  padding: 10px 15px;
+  border: none;
+}
+
+.search-button {
+  border: none;
+  color: white;
+  background: grey;
+  padding: 5px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+
+  &:hover {
+    background-color: cadetblue;
   }
 }
 

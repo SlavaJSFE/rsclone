@@ -47,17 +47,19 @@ export default class Map {
   }
 
   handleMethods() {
-    getPlaceCoord('London').then((coord) => {
-      console.log(coord);
-      this.place_LON = coord.lon;
-      this.place_LAT = coord.lat;
-      const promiseArr = requests.map((request) => {
-        return getPlaceData(this.place_LON, this.place_LAT, request).then((data) => {
-          this.data.push(data);
+    getPlaceCoord('London')
+      .then((coord) => {
+        console.log(coord);
+        this.place_LON = coord.lon;
+        this.place_LAT = coord.lat;
+        const promiseArr = requests.map((request) => {
+          return getPlaceData(this.place_LON, this.place_LAT, request).then((data) => {
+            this.data.push(data);
+          });
         });
-      });
-      Promise.all(promiseArr).then(() => this.initMap());
-    });
+        Promise.all(promiseArr).then(() => this.initMap());
+      })
+      .catch((err) => console.log(err));
 
     return this;
   }
@@ -76,6 +78,7 @@ export default class Map {
       this.map = new google.maps.Map(document.getElementById('map'), {
         center: this.location,
         zoom: 12,
+        mapTypeControl: false,
         streetViewControl: false,
         mapTypeId: google.maps.MapTypeId.TERRAIN,
       });
@@ -91,6 +94,7 @@ export default class Map {
       });
       this.createMarkerClusterer();
       this.createLegend();
+      this.createTownSearch();
     });
     return this;
   }
@@ -223,5 +227,26 @@ export default class Map {
     });
 
     this.map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(legend);
+  };
+
+  createTownSearch = () => {
+    const input = document.querySelector('.search-container');
+
+    createDOMElement(
+      'input',
+      'search-input',
+      null,
+      input,
+      ['type', 'search'],
+      ['aria-placeholder', 'Search your town']
+    );
+    createDOMElement(
+      'button',
+      'search-button',
+      [createDOMElement('i', 'material-icons', `search`)],
+      input
+    );
+
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
   };
 }
