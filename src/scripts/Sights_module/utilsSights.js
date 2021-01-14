@@ -1,9 +1,12 @@
 import 'regenerator-runtime/runtime';
 
 function getLang(link) {
-	let start = link.indexOf('://');
-	let finish = link.indexOf('.');
-	return link.substring(start + 3, finish);
+	if (link !== undefined) {
+		let start = link.indexOf('://');
+		let finish = link.indexOf('.');
+		return link.substring(start + 3, finish);
+	}
+	return 'without description';
 }
 
 export { getLang };
