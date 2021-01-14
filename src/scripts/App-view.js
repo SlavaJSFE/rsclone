@@ -18,19 +18,21 @@ export default class TravelPlaningAppView {
 
   createHeader() {
     this.header = services.createHeader();
+    this.links = services.createHeaderLinks();
+    this.modal = services.createModal();
+
+    this.header.append(this.links, this.modal);
     this.appWrapper.appendChild(this.header);
-
-    this.createHeaderOptions();
   }
 
-  createHeaderOptions() {
-    const authorization = createDOMElement('div', 'authorization');
-    const language = createDOMElement('div', 'language');
-    this.options = createDOMElement('div', 'options');
+  // createHeaderOptions() {
+  //   const authorization = createDOMElement('div', 'authorization');
+  //   const language = createDOMElement('div', 'language');
+  //   this.options = createDOMElement('div', 'options');
 
-    this.options.append(authorization, language);
-    this.header.appendChild(this.options);
-  }
+  //   this.options.append(authorization, language);
+  //   this.header.appendChild(this.options);
+  // }
 
   createMain() {
     this.main = createDOMElement('main', 'main');

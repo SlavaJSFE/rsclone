@@ -38,39 +38,21 @@ $main-color: white;
   width: 70%;
   height: 400px;
 
-  .trip-close-circle {
+  .close {
     position: absolute;
-    background-color: blue;
-    width: 40px;
-    height: 40px;
-    top: 20px;
-    right: 20px;
-    border-radius: 50%;
+    top: 12px;
+    right: 15px;
   }
-  .trip-close-circle:hover {
+  .close:hover {
     cursor: pointer;
   }
+  #trip-create-form {
+    width: 70%;
+    margin: 45px auto 0;
 
-  .trip-modal-close {
-    position: relative;
-    top: 5px;
-    left: 5px;
-  }
-
-  .trip-modal-close::before,
-  .trip-modal-close::after {
-    content: "";
-    position: absolute;
-    background-color: $main-color;
-    width: 30px;
-    height: 3px;
-    top: 14px;
-  }
-  .trip-modal-close::before {    
-    transform: rotate(45deg);
-  }
-  .trip-modal-close::after {
-    transform: rotate(-45deg);
+    #new-trip-submit {
+      border-radius: 20px;
+    }
   }
 }
 .select {

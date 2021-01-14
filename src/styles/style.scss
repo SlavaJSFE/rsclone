@@ -1,7 +1,7 @@
 @import "currency.scss";
 @import "clock.scss";
 @import 'my-trips.scss';
-@import "sights.scss";
+// @import "sights.scss";
 
 $main-color: white;
 
@@ -20,20 +20,27 @@ $main-color: white;
   justify-content: space-between;
   padding: 0 10px;
 }
-.options {
+.header-links {
   display: flex;
+  margin: auto 0;
+
+  i {
+    font-size: 30px;
+    margin-right: 5px;
+  }
 }
 .main {
   display: grid;
   grid-template-columns: 15% 63% 22%;
   grid-template-rows: 100%;
   background-color: yellowgreen;
-  min-height: 80vh;
+  height: 80vh;
 }
 .nav {
   background-color: hotpink;
   text-align: center;
   padding-top: 30px;
+  height: 100%;
 }
 .nav-item {
   margin: 10px auto 0 auto;

@@ -1,9 +1,11 @@
+import Materialize from 'materialize-css';
 import model from './App-model.js';
 import TravelPlaningAppView from './App-view.js';
 import Currency from './Currency_module/Currency';
 import Clock from './Clock_module/Clock';
 import Trips from './Trips_module/Trips-controller.js';
 import Sights from './Sights_module/Sights.js';
+
 export default class TravelPlaningApp {
 	static init() {
 		this.model = model;
@@ -26,13 +28,31 @@ export default class TravelPlaningApp {
 	}
 
 	static addAppEventListener() {
+		this.view.header.addEventListener('click', (event) => this.handleHeaderEvent(event.target));
 		this.view.navigation.addEventListener('click', (event) => this.handleNavEvent(event.target));
+		document.addEventListener('DOMContentLoaded', () => {
+			const modal = document.querySelectorAll('.modal');
+			this.modalWindow = Materialize.Modal.init(modal, { opacity: 0.6 });
+		});
 	}
 
 	static handleNavEvent(target) {
 		if (target.className && target.className.includes('nav-item')) {
 			const currentItem = target.className.split(' ')[1];
 			this.fillMainContentSection(currentItem);
+		}
+	}
+
+	static handleHeaderEvent(target) {
+		const authorization = this.view.header.querySelector('.authorization');
+		const modalTest = document.getElementById('modal1');
+		const modal = Materialize.Modal.getInstance(modalTest);
+		console.log(target)
+
+		if (target === authorization) {
+			
+			console.log('test', modalTest, modal)
+			modal.open();
 		}
 	}
 

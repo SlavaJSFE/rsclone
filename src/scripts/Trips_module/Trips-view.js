@@ -1,10 +1,11 @@
 import createDOMElement from '../services/createDOMElement.js';
-import TripCard from './TripCard.js';
+import createTripCard from './services/createTripCard.js';
 import TripDetails from './TripDetails.js';
 
 export default class TripsView {
   constructor() {
     this.mainContentSection = document.querySelector('.main-content-section');
+    // this.tripCard = new TripCard();
     this.init();
   }
 
@@ -16,21 +17,41 @@ export default class TripsView {
     this.myTripsContainer.append(this.newTripBtn, this.modalWindow);
 
     this.mainContentSection.appendChild(this.myTripsContainer);
-
   }
 
   createTripsModalWindow() {
     const modalWindow = createDOMElement('div', 'trips-modal');
-    this.closeSpan = createDOMElement('span', 'trip-modal-close');
-    this.closeCircle = createDOMElement('div', 'trip-close-circle', this.closeSpan);
-    const input = `<div class="select">
-                      <p>Enter destination</p>
-                      <input class="destination-input" type="text" name="destination" value=""><br>
-                      <button class="submit-btn">Submit</button>
-                    </div>`;
+    this.closeModalBtn = createDOMElement('i', 'material-icons close', 'close');
+
+    const input = `<form id="trip-create-form">
+                      <div class="input-field">
+                        <i class="material-icons prefix">wysiwyg</i>
+                        <input id="trip-name" type="text" required>
+                        <label for="trip-name">Trip Name</label>
+                      </div>
+                      <div class="input-field">
+                        <i class="material-icons prefix">place</i>
+                        <input id="first-destination" class="autocomplete" type="text" required>
+                        <label for="first-destination">Enter Your First Destination</label>
+                      </div>
+                      <div class="input-field">
+                        <i class="material-icons prefix">today</i>
+                        <input id="start-date" type="text" class="datepicker">
+                        <label for="start-date">Start Date</label>
+                      </div>
+                      <div class="input-field">
+                        <i class="material-icons prefix">today</i>
+                        <input id="end-date" type="text" class="datepicker">
+                        <label for="end-date">End Date</label>
+                      </div>
+                      <button id="new-trip-submit" class="btn waves-effect waves-light" type="submit" name="action">
+                        Create New Trip
+                        <i class="material-icons right">send</i>
+                      </button>
+                    </form>`;
 
     modalWindow.innerHTML = input;
-    modalWindow.prepend(this.closeCircle);
+    modalWindow.prepend(this.closeModalBtn);
     return modalWindow;
   }
 
@@ -40,8 +61,8 @@ export default class TripsView {
     this.mainContentSection.appendChild(trip);
   }
 
-  createTripCard(destination) {
-    const tripCard = new TripCard(destination);
+  setTripCard(tripObject) {
+    const tripCard = createTripCard(tripObject);
     this.myTripsContainer.appendChild(tripCard);
   }
 }

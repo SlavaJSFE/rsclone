@@ -11,6 +11,23 @@ const services = {
     return header;
   },
 
+  createHeaderLinks() {
+    const linksContainer = createDOMElement('div', 'header-links');
+
+    const authorization = createDOMElement('div', 'authorization btn black', 'Sing in', linksContainer);
+    createDOMElement('i', 'material-icons left', 'fingerprint', authorization);
+
+    const language = createDOMElement('div', 'language btn black', 'Language', linksContainer);
+    createDOMElement('i', 'material-icons left', 'language', language);
+
+    return linksContainer;
+  },
+
+  createModal() {
+    const modal = createDOMElement('div', 'modal', 'This is modal window', '', ['id', 'modal1']);
+    return modal;
+  },
+
   createNavigation() {
     const navigation = createDOMElement('nav', 'nav');
 
