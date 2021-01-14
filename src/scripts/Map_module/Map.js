@@ -46,8 +46,8 @@ export default class Map {
     this.icons = [];
   }
 
-  handleMethods() {
-    getPlaceCoord('London')
+  handleApi(town) {
+    getPlaceCoord(town)
       .then((coord) => {
         console.log(coord);
         this.place_LON = coord.lon;
@@ -57,6 +57,7 @@ export default class Map {
             this.data.push(data);
           });
         });
+        // after all async response handle next method
         Promise.all(promiseArr).then(() => this.initMap());
       })
       .catch((err) => console.log(err));
@@ -73,6 +74,7 @@ export default class Map {
     });
 
     loader.load().then(() => {
+      // coord of current town
       this.location = new google.maps.LatLng(this.place_LAT, this.place_LON);
 
       this.map = new google.maps.Map(document.getElementById('map'), {
@@ -83,8 +85,6 @@ export default class Map {
         mapTypeId: google.maps.MapTypeId.TERRAIN,
       });
 
-      // console.log(this.data);
-
       this.createFilterData(this.data);
 
       console.log(this.filterData);
@@ -92,48 +92,59 @@ export default class Map {
       this.filterData.forEach((place) => {
         this.createMarker(place);
       });
+
       this.createMarkerClusterer();
       this.createLegend();
       this.createTownSearch();
+
+      const button = document.querySelector('.search-button');
+      button.addEventListener('click', this.handleSearchButton);
     });
     return this;
   }
 
   createMarker = (place) => {
+    //get coord from api
     const lat = place.point.lat;
     const lng = place.point.lon;
     const coord = new google.maps.LatLng(lat, lng);
 
     const iconObj = getIcon(place.kinds);
-
     const icon = iconObj.e;
 
+    // get index for background color of marker
     const index = legendCategories.findIndex((el) => el.icon === icon);
-    // console.log(index);
-    // debugger;
-    // console.log(lat);
-    // console.log(lng);
-    // console.log(place.photos[0].getUrl());
 
     const marker = createHTMLMapMarker({
       latlng: coord,
       map: this.map,
-      html: `<div id="marker" data-category=${index}>${icon}</div>`,
+      html: `<div id="marker" data-category=${index} data-selected='false'>${icon}</div>`,
     });
 
-    // console.log(marker.getPosition());
-
+    //array of markers for clusterer
     this.markers.push(marker);
 
-    marker.addListener('click', () => {
-      getXIdData(place.xid).then((place) => {
-        this.createInfoWindow(place);
-        this.infoWindow.open(this.map, marker);
+    google.maps.event.addListener(marker, 'click', (event) => {
+      getXIdData(place.xid)
+        .then((place) => {
+          const { target } = event;
+          // current marker info
+          this.target = target;
 
-        this.map.addListener('click', () => {
-          this.infoWindow.close();
-        });
-      });
+          this.createInfoWindow(place);
+
+          this.infoWindow.open(this.map, marker);
+
+          this.infoWindow.addListener('domready', () => {
+            const button = document.querySelector('.iw-button');
+            button.addEventListener('click', this.addToTODOList);
+          });
+
+          this.map.addListener('click', () => {
+            this.infoWindow.close();
+          });
+        })
+        .catch((err) => console.log(err));
     });
   };
 
@@ -144,9 +155,20 @@ export default class Map {
     <div class="iw-container">
       <div class="iw-title">${place.name}</div>
       <div class="iw-content">
-        <img class="iw-img" src="${place.preview.source}" height="150px" width="150px" alt="${place.name}"></img>
-        <div class="iw-info"><a href="https://www.wikidata.org/wiki/${place.wikidata}" target="blank">Wikidata</a></div>
+        <img class="iw-img" src="${place.preview.source}" height="150px" width="150px" alt="${
+      place.name
+    }"></img>
+        <div class="iw-info">${place.wikipedia_extracts.text}</div>
       </div>
+      <div class="iw-contacts">
+        <div class="iw-address">Address: ${place.address.city || place.address.town}, ${
+      place.address.country
+    }, ${place.address.postcode}</div>
+        <a href="https://www.wikidata.org/wiki/${
+          place.wikidata
+        }" class="iw-link" target="blank">Link: Wikidata</a>
+      </div>
+      <button class="iw-button">Add+</button>
     </div>
     `;
 
@@ -158,8 +180,8 @@ export default class Map {
 
   createFilterData = (data) => {
     console.log(data);
-
     let arr = [];
+
     //filter duplicate
     data.forEach((item) => {
       arr.push(_.uniqBy(item, 'name'));
@@ -199,14 +221,15 @@ export default class Map {
     });
 
     this.filterData.push(uniqArr[0]);
-    // console.log(this.filterData);
   };
 
   createMarkerClusterer = () => {
     const markerCluster = new MarkerClusterer(this.map, this.markers, {
-      gridSize: 150,
+      gridSize: 100,
       imagePath: `./assets/images/m`,
     });
+
+    this.markers = [];
   };
 
   createLegend = () => {
@@ -238,7 +261,7 @@ export default class Map {
       null,
       input,
       ['type', 'search'],
-      ['aria-placeholder', 'Search your town']
+      ['placeholder', 'Search your town']
     );
     createDOMElement(
       'button',
@@ -248,5 +271,24 @@ export default class Map {
     );
 
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  };
+
+  addToTODOList = () => {
+    const title = document.querySelector('.iw-title');
+    console.log(this.target);
+    if (this.target.dataset.selected === 'false') {
+      this.target.dataset.selected = true;
+    } else {
+      this.target.dataset.selected = false;
+    }
+
+    return title.innerHTML; // for example London Tower
+  };
+
+  handleSearchButton = () => {
+    const search = document.querySelector('.search-input');
+
+    console.log(search.value.toLowerCase());
+    // this.handleApi('Minsk');
   };
 }

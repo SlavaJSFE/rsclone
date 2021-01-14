@@ -23,6 +23,7 @@ $color_purple: #ef2fa2;
 }
 
 #marker {
+  position: relative;
   font-size: 18px;
   text-align: center;
   // background-color: crimson;
@@ -57,18 +58,35 @@ $color_purple: #ef2fa2;
     .iw-info {
       cursor: pointer;
     }
+  }
 
-    .iw-bottom-gradient {
-      position: absolute;
-      width: 326px;
-      height: 25px;
-      bottom: 10px;
-      right: 18px;
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
-      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
-      background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
-      background: -ms-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+  .iw-contacts {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 7px;
+    .iw-address {
     }
+    .iw-link {
+      color: black;
+      margin-top: 5px;
+      text-decoration: none;
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        color: goldenrod;
+      }
+    }
+  }
+  .iw-button {
+    display: block;
+    float: right;
+    padding: 3px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: blue;
+    color: white;
+    margin: 5px;
   }
 }
 
@@ -173,4 +191,13 @@ $color_purple: #ef2fa2;
 }
 [data-category="14"] {
   background-color: $color_purple;
+}
+
+[data-selected="true"] {
+  &::after {
+    content: "✔️";
+    position: absolute;
+    top: -12px;
+    left: 24px;
+  }
 }

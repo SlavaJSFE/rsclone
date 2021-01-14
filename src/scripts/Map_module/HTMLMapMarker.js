@@ -14,7 +14,8 @@ const createHTMLMapMarker = ({ OverlayView = google.maps.OverlayView, ...args })
         this.div.innerHTML = this.html;
       }
       google.maps.event.addDomListener(this.div, 'click', (event) => {
-        google.maps.event.trigger(this, 'click');
+        event.stopPropagation();
+        google.maps.event.trigger(this, 'click', event);
       });
     }
 

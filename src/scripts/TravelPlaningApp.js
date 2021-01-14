@@ -16,6 +16,6 @@ export default class TravelPlaningApp {
 
     const map = new Map();
     // map.initMap();
-    map.handleMethods();
+    map.handleApi('london');
   }
 }
