@@ -1,11 +1,11 @@
 import createDOMElement from '../services/createDOMElement.js';
 import createTripCard from './services/createTripCard.js';
 import TripDetails from './TripDetails.js';
+import services from './services/tripsViewServices.js';
 
 export default class TripsView {
   constructor() {
     this.mainContentSection = document.querySelector('.main-content-section');
-    // this.tripCard = new TripCard();
     this.init();
   }
 
@@ -17,6 +17,18 @@ export default class TripsView {
     this.myTripsContainer.append(this.newTripBtn, this.modalWindow);
 
     this.mainContentSection.appendChild(this.myTripsContainer);
+  }
+
+  renderTripsCards(userTripsArray) {
+    const trips = userTripsArray;
+    trips.forEach((trip) => {
+      const tripCard = createTripCard(trip);
+      this.myTripsContainer.appendChild(tripCard);
+    });
+  }
+
+  fillNewTripModal() {
+    services.fillModalNewTrip();
   }
 
   createTripsModalWindow() {

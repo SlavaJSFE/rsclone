@@ -20,26 +20,46 @@ export default class TripsModel {
     return newTrip;
   }
 
-  static setToDatabase(tripObject) {
+  static async setToDatabase(tripObject, email) {
     const trip = tripObject;
-    return fetch('https://rsclone-833d0-default-rtdb.firebaseio.com/trips.json', {
+    const userName = email.split('@')[0];
+
+    const response = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}.json`, {
       method: 'POST',
       body: JSON.stringify(trip),
       headers: {
         'Content-Type': 'application/json'
       }
-    })
-      .then(response => response.json())
-      .then(response => {
-        trip.id = response.name;
-        return trip;
-      });
+    });
+
+    const data = await response.json();
+    trip.id = data.name;
+    return trip;
   }
 
-  // static getFromDatabase() {
-  //   return fetch('https://rsclone-833d0-default-rtdb.firebaseio.com/trips.json', {
-  //     method: 'GET'
-  //   })
-  //     .then(response => )
-  // }
+  static async getTripsFromDatabase() {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const token = user.token;
+    const email = user.email;
+    const userName = email.split('@')[0];
+
+    let response = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}.json?auth=${token}`);
+    let data = await response.json();
+    if (data && data.error) {
+      return `<p class="error">${response.error}</p>`;
+    }
+
+    return data ? Object.keys(data).map((key) => ({
+      ...data[key],
+      id: key
+    })) : [];
+  }
 }
+
+// write and read database rules
+// {
+//   "rules": {
+//     ".read": "now < 1612821600000",  // 2021-2-9
+//     ".write": "now < 1612821600000",  // 2021-2-9
+//   }
+// }

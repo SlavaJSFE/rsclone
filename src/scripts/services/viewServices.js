@@ -24,8 +24,29 @@ const services = {
   },
 
   createModal() {
-    const modal = createDOMElement('div', 'modal', 'This is modal window', '', ['id', 'modal1']);
+    const modal = createDOMElement('div', 'modal', null, null, ['id', 'modal1']);
     return modal;
+  },
+
+  fillModal(modal) {
+    const modalWindow = modal;
+    const modalContent = createDOMElement('div', 'modal-content');
+    createDOMElement('h4', null, 'Authentication', modalContent);
+
+    const form = createDOMElement('form', null, null, modalContent, ['id', 'auth-form']);
+
+    const inputEmail = createDOMElement('div', 'input-field', null, form);
+    createDOMElement('input', 'validate', null, inputEmail, ['type', 'email'], ['id', 'email']);
+    createDOMElement('label', null, 'Email', inputEmail, ['for', 'email']);
+
+    const inputPassword = createDOMElement('div', 'input-field', null, form);
+    createDOMElement('input', 'validate', null, inputPassword, ['type', 'email'], ['id', 'password']);
+    createDOMElement('label', null, 'Password', inputPassword, ['for', 'password']);
+
+    createDOMElement('button', 'btn waves-effect waves-light', 'Enter', form, ['type', 'submit']);
+
+    modalWindow.innerHTML = '';
+    modalWindow.appendChild(modalContent);
   },
 
   createNavigation() {
@@ -43,17 +64,17 @@ const services = {
 
   createFooter() {
     const footer = createDOMElement('footer', 'footer');
-    const githubLogo = createDOMElement('img', 'gh-logo', '', '', ['src', statement.githubLogo]);
+    const githubLogo = createDOMElement('img', 'gh-logo', null, null, ['src', statement.githubLogo]);
 
     const authorsArray = [
-      createDOMElement('a', 'gh-link', 'Roman', '', ['href', statement.roman]),
-      createDOMElement('a', 'gh-link', 'Maria', '', ['href', statement.maria]),
-      createDOMElement('a', 'gh-link', 'Yulia', '', ['href', statement.julia]),
-      createDOMElement('a', 'gh-link', 'Slava', '', ['href', statement.slava]),
+      createDOMElement('a', 'gh-link', 'Roman', null, ['href', statement.roman]),
+      createDOMElement('a', 'gh-link', 'Maria', null, ['href', statement.maria]),
+      createDOMElement('a', 'gh-link', 'Yulia', null, ['href', statement.julia]),
+      createDOMElement('a', 'gh-link', 'Slava', null, ['href', statement.slava]),
     ];
     const authors = createDOMElement('div', 'authors', authorsArray);
-    const rssLogo = createDOMElement('img', 'rss-logo', '', '', ['src', statement.rssLogo]);
-    const rsschoolLink = createDOMElement('a', 'rss-link', '', '', ['href', statement.rssLink]);
+    const rssLogo = createDOMElement('img', 'rss-logo', null, null, ['src', statement.rssLogo]);
+    const rsschoolLink = createDOMElement('a', 'rss-link', null, null, ['href', statement.rssLink]);
 
     rsschoolLink.appendChild(rssLogo);
     footer.append(githubLogo, authors, rsschoolLink);

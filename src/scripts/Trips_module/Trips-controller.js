@@ -3,30 +3,44 @@ import Materialize from 'materialize-css';
 import TripsModel from './Trips-model.js';
 
 export default class Trips {
-  constructor(allTrips) {
-    this.trips = allTrips;
-  }
-
   init() {
     this.view = new TripsView();
+
+    this.showUserTrips();
     this.addTripEventListener();
   }
 
   addTripEventListener() {
-    const newTripForm = document.getElementById('trip-create-form');
     this.view.myTripsContainer.addEventListener('click', (event) => this.handleTripsEvent(event));
-    document.addEventListener('DOMContentLoaded', () => {
-      const datepicker = document.querySelectorAll('.datepicker');
-      Materialize.Datepicker.init(datepicker, {
-        firstDay: 1
-      });
-    });
-    newTripForm.addEventListener('submit', (event) => this.handleSubmit(event));
   }
 
   handleTripsEvent(event) {
     if (event.target === this.view.newTripBtn) {
-      this.view.modalWindow.classList.toggle('active');
+      let user = sessionStorage.getItem('user');
+
+      if (user) {
+        this.modalWindow = document.getElementById('modal1');
+        this.modal = Materialize.Modal.getInstance(this.modalWindow);
+
+        this.view.fillNewTripModal();
+
+        const datepicker = document.querySelectorAll('.datepicker');
+        Materialize.Datepicker.init(datepicker, {
+          firstDay: 1
+        });
+
+        // this.modal.open();
+        // document.addEventListener('DOMContentLoaded', () => {
+        //   Materialize.updateTextFields();
+        // });
+
+        const form = document.getElementById('new-trip-form');
+        form.addEventListener('submit', (e) => {
+          this.handleSubmit(e);
+        }, { once: true });
+      } else {
+        console.log('you are not signed in')
+      }
     }
     if (event.target === this.view.closeModalBtn) {
       this.view.modalWindow.classList.toggle('active');
@@ -37,13 +51,25 @@ export default class Trips {
     }
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
+
+    const user = JSON.parse(sessionStorage.getItem('user'));
     const tripObject = TripsModel.setNewTrip();
-    TripsModel.setToDatabase(tripObject).then((response) => {
-      console.log('added to database', response);
-    });
+    const response = await TripsModel.setToDatabase(tripObject, user.email);
+
+    console.log('added to database', response);
+
     this.view.setTripCard(tripObject);
     this.view.modalWindow.classList.toggle('active');
+  }
+
+  async showUserTrips() {
+    try {
+      const tripsArray = await TripsModel.getTripsFromDatabase();
+      this.view.renderTripsCards(tripsArray);
+    } catch (error) {
+
+    }
   }
 }

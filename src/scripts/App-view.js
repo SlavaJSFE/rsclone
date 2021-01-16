@@ -25,15 +25,6 @@ export default class TravelPlaningAppView {
     this.appWrapper.appendChild(this.header);
   }
 
-  // createHeaderOptions() {
-  //   const authorization = createDOMElement('div', 'authorization');
-  //   const language = createDOMElement('div', 'language');
-  //   this.options = createDOMElement('div', 'options');
-
-  //   this.options.append(authorization, language);
-  //   this.header.appendChild(this.options);
-  // }
-
   createMain() {
     this.main = createDOMElement('main', 'main');
     this.appWrapper.appendChild(this.main);
@@ -70,12 +61,16 @@ export default class TravelPlaningAppView {
   }
 
   showMap() {
-    const mapImage = createDOMElement('img', 'map-image', '', '', ['src', statement.map]);
+    const mapImage = createDOMElement('img', 'map-image', null, null, ['src', statement.map]);
     this.mainContentSection.appendChild(mapImage);
   }
 
   showNotes() {
-    const notesImage = createDOMElement('img', 'notes-image', '', '', ['src', statement.notes]);
+    const notesImage = createDOMElement('img', 'notes-image', null, null, ['src', statement.notes]);
     this.mainContentSection.appendChild(notesImage);
+  }
+
+  fillModalAuth() {
+    services.fillModal(this.modal);
   }
 }
