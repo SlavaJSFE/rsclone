@@ -321,33 +321,6 @@ btn-primary:hover {
 	background: #555; 
   }
 
-  .form_divChangeLang{
-	display: flex;
-	justify-content: space-between;
-	column-gap: 2rem;
-	margin-top: 1rem;
-  }
-
-  .divChangeLang span{
-	font-size: 1.5rem;
-	font-weight: 600;
-}
-
-  .select-sights{
-	padding: 0.5rem 0.75rem;
-    font-size: 1.5rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-	outline: none;
-	cursor: pointer;
-  }
-
 @media (min-width: 992px){
 .col-lg-7 {
     -ms-flex: 0 0 58.333333%;

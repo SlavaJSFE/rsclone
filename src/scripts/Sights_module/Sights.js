@@ -1,6 +1,7 @@
 import 'regenerator-runtime/runtime';
 import { isoCountries, layer_names } from './constants';
-import { getLang } from './utilsSights';
+import objTranslate from '../Language_module/sightsLang.component';
+import { local } from '../Language_module/languageSwicher'
 
 export default class Sights {
 
@@ -116,7 +117,9 @@ export default class Sights {
 			).then((data) => {
 				let list = document.querySelector("#list");
 				list.innerHTML = "";
-				data.forEach(item => list.appendChild(this.createListItem(item)));
+				data.forEach(item => {
+					list.appendChild(this.createListItem(item))
+				});
 				let nextBtn = document.querySelector("#next_button");
 				if (this.count < this.offset + this.pageLength) {
 					nextBtn.style.visibility = "hidden";
@@ -129,17 +132,11 @@ export default class Sights {
 	}
 
 	createListItem(item) {
-		// console.log(item);
-		// console.log('item');
 		let a = document.createElement("a");
 		a.className = "list-group-item list-group-item-action";
 		a.setAttribute("data-id", item.xid);
-		this.apiGet("xid/" + item.xid).then((data) => {
-			let lang = getLang(data.wikipedia);
-			a.innerHTML = `<h5 class="list-group-item-heading">${item.name}</h5>
-			<p class="list-group-item-text">${this.getCategoryName(item.kinds)}</p>
-			<p class="list-group-item-text-lang">(${lang})</p>`;
-		});
+		a.innerHTML = `<h5 class="list-group-item-heading">${item.name}</h5>
+				<p class="list-group-item-text">${this.getCategoryName(item.kinds)}</p>`;
 
 		a.addEventListener("click", () => {
 			document.querySelectorAll("#list a").forEach((item) => {
@@ -153,13 +150,10 @@ export default class Sights {
 	}
 
 	onShowPOI(data) {
-		console.log(data)
-		console.log(getLang(data.wikipedia));
 		let poi = document.querySelector("#poi");
-		// console.log(poi)
 		poi.innerHTML = "";
 		if (data.preview) {
-			poi.innerHTML += `<img src="${data.preview.source}">`;
+			poi.innerHTML += `<img src = "${data.preview.source}"> `;
 		}
 		poi.innerHTML += data.wikipedia_extracts
 			? data.wikipedia_extracts.html
@@ -167,40 +161,11 @@ export default class Sights {
 				? data.info.descr
 				: "No description";
 
-		poi.innerHTML += `<p><a target="_blank" href="${data.otm}">Show more at OpenTripMap</a></p>`;
+		poi.innerHTML += `<p> <a target="_blank" href="${data.otm}">Show more at OpenTripMap</a></p> `;
 	}
 
 	createSearcher() {
 		const main_content_block = document.querySelector('.main-content-section');
-
-		const selectName = document.createElement("span");
-		selectName.innerHTML = "Choose language of article: ";
-		const options = [];
-		const languages = {
-			all: 'All languages',
-			ru: 'Russian',
-			en: 'English',
-			pl: 'Poland'
-		};
-		let i = 0;
-		const select = document.createElement("select");
-		select.classList.add('select-sights');
-		for (let key in languages) {
-			options[i] = document.createElement("option");
-			options[i].innerHTML = languages[key];
-			options[i].value = key;
-			select.appendChild(options[i]);
-			i++;
-		}
-		options[0].selected = true;
-
-		const form_divChangeLang = document.createElement('div');
-		form_divChangeLang.classList.add('form_divChangeLang');
-
-		const divChangeLang = document.createElement("div");
-		divChangeLang.classList.add("divChangeLang");
-		divChangeLang.appendChild(selectName);
-		divChangeLang.appendChild(select);
 
 		const sights_container = document.createElement('div');
 		sights_container.classList.add('sights-container');
@@ -249,7 +214,7 @@ export default class Sights {
 		const input = document.createElement('input');
 		input.setAttribute('id', 'textbox');
 		input.setAttribute('type', 'search');
-		input.setAttribute('placeholder', 'Choose city for search sights...');
+		input.setAttribute('placeholder', objTranslate.sightsLang['inputPlaceholder_' + local]);
 		input.setAttribute('aria-describedby', 'button-search');
 		input.classList.add('form-control', 'bg-none', 'border-0');
 
@@ -267,13 +232,9 @@ export default class Sights {
 		mainBlockRow.appendChild(mainBlockRow_left);
 		mainBlockRow.appendChild(mainBlockRow_right);
 
-		form_divChangeLang.appendChild(form);
-		form_divChangeLang.appendChild(divChangeLang);
-		sights_container.appendChild(form_divChangeLang);
+		sights_container.appendChild(form);
 		sights_container.appendChild(info);
 		sights_container.appendChild(mainBlockRow);
-
-
 
 		main_content_block.appendChild(sights_container);
 	}
@@ -289,7 +250,7 @@ export default class Sights {
 				this.lat = data.lat;
 				this.firstLoad();
 			}
-			document.querySelector("#info").innerHTML = `<p>${message}</p>`;
+			document.querySelector("#info").innerHTML = `<p> ${message}</p > `;
 			document.querySelector('#info').classList.add('alert-primary');
 
 		});
