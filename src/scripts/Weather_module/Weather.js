@@ -4,7 +4,7 @@ import createDOMElement from '../services/createDOMElement';
 export default class Weather {
   constructor() {}
 
-  createWeatherCard = () => {
+  createSearchByCity = () => {
     const container = document.querySelector('.container');
 
     const title = createDOMElement('h1', 'text-center weather-title', 'Weather in');
@@ -21,51 +21,7 @@ export default class Weather {
       ),
     ]);
 
-    const cardBack = createDOMElement('div', 'card rounded my-3 shadow-lg back-card', [
-      createDOMElement('div', 'card-top text-center', [
-        createDOMElement('div', 'city-name my-3', [
-          createDOMElement('p', null, 'Abuja'),
-          createDOMElement('span', null, '...'),
-        ]),
-        createDOMElement('img', 'card-img-top time', null, null, [
-          'src',
-          './assets/night_image.svg',
-        ]),
-      ]),
-    ]);
-
-    createDOMElement(
-      'div',
-      'card-body',
-      [
-        createDOMElement('div', 'card-mid row', [
-          createDOMElement('div', 'col-8 text-center temp', [
-            createDOMElement('span', null, '30&deg;C'),
-          ]),
-          createDOMElement('div', 'col-4 condition-temp', [
-            createDOMElement('p', 'condition', 'Thunder Storm'),
-            createDOMElement('p', 'high', '30&deg;C'),
-            createDOMElement('p', 'low', '30&deg;C'),
-          ]),
-        ]),
-        createDOMElement('div', 'icon-container card shadow mx-auto', [
-          createDOMElement('img', null, null, null, ['src', './assets/cloud.svg']),
-        ]),
-        createDOMElement('div', 'card-bottom px-5 py-5 row', [
-          createDOMElement('div', 'col text-center', [
-            createDOMElement('p', null, '30&deg;C'),
-            createDOMElement('span', null, 'Feels Like'),
-          ]),
-          createDOMElement('div', 'col text-center', [
-            createDOMElement('p', null, '55%'),
-            createDOMElement('span', 'humidity', 'Humidity'),
-          ]),
-        ]),
-      ],
-      cardBack
-    );
-
-    container.append(title, input, cardBack);
+    container.append(title, input);
     this.setListeners();
   };
 
@@ -80,9 +36,15 @@ export default class Weather {
   };
 
   handleRequest = (event) => {
+    const container = document.querySelector('.container');
     const searchFrom = document.querySelector('.search-location');
     const cityValue = document.querySelector('.search-location input');
+    const card = document.querySelector('.card');
     event.preventDefault();
+
+    if (card) {
+      card.remove(container);
+    }
 
     const cityName = cityValue.value.trim().toLowerCase();
     console.log(cityName);
@@ -90,21 +52,77 @@ export default class Weather {
 
     getWeatherData(cityName)
       .then((data) => {
-        this.updateWeatherApp(data);
+        this.createWeatherApp(data);
       })
       .catch((err) => console.log(err));
   };
 
-  updateWeatherApp = (city) => {
-    console.log(city);
+  isDayTime = (icon) => {
+    if (icon.includes('d')) {
+      return true;
+    } else {
+      return false;
+    }
   };
-  // handleApi() {
-  //   const city = 'Minsk';
-  //   console.log('test');
-  //   getWeatherData(city)
-  //     .then((data) => {
-  //       console.log(data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
+
+  createWeatherApp = (city) => {
+    console.log(city);
+    const container = document.querySelector('.container');
+    const imageName = city.weather[0].icon;
+    const iconSrc = `http://openweathermap.org/img/wn/${imageName}@2x.png`;
+
+    let cardImg = 'night_image.svg';
+    let isNight = true;
+
+    if (this.isDayTime(imageName)) {
+      cardImg = 'day_image.svg';
+      isNight = false;
+    }
+
+    const cardBack = createDOMElement(
+      'div',
+      'card rounded my-3 shadow-lg back-card',
+      [
+        createDOMElement('div', 'card-top text-center', [
+          createDOMElement('div', 'city-name my-3', [
+            createDOMElement('p', null, `${city.name}`, null, ['data-night', `${isNight}`]),
+            createDOMElement('span', null, '...'),
+          ]),
+          createDOMElement('img', 'card-img-top time', null, null, ['src', `./assets/${cardImg}`]),
+        ]),
+      ],
+      container
+    );
+
+    createDOMElement(
+      'div',
+      'card-body',
+      [
+        createDOMElement('div', 'card-mid row', [
+          createDOMElement('div', 'col-8 text-center temp', [
+            createDOMElement('span', null, `${this.transferToCelcius(city.main.temp)} &deg;C`),
+          ]),
+          createDOMElement('div', 'col-4 condition-temp', [
+            createDOMElement('p', 'condition', `${city.weather[0].description}`),
+            createDOMElement('p', 'high', `${this.transferToCelcius(city.main.temp_max)} &deg;C`),
+            createDOMElement('p', 'low', `${this.transferToCelcius(city.main.temp_min)} &deg;C`),
+          ]),
+        ]),
+        createDOMElement('div', 'icon-container card shadow mx-auto', [
+          createDOMElement('img', null, null, null, ['src', `${iconSrc}`]),
+        ]),
+        createDOMElement('div', 'card-bottom px-5 py-5 row', [
+          createDOMElement('div', 'col text-center', [
+            createDOMElement('p', null, `${this.transferToCelcius(city.main.feels_like)} &deg;C`),
+            createDOMElement('span', null, 'Feels Like'),
+          ]),
+          createDOMElement('div', 'col text-center', [
+            createDOMElement('p', null, `${city.main.humidity} %`),
+            createDOMElement('span', 'humidity', 'Humidity'),
+          ]),
+        ]),
+      ],
+      cardBack
+    );
+  };
 }

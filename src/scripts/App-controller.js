@@ -23,7 +23,7 @@ export default class TravelPlaningApp {
     // this.addAppEventListener();
 
     const weather = new Weather();
-    weather.createWeatherCard();
+    weather.createSearchByCity();
   }
 
   static addAppEventListener() {
