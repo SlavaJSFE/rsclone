@@ -97,7 +97,7 @@ const services = {
   fillModalRemoveTrip(modal) {
     const modalWindow = modal;
 
-    const modalContent = `<div class="modal-content">
+    const modalContent = `<div class="modal-content" id="remove-trip-modal">
                             <h4>Are you sure you want remove this trip?</h4>
                             <p>If you remove the trip, all settings will be permanently deleted!</p>
                             <i class="material-icons close" id="close-modal-btn">close</i>

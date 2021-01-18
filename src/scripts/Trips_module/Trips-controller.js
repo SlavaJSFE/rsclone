@@ -65,18 +65,20 @@ export default class Trips {
     const tripObject = TripsModel.setNewTrip();
     await TripsModel.setToDatabase(tripObject, user.email);
 
-    this.view.setTripCard(tripObject);
     this.modal.close();
+    this.view.setTripCard(tripObject);
   }
 
   async showUserTrips() {
     try {
       const tripsArray = await TripsModel.getTripsFromDatabase();
       this.view.renderTripsCards(tripsArray);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  async handleTripDetailsEvent(event, tripDetailsContainer) {
+  handleTripDetailsEvent(event, tripDetailsContainer) {
     // ! make separate function for modal activation to avoid code duplicate
     this.modalWindow = document.getElementById('modal1');
     this.modal = Materialize.Modal.getInstance(this.modalWindow);
@@ -92,8 +94,10 @@ export default class Trips {
       this.modal.open();
       this.addListenerToCloseBtn();
 
-      // await TripsModel.removeTripFromDatabase(tripDetailsContainer.id);
-      // this.showUserTrips();
+      const removeModal = document.getElementById('remove-trip-modal');
+      removeModal.addEventListener('click', (e) => {
+        this.handleTripRemoveModalEvent(e, tripDetailsContainer.id);
+      });
     }
 
     if (event.target === addDestinationBtn) {
@@ -116,6 +120,21 @@ export default class Trips {
 
     if (event.target === weather) {
       console.log('weather')
+    }
+  }
+
+  async handleTripRemoveModalEvent(event, tripId) {
+    const cancelBtn = document.getElementById('cancel-remove-trip');
+    const removeBtn = document.getElementById('remove-trip-permanently');
+
+    if (event.target === cancelBtn) {
+      this.modal.close();
+    }
+    if (event.target === removeBtn) {
+      await TripsModel.removeTripFromDatabase(tripId);
+      this.view.mainContentSection.innerHTML = '';
+      this.init();
+      this.modal.close();
     }
   }
 

@@ -15,7 +15,6 @@ export default class TripsView {
     this.newTripBtn = services.createNewTripBtn();
 
     this.myTripsContainer.append(this.newTripBtn);
-
     this.mainContentSection.appendChild(this.myTripsContainer);
   }
 
