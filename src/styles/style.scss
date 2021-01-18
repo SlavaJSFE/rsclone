@@ -1,7 +1,7 @@
 @import "currency.scss";
 @import "clock.scss";
 @import 'my-trips.scss';
-// @import "sights.scss";
+@import "sights.scss";
 
 $main-color: white;
 
@@ -37,6 +37,9 @@ $main-color: white;
   }
   .close:hover {
     cursor: pointer;
+  }
+  select {
+    display: block;
   }
 }
 .header-links {
