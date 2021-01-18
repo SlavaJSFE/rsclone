@@ -1,5 +1,7 @@
 import 'regenerator-runtime/runtime';
 import { isoCountries, layer_names } from './constants';
+import objTranslate from '../Language_module/sightsLang.component';
+import { local } from '../Language_module/languageSwicher'
 
 export default class Sights {
 
@@ -115,7 +117,9 @@ export default class Sights {
 			).then((data) => {
 				let list = document.querySelector("#list");
 				list.innerHTML = "";
-				data.forEach(item => list.appendChild(this.createListItem(item)));
+				data.forEach(item => {
+					list.appendChild(this.createListItem(item))
+				});
 				let nextBtn = document.querySelector("#next_button");
 				if (this.count < this.offset + this.pageLength) {
 					nextBtn.style.visibility = "hidden";
@@ -146,12 +150,10 @@ export default class Sights {
 	}
 
 	onShowPOI(data) {
-		// console.log(data)
 		let poi = document.querySelector("#poi");
-		// console.log(poi)
 		poi.innerHTML = "";
 		if (data.preview) {
-			poi.innerHTML += `<img src="${data.preview.source}">`;
+			poi.innerHTML += `<img src = "${data.preview.source}"> `;
 		}
 		poi.innerHTML += data.wikipedia_extracts
 			? data.wikipedia_extracts.html
@@ -159,11 +161,14 @@ export default class Sights {
 				? data.info.descr
 				: "No description";
 
-		poi.innerHTML += `<p><a target="_blank" href="${data.otm}">Show more at OpenTripMap</a></p>`;
+		poi.innerHTML += `<p> <a target="_blank" href="${data.otm}">Show more at OpenTripMap</a></p> `;
 	}
 
 	createSearcher() {
 		const main_content_block = document.querySelector('.main-content-section');
+
+		const sights_container = document.createElement('div');
+		sights_container.classList.add('sights-container');
 
 		const form = document.createElement('form');
 		form.setAttribute('id', 'search_form');
@@ -209,7 +214,7 @@ export default class Sights {
 		const input = document.createElement('input');
 		input.setAttribute('id', 'textbox');
 		input.setAttribute('type', 'search');
-		input.setAttribute('placeholder', 'Choose city for search sights...');
+		input.setAttribute('placeholder', objTranslate.sightsLang['inputPlaceholder_' + local]);
 		input.setAttribute('aria-describedby', 'button-search');
 		input.classList.add('form-control', 'bg-none', 'border-0');
 
@@ -227,9 +232,11 @@ export default class Sights {
 		mainBlockRow.appendChild(mainBlockRow_left);
 		mainBlockRow.appendChild(mainBlockRow_right);
 
-		main_content_block.appendChild(form);
-		main_content_block.appendChild(info);
-		main_content_block.appendChild(mainBlockRow);
+		sights_container.appendChild(form);
+		sights_container.appendChild(info);
+		sights_container.appendChild(mainBlockRow);
+
+		main_content_block.appendChild(sights_container);
 	}
 
 	search() {
@@ -243,7 +250,7 @@ export default class Sights {
 				this.lat = data.lat;
 				this.firstLoad();
 			}
-			document.querySelector("#info").innerHTML = `<p>${message}</p>`;
+			document.querySelector("#info").innerHTML = `<p> ${message}</p > `;
 			document.querySelector('#info').classList.add('alert-primary');
 
 		});
