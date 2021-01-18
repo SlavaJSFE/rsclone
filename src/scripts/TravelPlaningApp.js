@@ -1,6 +1,7 @@
 import TravelPlaningAppView from './TravelPlanningApp-view.js';
 import Currency from '../scripts/Currency_module/Currency';
 import Clock from '../scripts/Clock_module/Clock';
+import Notes from '../scripts/notes_module/Notes';
 
 export default class TravelPlaningApp {
   static init() {
@@ -15,5 +16,9 @@ export default class TravelPlaningApp {
 
     const currency = new Currency();
     currency.handleMethods();
+
+    const notes = new Notes();
+    notes.createNotes();
+
   }
 }
