@@ -16,24 +16,9 @@ export default class AppModel {
     return data.idToken;
   }
 
-  static setUserToSessionStorage(email, token) {
+  static setUserToSessionStorage(email) {
     sessionStorage.setItem('user', JSON.stringify({
-      email,
-      token
+      email
     }));
   }
-
-  // static async getTripsFromDatabase(email, token) {
-  //   const userName = email.split('@')[0];
-  //   let response = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}.json?auth=${token}`);
-  //   let data = await response.json();
-  //   if (data && data.error) {
-  //     return `<p class="error">${response.error}</p>`;
-  //   }
-
-  //   return data ? Object.keys(data).map((key) => ({
-  //     ...data[key],
-  //     id: key
-  //   })) : [];
-  // }
 }

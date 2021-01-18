@@ -23,6 +23,7 @@ export default class TravelPlaningApp {
 
     this.tripsComponent = new Trips();
     this.tripsComponent.init();
+    // this.fillMainContentSection('home');
 
     this.addAppEventListener();
   }
@@ -51,10 +52,16 @@ export default class TravelPlaningApp {
     if (target === authorization) {
       this.view.fillModalAuth();
       this.modal.open();
+
       const form = document.getElementById('auth-form');
       form.addEventListener('submit', (event) => {
         this.handleAuth(event);
-      }, { once: true });
+      });
+
+      const closeModalBtn = document.getElementById('close-modal-btn');
+      closeModalBtn.addEventListener('click', () => {
+        this.modal.close();
+      });
     }
   }
 
@@ -67,7 +74,7 @@ export default class TravelPlaningApp {
     let token = await this.model.authWithEmailAndPassword(email, password);
 
     if (token) {
-      this.model.setUserToSessionStorage(email, token);
+      this.model.setUserToSessionStorage(email);
       this.modal.close();
       this.modalWindow.innerHTML = '';
 
@@ -76,6 +83,9 @@ export default class TravelPlaningApp {
   }
 
   static fillMainContentSection(currentItem) {
+    if (currentItem === 'home') {
+      this.view.mainContentSection.innerHTML = '<h3>Start Page</h3>';
+    }
     if (currentItem === 'my-trips') {
       this.view.mainContentSection.innerHTML = '';
       const tripsComponent = new Trips();
@@ -89,7 +99,7 @@ export default class TravelPlaningApp {
       this.view.mainContentSection.innerHTML = '';
       this.view.showNotes();
     }
-    if (currentItem === 'attractions') {
+    if (currentItem === 'sights') {
       const sights = new Sights();
       this.view.mainContentSection.innerHTML = '';
       sights.createSearcher();

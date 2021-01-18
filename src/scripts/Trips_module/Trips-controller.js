@@ -14,40 +14,47 @@ export default class Trips {
     this.view.myTripsContainer.addEventListener('click', (event) => this.handleTripsEvent(event));
   }
 
-  handleTripsEvent(event) {
+  async handleTripsEvent(event) {
+    this.modalWindow = document.getElementById('modal1');
+    this.modal = Materialize.Modal.getInstance(this.modalWindow);
+
     if (event.target === this.view.newTripBtn) {
       let user = sessionStorage.getItem('user');
 
       if (user) {
-        this.modalWindow = document.getElementById('modal1');
-        this.modal = Materialize.Modal.getInstance(this.modalWindow);
-
         this.view.fillNewTripModal();
 
         const datepicker = document.querySelectorAll('.datepicker');
         Materialize.Datepicker.init(datepicker, {
-          firstDay: 1
+          firstDay: 1,
+          format: 'dd.mm.yyyy'
         });
 
-        // this.modal.open();
-        // document.addEventListener('DOMContentLoaded', () => {
-        //   Materialize.updateTextFields();
-        // });
+        this.modal.open();
 
         const form = document.getElementById('new-trip-form');
         form.addEventListener('submit', (e) => {
           this.handleSubmit(e);
-        }, { once: true });
+        });
       } else {
-        console.log('you are not signed in')
+        this.view.fillNotAuthModal();
+        this.modal.open();
       }
+
+      this.addListenerToCloseBtn();
     }
-    if (event.target === this.view.closeModalBtn) {
-      this.view.modalWindow.classList.toggle('active');
-    }
-    if (event.target.className && event.target.className.includes('trip-card-container')) {
-      const currentTrip = event.target.className.split(' ')[1];
-      this.view.showTrip(currentTrip);
+
+    if (event.target.className && event.target.className.includes('trip-details-link')) {
+      event.preventDefault();
+      const id = event.target.id;
+      const tripDetails = await TripsModel.getTripById(id);
+
+      this.view.showTrip(tripDetails);
+
+      const tripDetailsContainer = document.querySelector('.trip-details');
+      tripDetailsContainer.addEventListener('click', (e) => {
+        this.handleTripDetailsEvent(e, tripDetailsContainer);
+      });
     }
   }
 
@@ -56,20 +63,66 @@ export default class Trips {
 
     const user = JSON.parse(sessionStorage.getItem('user'));
     const tripObject = TripsModel.setNewTrip();
-    const response = await TripsModel.setToDatabase(tripObject, user.email);
-
-    console.log('added to database', response);
+    await TripsModel.setToDatabase(tripObject, user.email);
 
     this.view.setTripCard(tripObject);
-    this.view.modalWindow.classList.toggle('active');
+    this.modal.close();
   }
 
   async showUserTrips() {
     try {
       const tripsArray = await TripsModel.getTripsFromDatabase();
       this.view.renderTripsCards(tripsArray);
-    } catch (error) {
+    } catch (error) {}
+  }
 
+  async handleTripDetailsEvent(event, tripDetailsContainer) {
+    // ! make separate function for modal activation to avoid code duplicate
+    this.modalWindow = document.getElementById('modal1');
+    this.modal = Materialize.Modal.getInstance(this.modalWindow);
+    const removeTripBtn = document.getElementById('remove-trip');
+    const addDestinationBtn = document.getElementById('add-destination');
+    const map = tripDetailsContainer.querySelector('.map');
+    const sights = tripDetailsContainer.querySelector('.sights');
+    const notes = tripDetailsContainer.querySelector('.notes');
+    const weather = tripDetailsContainer.querySelector('.weather');
+
+    if (event.target === removeTripBtn) {
+      this.view.fillRemoveTripModal();
+      this.modal.open();
+      this.addListenerToCloseBtn();
+
+      // await TripsModel.removeTripFromDatabase(tripDetailsContainer.id);
+      // this.showUserTrips();
     }
+
+    if (event.target === addDestinationBtn) {
+      this.view.fillAddDestinationModal();
+      this.modal.open();
+      this.addListenerToCloseBtn();
+    }
+
+    if (event.target === map) {
+      console.log('map')
+    }
+
+    if (event.target === sights) {
+      console.log('sights')
+    }
+
+    if (event.target === notes) {
+      console.log('notes')
+    }
+
+    if (event.target === weather) {
+      console.log('weather')
+    }
+  }
+
+  addListenerToCloseBtn() {
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    closeModalBtn.addEventListener('click', () => {
+      this.modal.close();
+    });
   }
 }

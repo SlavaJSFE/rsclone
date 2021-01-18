@@ -22,6 +22,7 @@ export default class TravelPlaningAppView {
     this.modal = services.createModal();
 
     this.header.append(this.links, this.modal);
+
     this.appWrapper.appendChild(this.header);
   }
 

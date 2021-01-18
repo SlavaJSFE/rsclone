@@ -30,34 +30,39 @@ const services = {
 
   fillModal(modal) {
     const modalWindow = modal;
-    const modalContent = createDOMElement('div', 'modal-content');
-    createDOMElement('h4', null, 'Authentication', modalContent);
 
-    const form = createDOMElement('form', null, null, modalContent, ['id', 'auth-form']);
+    const modalContent = `<div class="modal-content">
+                            <i class="material-icons close" id="close-modal-btn">close</i>
+                            <h4>Authentication</h4>
+                            <form id="auth-form">
+                              <div class="input-field">
+                                <input id="email" class="validate" type="email" required>
+                                <label for="email">Email</label>
+                              </div>
+                              <div class="input-field">
+                                <input id="password" class="validate" type="password" required>
+                                <label for="password">Password</label>
+                              </div>
+                              <button id="auth-btn" class="btn waves-effect waves-light" type="submit">
+                                Enter
+                                <i class="material-icons right">send</i>
+                              </button>
+                            </form>
+                          </div>`;
 
-    const inputEmail = createDOMElement('div', 'input-field', null, form);
-    createDOMElement('input', 'validate', null, inputEmail, ['type', 'email'], ['id', 'email']);
-    createDOMElement('label', null, 'Email', inputEmail, ['for', 'email']);
-
-    const inputPassword = createDOMElement('div', 'input-field', null, form);
-    createDOMElement('input', 'validate', null, inputPassword, ['type', 'email'], ['id', 'password']);
-    createDOMElement('label', null, 'Password', inputPassword, ['for', 'password']);
-
-    createDOMElement('button', 'btn waves-effect waves-light', 'Enter', form, ['type', 'submit']);
-
-    modalWindow.innerHTML = '';
-    modalWindow.appendChild(modalContent);
+    modalWindow.innerHTML = modalContent;
   },
 
   createNavigation() {
     const navigation = createDOMElement('nav', 'nav');
 
-    const menuItem1 = createDOMElement('div', 'nav-item my-trips', 'My Trips');
-    const menuItem2 = createDOMElement('div', 'nav-item map', 'Map');
-    const menuItem3 = createDOMElement('div', 'nav-item notes', 'Notes');
-    const menuItem4 = createDOMElement('div', 'nav-item attractions', 'Attractions');
+    const menuItem1 = createDOMElement('div', 'nav-item home', 'Main');
+    const menuItem2 = createDOMElement('div', 'nav-item my-trips', 'My Trips');
+    const menuItem3 = createDOMElement('div', 'nav-item map', 'Map');
+    const menuItem4 = createDOMElement('div', 'nav-item notes', 'Notes');
+    const menuItem5 = createDOMElement('div', 'nav-item sights', 'Sights');
 
-    navigation.append(menuItem1, menuItem2, menuItem3, menuItem4);
+    navigation.append(menuItem1, menuItem2, menuItem3, menuItem4, menuItem5);
 
     return navigation;
   },
