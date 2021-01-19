@@ -6,6 +6,7 @@ import Clock from './Clock_module/Clock';
 import Trips from './Trips_module/Trips-controller.js';
 import Sights from './Sights_module/Sights.js';
 import './Sights_module/EventsSights';
+import Map from '../scripts/Map_module/Map';
 
 export default class TravelPlaningApp {
   static init() {
@@ -25,6 +26,10 @@ export default class TravelPlaningApp {
     this.tripsComponent = new Trips();
     this.tripsComponent.init();
     // this.fillMainContentSection('home');
+
+    // const map = new Map();
+    // // map.initMap();
+    // map.handleApi('london');
 
     this.addAppEventListener();
   }
