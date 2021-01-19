@@ -113,5 +113,9 @@ export default class TravelPlaningApp {
       this.view.mainContentSection.innerHTML = '';
       sights.createSearcher();
     }
+    if (currentItem === 'todo') {
+      this.view.mainContentSection.innerHTML = '';
+      this.view.showTODOList();
+    }
   }
 }

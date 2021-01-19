@@ -2,6 +2,7 @@ import services from './services/viewServices.js';
 import createDOMElement from './services/createDOMElement.js';
 import statement from './constants/TravelPlaningApp-constants.js';
 import Map from '../scripts/Map_module/Map';
+import TODO from './TODO_module/TODO';
 
 export default class TravelPlaningAppView {
   constructor(model) {
@@ -86,5 +87,11 @@ export default class TravelPlaningAppView {
 
   fillModalAuth() {
     services.fillModal(this.modal);
+  }
+
+  showTODOList() {
+    createDOMElement('div', 'todo-container', null, this.mainContentSection);
+    const todo = new TODO();
+    todo.createTODOElements();
   }
 }
