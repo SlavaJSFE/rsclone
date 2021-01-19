@@ -1,6 +1,7 @@
 @import "currency.scss";
 @import "clock.scss";
-@import 'my-trips.scss';
+@import "map.scss";
+@import "my-trips.scss";
 @import "sights.scss";
 
 $main-color: white;
@@ -25,7 +26,7 @@ $main-color: white;
     height: 400px;
     padding: 15px;
   }
-  .datepicker-modal{
+  .datepicker-modal {
     top: 3% !important;
     height: auto;
     width: auto;
@@ -107,5 +108,5 @@ $main-color: white;
   background-color: #ffab00;
 }
 .btn:hover {
-  background-color:#ff6d00;
+  background-color: #ff6d00;
 }
