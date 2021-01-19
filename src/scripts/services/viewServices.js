@@ -17,10 +17,10 @@ const services = {
   createHeaderLinks() {
     const linksContainer = createDOMElement('div', 'header-links');
 
-    const authorization = createDOMElement('div', 'authorization btn black', 'Sing in', linksContainer);
+    const authorization = createDOMElement('div', 'authorization btn', 'Sing in', linksContainer);
     createDOMElement('i', 'material-icons left', 'fingerprint', authorization);
 
-    const language = createDOMElement('div', 'language btn black', null, linksContainer);
+    const language = createDOMElement('div', 'language btn', null, linksContainer);
     // createDOMElement('i', 'material-icons left', 'language', language);
     const langSwitcher = document.createElement('select');
     langSwitcher.setAttribute('name', '');
@@ -87,11 +87,25 @@ const services = {
   createNavigation() {
     const navigation = createDOMElement('nav', 'nav');
 
-    const menuItem1 = createDOMElement('div', 'nav-item home', objTranslate.commonLang['main_' + local]);
-    const menuItem2 = createDOMElement('div', 'nav-item my-trips', objTranslate.commonLang['myTrips_' + local]);
-    const menuItem3 = createDOMElement('div', 'nav-item map', objTranslate.commonLang['map_' + local]);
-    const menuItem4 = createDOMElement('div', 'nav-item notes', objTranslate.commonLang['notes_' + local]);
-    const menuItem5 = createDOMElement('div', 'nav-item sights', objTranslate.commonLang['sights_' + local]);
+    const menuItem1 = createDOMElement('div', 'nav-item-block');
+    createDOMElement('i', 'material-icons', 'home', menuItem1);
+    createDOMElement('div', 'nav-item home', objTranslate.commonLang['main_' + local], menuItem1);
+
+    const menuItem2 = createDOMElement('div', 'nav-item-block');
+    createDOMElement('i', 'material-icons', 'airport_shuttle', menuItem2);
+    createDOMElement('div', 'nav-item my-trips', objTranslate.commonLang['myTrips_' + local], menuItem2);
+
+    const menuItem3 = createDOMElement('div', 'nav-item-block');
+    createDOMElement('i', 'material-icons', 'place', menuItem3);
+    createDOMElement('div', 'nav-item map', objTranslate.commonLang['map_' + local], menuItem3);
+
+    const menuItem4 = createDOMElement('div', 'nav-item-block');
+    createDOMElement('i', 'material-icons', 'notes', menuItem4);
+    createDOMElement('div', 'nav-item notes', objTranslate.commonLang['notes_' + local], menuItem4);
+
+    const menuItem5 = createDOMElement('div', 'nav-item-block');
+    createDOMElement('i', 'material-icons', 'account_balance', menuItem5);
+    createDOMElement('div', 'nav-item sights', objTranslate.commonLang['sights_' + local], menuItem5);
 
     navigation.append(menuItem1, menuItem2, menuItem3, menuItem4, menuItem5);
 

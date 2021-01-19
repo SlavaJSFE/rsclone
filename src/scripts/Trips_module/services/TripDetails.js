@@ -14,12 +14,17 @@ export default class TripDetails {
     createDOMElement('div', 'trip-title', this.trip.tripName, tripContainer);
     createDOMElement('div', 'trip-destination', this.trip.tripRoute[0], tripContainer);
     createDOMElement('div', 'trip-date', `Trip date: ${this.trip.startDate} - ${this.trip.endDate}`, tripContainer);
-    createDOMElement('div', 'trip-icon map', 'Map', tripContainer);
-    createDOMElement('div', 'trip-icon sights', 'Sights', tripContainer);
-    createDOMElement('div', 'trip-icon notes', 'Notes', tripContainer); 
-    createDOMElement('div', 'trip-icon weather', 'Weather', tripContainer);
+    const map = createDOMElement('div', 'trip-icon map', 'Map', tripContainer);
+    createDOMElement('img', null, null, map, ['src', './assets/images/icons/map.svg']);
+    const sights = createDOMElement('div', 'trip-icon sights', 'Sights', tripContainer);
+    createDOMElement('img', null, null, sights, ['src', './assets/images/icons/cathedral.svg']);
+    const notes = createDOMElement('div', 'trip-icon notes', 'Notes', tripContainer);
+    createDOMElement('img', null, null, notes, ['src', './assets/images/icons/test.svg']);
+    const weather = createDOMElement('div', 'trip-icon weather', 'Weather', tripContainer);
+    createDOMElement('img', null, null, weather, ['src', './assets/images/icons/cloudy.svg']);
     createDOMElement('div', 'trip-icon about-place', `About ${this.trip.tripRoute[0]}`, tripContainer);
-    createDOMElement('div', 'trip-icon important', 'Important', tripContainer);
+    const important = createDOMElement('div', 'trip-icon important', 'Important', tripContainer);
+    createDOMElement('img', null, null, important, ['src', './assets/images/icons/school.svg']);
 
     const pagination = createDOMElement('ul', 'pagination', null, tripContainer);
     const paginationContent = `<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>

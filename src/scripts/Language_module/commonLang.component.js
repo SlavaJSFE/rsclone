@@ -60,7 +60,7 @@ const commonLang = {
   notes_zh: '筆記',
 
   sights_en: 'Sights',
-  sights_ru: 'Достопримечательности',
+  sights_ru: '<p style="line-height: 1.5rem">Достоприме-<br>чательности</p>',
   sights_pl: 'Atrakcje',
   sights_de: 'Sehenswürdigkeiten',
   sights_zh: '旅遊景點'

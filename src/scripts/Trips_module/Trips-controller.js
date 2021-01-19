@@ -145,3 +145,6 @@ export default class Trips {
     });
   }
 }
+
+// OpenTripMap apiKey:
+// 5ae2e3f221c38a28845f05b6d6abeebb861dd05be680cb6c5c452fa0
