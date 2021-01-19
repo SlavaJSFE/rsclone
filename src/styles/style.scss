@@ -1,5 +1,6 @@
 @import "currency.scss";
 @import "clock.scss";
+@import "map.scss";
 @import "my-trips.scss";
 @import "sights.scss";
 @import "TODO.scss";
@@ -22,21 +23,50 @@ $main-color: white;
   display: flex;
   justify-content: space-between;
   padding: 0 10px;
+
+  .modal {
+    max-width: 560px;
+    height: 400px;
+    padding: 15px;
+  }
+  .datepicker-modal {
+    top: 3% !important;
+    height: auto;
+    width: auto;
+  }
+  .close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+  }
+  .close:hover {
+    cursor: pointer;
+  }
+  select {
+    display: block;
+  }
 }
-.options {
+.header-links {
   display: flex;
+  margin: auto 0;
+
+  i {
+    font-size: 30px;
+    margin-right: 5px;
+  }
 }
 .main {
   display: grid;
   grid-template-columns: 15% 63% 22%;
   grid-template-rows: 100%;
   background-color: yellowgreen;
-  min-height: 80vh;
+  height: 80vh;
 }
 .nav {
   background-color: hotpink;
   text-align: center;
   padding-top: 30px;
+  height: 100%;
 }
 .nav-item {
   margin: 10px auto 0 auto;
@@ -75,4 +105,11 @@ $main-color: white;
 }
 .rss-logo {
   height: 22px;
+}
+.btn {
+  border-radius: 20px;
+  background-color: #ffab00;
+}
+.btn:hover {
+  background-color: #ff6d00;
 }

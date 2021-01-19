@@ -1,47 +1,55 @@
 import createDOMElement from '../services/createDOMElement.js';
-import TripCard from './TripCard.js';
-import TripDetails from './TripDetails.js';
+import createTripCard from './services/createTripCard.js';
+import TripDetails from './services/TripDetails.js';
+import services from './services/tripsViewServices.js';
 
 export default class TripsView {
   constructor() {
     this.mainContentSection = document.querySelector('.main-content-section');
+    this.modal = document.getElementById('modal1');
     this.init();
   }
 
   init() {
     this.myTripsContainer = createDOMElement('div', 'trips-container');
-    this.newTripBtn = createDOMElement('button', 'new-trip-btn', 'New Trip');
-    this.modalWindow = this.createTripsModalWindow();
+    this.newTripBtn = services.createNewTripBtn();
 
-    this.myTripsContainer.append(this.newTripBtn, this.modalWindow);
-
+    this.myTripsContainer.append(this.newTripBtn);
     this.mainContentSection.appendChild(this.myTripsContainer);
-
   }
 
-  createTripsModalWindow() {
-    const modalWindow = createDOMElement('div', 'trips-modal');
-    this.closeSpan = createDOMElement('span', 'trip-modal-close');
-    this.closeCircle = createDOMElement('div', 'trip-close-circle', this.closeSpan);
-    const input = `<div class="select">
-                      <p>Enter destination</p>
-                      <input class="destination-input" type="text" name="destination" value=""><br>
-                      <button class="submit-btn">Submit</button>
-                    </div>`;
-
-    modalWindow.innerHTML = input;
-    modalWindow.prepend(this.closeCircle);
-    return modalWindow;
+  renderTripsCards(userTripsArray) {
+    const trips = userTripsArray;
+    trips.forEach((trip) => {
+      const tripCard = createTripCard(trip);
+      this.myTripsContainer.appendChild(tripCard);
+    });
   }
 
-  showTrip(id) {
+  fillNewTripModal() {
+    services.fillModalNewTrip(this.modal);
+  }
+
+  fillNotAuthModal() {
+    services.fillModalNotAuthorized(this.modal);
+  }
+
+  fillAddDestinationModal() {
+    services.fillModalAddDestination(this.modal);
+  }
+
+  fillRemoveTripModal() {
+    services.fillModalRemoveTrip(this.modal);
+  }
+
+  showTrip(tripObject) {
     this.mainContentSection.innerHTML = '';
-    const trip = new TripDetails(id);
+    const trip = new TripDetails(tripObject);
     this.mainContentSection.appendChild(trip);
   }
 
-  createTripCard(destination) {
-    const tripCard = new TripCard(destination);
+  setTripCard(tripObject) {
+    const tripCard = createTripCard(tripObject);
     this.myTripsContainer.appendChild(tripCard);
   }
 }

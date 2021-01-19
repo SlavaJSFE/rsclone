@@ -1,6 +1,7 @@
 import services from './services/viewServices.js';
 import createDOMElement from './services/createDOMElement.js';
 import statement from './constants/TravelPlaningApp-constants.js';
+import Map from '../scripts/Map_module/Map';
 
 export default class TravelPlaningAppView {
   constructor(model) {
@@ -18,18 +19,12 @@ export default class TravelPlaningAppView {
 
   createHeader() {
     this.header = services.createHeader();
+    this.links = services.createHeaderLinks();
+    this.modal = services.createModal();
+
+    this.header.append(this.links, this.modal);
+
     this.appWrapper.appendChild(this.header);
-
-    this.createHeaderOptions();
-  }
-
-  createHeaderOptions() {
-    const authorization = createDOMElement('div', 'authorization');
-    const language = createDOMElement('div', 'language');
-    this.options = createDOMElement('div', 'options');
-
-    this.options.append(authorization, language);
-    this.header.appendChild(this.options);
   }
 
   createMain() {
@@ -56,10 +51,9 @@ export default class TravelPlaningAppView {
     this.main.appendChild(this.sideBar);
 
     const clockWidget = createDOMElement('div', 'clock');
-    const mapWidget = createDOMElement('div', 'map');
     const currencyWidget = createDOMElement('div', 'currency');
 
-    this.sideBar.append(clockWidget, mapWidget, currencyWidget);
+    this.sideBar.append(clockWidget, currencyWidget);
   }
 
   createFooter() {
@@ -68,12 +62,29 @@ export default class TravelPlaningAppView {
   }
 
   showMap() {
-    const mapImage = createDOMElement('img', 'map-image', '', '', ['src', statement.map]);
-    this.mainContentSection.appendChild(mapImage);
+    const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
+    const content = createDOMElement('div', 'content');
+    const legend = createDOMElement(
+      'div',
+      'legend',
+      [createDOMElement('h3', null, 'Legend')],
+      null,
+      ['id', 'legend']
+    );
+    const searchContainer = createDOMElement('div', 'search-container');
+    this.mainContentSection.append(mapWidget, content, legend, searchContainer);
+
+    const map = new Map();
+    // map.initMap();
+    map.handleApi('london');
   }
 
   showNotes() {
-    const notesImage = createDOMElement('img', 'notes-image', '', '', ['src', statement.notes]);
+    const notesImage = createDOMElement('img', 'notes-image', null, null, ['src', statement.notes]);
     this.mainContentSection.appendChild(notesImage);
+  }
+
+  fillModalAuth() {
+    services.fillModal(this.modal);
   }
 }

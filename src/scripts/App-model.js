@@ -1,20 +1,24 @@
-const model = {
-  myTrips: {
-    destination: 'Warsaw',
-    date: ['1.02.2021', '5.02.2021']
-  },
-  map: {
-    image: './assets/images/map1.png',
-    test: 'test map'
-  },
-  notes: {
-    image: './assets/images/notes1.png',
-    test: 'test notes'
-  },
+export default class AppModel {
+  static async authWithEmailAndPassword(email, password) {
+    const apiKey = 'AIzaSyDgKLFvYaOMMroest_opHKECaaiY4_lwaU';
+    let response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        returnSecureToken: true
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    let data = await response.json();
+    return data.idToken;
+  }
 
-  // setNewTripCard() {
-
-  // }
-};
-
-export default model;
+  static setUserToSessionStorage(email) {
+    sessionStorage.setItem('user', JSON.stringify({
+      email
+    }));
+  }
+}
