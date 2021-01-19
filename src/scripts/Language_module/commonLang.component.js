@@ -63,7 +63,13 @@ const commonLang = {
   sights_ru: 'Достопримечательности',
   sights_pl: 'Atrakcje',
   sights_de: 'Sehenswürdigkeiten',
-  sights_zh: '旅遊景點'
+  sights_zh: '旅遊景點',
+
+  todo_en: 'To-do List',
+  todo_ru: 'Список дел',
+  todo_pl: 'Lista rzeczy do zrobienia',
+  todo_de: 'Aufgabenliste',
+  todo_zh: '待辦事項清單',
 };
 
 export default { commonLang };

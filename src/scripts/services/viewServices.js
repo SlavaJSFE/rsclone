@@ -118,7 +118,13 @@ const services = {
       objTranslate.commonLang['sights_' + local]
     );
 
-    navigation.append(menuItem1, menuItem2, menuItem3, menuItem4, menuItem5);
+    const menuItem6 = createDOMElement(
+      'div',
+      'nav-item todo',
+      objTranslate.commonLang['todo_' + local]
+    );
+
+    navigation.append(menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6);
 
     return navigation;
   },

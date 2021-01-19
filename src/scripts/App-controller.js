@@ -6,7 +6,8 @@ import Clock from './Clock_module/Clock';
 import Trips from './Trips_module/Trips-controller.js';
 import Sights from './Sights_module/Sights.js';
 import './Sights_module/EventsSights';
-import Map from '../scripts/Map_module/Map';
+import Map from './Map_module/Map';
+import TODO from './TODO_module/TODO';
 
 export default class TravelPlaningApp {
   static init() {
@@ -28,8 +29,10 @@ export default class TravelPlaningApp {
     // this.fillMainContentSection('home');
 
     // const map = new Map();
-    // // map.initMap();
     // map.handleApi('london');
+
+    // const todo = new TODO();
+    // todo.createTODOElements();
 
     this.addAppEventListener();
   }
@@ -109,6 +112,10 @@ export default class TravelPlaningApp {
       const sights = new Sights();
       this.view.mainContentSection.innerHTML = '';
       sights.createSearcher();
+    }
+    if (currentItem === 'todo') {
+      this.view.mainContentSection.innerHTML = '';
+      this.view.showTODOList();
     }
   }
 }

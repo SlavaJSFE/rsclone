@@ -3,11 +3,14 @@
 @import "map.scss";
 @import "my-trips.scss";
 @import "sights.scss";
+@import "TODO.scss";
 
 $main-color: white;
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 .title {
