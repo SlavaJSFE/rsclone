@@ -30,19 +30,24 @@ export default class TravelPlaningApp {
   }
 
   static addAppEventListener() {
+    const navItemHome = document.getElementById('nav-home');
+    const navItemMyTrips = document.getElementById('nav-my-trips');
+    const navItemMap = document.getElementById('nav-map');
+    const navItemNotes = document.getElementById('nav-notes');
+    const navItemSights = document.getElementById('nav-sights');
+
     this.view.header.addEventListener('click', (event) => this.handleHeaderEvent(event.target));
-    this.view.navigation.addEventListener('click', (event) => this.handleNavEvent(event.target));
+
+    navItemHome.addEventListener('click', () => this.fillMainContentSection('home'));
+    navItemMyTrips.addEventListener('click', () => this.fillMainContentSection('my-trips'));
+    navItemMap.addEventListener('click', () => this.fillMainContentSection('map'));
+    navItemNotes.addEventListener('click', () => this.fillMainContentSection('notes'));
+    navItemSights.addEventListener('click', () => this.fillMainContentSection('sights'));
+
     document.addEventListener('DOMContentLoaded', () => {
       const modal = document.querySelectorAll('.modal');
       Materialize.Modal.init(modal, { opacity: 0.6 });
     });
-  }
-
-  static handleNavEvent(target) {
-    if (target.className && target.className.includes('nav-item')) {
-      const currentItem = target.className.split(' ')[1];
-      this.fillMainContentSection(currentItem);
-    }
   }
 
   static handleHeaderEvent(target) {
@@ -50,7 +55,7 @@ export default class TravelPlaningApp {
     this.modalWindow = document.getElementById('modal1');
     this.modal = Materialize.Modal.getInstance(this.modalWindow);
 
-    if (target === authorization) {
+    if (target === authorization || target === authorization.children[0]) {
       this.view.fillModalAuth();
       this.modal.open();
 

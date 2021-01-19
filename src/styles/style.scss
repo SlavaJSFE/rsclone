@@ -20,7 +20,6 @@ $primary-color:  #1e1e20;
 }
 body {
   background: url('../assets/images/map-2153535_1280.jpg');
-  // background: url('../assets/images/map-3578213_1280.jpg');
   background-size: cover;
 }
 .title {
@@ -78,8 +77,6 @@ body {
   grid-template-columns: 10rem 1fr 25rem;
   grid-template-rows: 100%;
   height: 84vh;
-  // background-color: #fae317;
-  // background-color: white;
 
   .nav {
     background-color:#131314;
@@ -89,20 +86,25 @@ body {
     box-shadow: none;
 
     .nav-item-block {
-      margin: 3rem auto;
+      margin: 1rem auto;
+      z-index: 5;
 
       .nav-item {
         margin: 0 auto;
         width: max-content;
         font-size: 1.2rem;
-        line-height: 0.3rem;
-      }
-      .nav-item:hover {
-        cursor: pointer;
+        line-height: 1.5rem;
+        padding-bottom: 10px;
       }
       i {
         font-size: 3.5rem;
+        height: 5rem;
       }
+    }
+    .nav-item-block:hover {
+      cursor: pointer;
+      background-color:#ffffff18;
+      color: #ffab00;
     }
   }
   .main-content-section {
