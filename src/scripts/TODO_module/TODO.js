@@ -32,7 +32,7 @@ export default class TODO {
             [
               createDOMElement('option', null, 'All', null, ['value', 'all']),
               createDOMElement('option', null, 'Completed', null, ['value', 'completed']),
-              createDOMElement('option', null, 'Uncomplited', null, ['value', 'uncompleted']),
+              createDOMElement('option', null, 'Uncompleted', null, ['value', 'uncompleted']),
             ],
             null,
             ['name', 'todos']
@@ -57,15 +57,13 @@ export default class TODO {
     addButton.addEventListener('click', this.addTodoItem);
 
     const filterTodo = document.querySelector('.filter-todo');
-    filterTodo.addEventListener('change', this.select);
+    filterTodo.addEventListener('change', this.filterTodo);
   };
 
   addTodoItem = (event) => {
     event.preventDefault();
     const todoInput = document.querySelector('.todo-input');
     const todoList = document.querySelector('.todo-list');
-
-    console.log(todoInput.value);
 
     const inputValue = todoInput.value.trim();
     if (inputValue === '') return;
@@ -103,27 +101,30 @@ export default class TODO {
     }
   };
 
-  select = (event) => {
+  filterTodo = (event) => {
     const todoList = document.querySelector('.todo-list');
     const todos = todoList.childNodes;
-    console.log(todos);
+
     const { target } = event;
-    console.log(target.value);
+
     todos.forEach((item) => {
-      if (target.value === 'all') {
-        item.style.display = 'flex';
-      } else if (target.value === 'completed') {
-        if (item.classList.contains('completed')) {
+      switch (target.value) {
+        case 'All':
           item.style.display = 'flex';
-        } else {
-          item.style.display = 'none';
-        }
-      } else {
-        if (!item.classList.contains('completed')) {
-          item.style.display = 'flex';
-        } else {
-          item.style.display = 'none';
-        }
+          break;
+        case 'Completed':
+          if (item.classList.contains('completed')) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+          break;
+        case 'Uncompleted':
+          if (!item.classList.contains('completed')) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
       }
     });
   };
