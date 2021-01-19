@@ -18,6 +18,12 @@ const services = {
     const linksContainer = createDOMElement('div', 'header-links');
 
     const authorization = createDOMElement('div', 'authorization btn', 'Sing in', linksContainer);
+    const authorization = createDOMElement(
+      'div',
+      'authorization btn black',
+      'Sing in',
+      linksContainer
+    );
     createDOMElement('i', 'material-icons left', 'fingerprint', authorization);
 
     const language = createDOMElement('div', 'language btn', null, linksContainer);
@@ -33,7 +39,7 @@ const services = {
       en: objTranslate.commonLang['langSelect2_' + local],
       pl: objTranslate.commonLang['langSelect3_' + local],
       de: objTranslate.commonLang['langSelect4_' + local],
-      zh: objTranslate.commonLang['langSelect5_' + local]
+      zh: objTranslate.commonLang['langSelect5_' + local],
     };
     let i = 0;
     let selectIndex = 0;
@@ -108,19 +114,55 @@ const services = {
     createDOMElement('div', 'nav-item sights', objTranslate.commonLang['sights_' + local], menuItem5);
 
     navigation.append(menuItem1, menuItem2, menuItem3, menuItem4, menuItem5);
+    const menuItem1 = createDOMElement(
+      'div',
+      'nav-item home',
+      objTranslate.commonLang['main_' + local]
+    );
+    const menuItem2 = createDOMElement(
+      'div',
+      'nav-item my-trips',
+      objTranslate.commonLang['myTrips_' + local]
+    );
+    const menuItem3 = createDOMElement(
+      'div',
+      'nav-item map',
+      objTranslate.commonLang['map_' + local]
+    );
+    const menuItem4 = createDOMElement(
+      'div',
+      'nav-item notes',
+      objTranslate.commonLang['notes_' + local]
+    );
+    const menuItem5 = createDOMElement(
+      'div',
+      'nav-item sights',
+      objTranslate.commonLang['sights_' + local]
+    );
+
+    const menuItem6 = createDOMElement(
+      'div',
+      'nav-item todo',
+      objTranslate.commonLang['todo_' + local]
+    );
+
+    navigation.append(menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6);
 
     return navigation;
   },
 
   createFooter() {
     const footer = createDOMElement('footer', 'footer');
-    const githubLogo = createDOMElement('img', 'gh-logo', null, null, ['src', statement.githubLogo]);
+    const githubLogo = createDOMElement('img', 'gh-logo', null, null, [
+      'src',
+      statement.githubLogo,
+    ]);
 
     const authorsArray = [
       createDOMElement('a', 'gh-link', 'Roman', null, ['href', statement.roman]),
       createDOMElement('a', 'gh-link', 'Maria', null, ['href', statement.maria]),
       createDOMElement('a', 'gh-link', 'Yulia', null, ['href', statement.julia]),
-      createDOMElement('a', 'gh-link', 'Slava', null, ['href', statement.slava])
+      createDOMElement('a', 'gh-link', 'Slava', null, ['href', statement.slava]),
     ];
     const authors = createDOMElement('div', 'authors', authorsArray);
     const rssLogo = createDOMElement('img', 'rss-logo', null, null, ['src', statement.rssLogo]);
@@ -130,7 +172,7 @@ const services = {
     footer.append(githubLogo, authors, rsschoolLink);
 
     return footer;
-  }
+  },
 };
 
 export default services;
