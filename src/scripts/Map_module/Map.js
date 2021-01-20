@@ -263,11 +263,11 @@ export default class Map {
       null,
       input,
       ['type', 'search'],
-      ['placeholder', 'Search your town']
+      ['placeholder', 'Find your city']
     );
     createDOMElement(
       'button',
-      'search-button',
+      'search-button btn',
       [createDOMElement('i', 'material-icons', `search`)],
       input
     );
