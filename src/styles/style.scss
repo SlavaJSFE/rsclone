@@ -4,11 +4,12 @@
 @import "my-trips.scss";
 @import "sights.scss";
 @import "TODO.scss";
+@import "notes.scss";
 
 $main-color: white;
 $main: none;
 $secondary-color: #272142;
-$primary-color:  #1e1e20;
+$primary-color: #1e1e20;
 
 :root {
   font-size: 10px;
@@ -20,7 +21,7 @@ $primary-color:  #1e1e20;
   padding: 0;
 }
 body {
-  background: url('../assets/images/map-2153535_1280.jpg');
+  // background: url('../assets/images/map-2153535_1280.jpg');
   background-size: cover;
 }
 .title {
@@ -56,7 +57,7 @@ body {
   .header-links {
     display: flex;
     margin: auto 0;
-  
+
     i {
       font-size: 2.5rem;
       margin-right: 5px;
@@ -69,7 +70,8 @@ body {
     .btn:hover {
       background-color: unset;
     }
-    .log-in:hover, .sign-up:hover {
+    .log-in:hover,
+    .sign-up:hover {
       color: #ffab00;
     }
     .language {
@@ -79,7 +81,7 @@ body {
       display: block;
       margin-top: 0.3rem;
       padding-top: 0.3rem;
-      
+
       // .pl:before {
       //   content: '';
       //   background-image: url('https://www.countryflags.io/pl/flat/32.png');
@@ -94,7 +96,7 @@ body {
   height: 84vh;
 
   .nav {
-    background-color:#131314;
+    background-color: #131314;
     text-align: center;
     padding-top: 1rem;
     height: 100%;
@@ -118,7 +120,7 @@ body {
     }
     .nav-item-block:hover {
       cursor: pointer;
-      background-color:#ffffff18;
+      background-color: #ffffff18;
       color: #ffab00;
     }
     .nav-item-block.active {
@@ -135,7 +137,7 @@ body {
     max-height: 100%;
   }
   .side-bar {
-    background-color:#ffa000e7;
+    background-color: #ffa000e7;
     color: white;
     overflow: hidden;
     margin: 0.7rem;
