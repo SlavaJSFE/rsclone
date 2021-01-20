@@ -17,45 +17,57 @@ const services = {
   createHeaderLinks() {
     const linksContainer = createDOMElement('div', 'header-links');
 
-    const authorization = createDOMElement('div', 'authorization btn', 'Sing in', linksContainer);
-    const authorization = createDOMElement(
-      'div',
-      'authorization btn black',
-      'Sing in',
-      linksContainer
-    );
-    createDOMElement('i', 'material-icons left', 'fingerprint', authorization);
+    const authorization = createDOMElement('div', 'authorization', null, linksContainer);
+
+    const logIn = createDOMElement('div', 'btn log-in', 'Log In', authorization);
+    createDOMElement('i', 'material-icons left', 'fingerprint', logIn);
+
+    const singUp = createDOMElement('div', 'btn sign-up', 'Sing Up', authorization);
+    createDOMElement('i', 'material-icons left', 'person_add', singUp);
 
     const language = createDOMElement('div', 'language btn', null, linksContainer);
-    // createDOMElement('i', 'material-icons left', 'language', language);
-    const langSwitcher = document.createElement('select');
-    langSwitcher.setAttribute('name', '');
-    langSwitcher.setAttribute('id', '');
-    langSwitcher.classList.add('langSwitcher');
 
-    const optionsLang = [];
-    const languages = {
-      ru: objTranslate.commonLang['langSelect1_' + local],
-      en: objTranslate.commonLang['langSelect2_' + local],
-      pl: objTranslate.commonLang['langSelect3_' + local],
-      de: objTranslate.commonLang['langSelect4_' + local],
-      zh: objTranslate.commonLang['langSelect5_' + local],
-    };
-    let i = 0;
-    let selectIndex = 0;
-    for (let key in languages) {
-      optionsLang[i] = document.createElement('option');
-      optionsLang[i].innerHTML = languages[key];
-      optionsLang[i].value = key;
-      langSwitcher.appendChild(optionsLang[i]);
-      if (local === key) {
-        selectIndex = i;
-      }
-      i += 1;
-    }
-    optionsLang[selectIndex].selected = true;
+    const langSwitcher = `<i class="material-icons left">language</i>
+                          <select class="langSwitcher">
+                            <option value="ru">Русский</option>
+                            <option value="en">English</option>
+                            <option value="pl">Polski</option>
+                            <option value="de">Deutsch</option>
+                            <option value="zh">中文</option>
+                          </select>`;
+    // document.createElement('select');
+    // langSwitcher.setAttribute('name', '');
+    // langSwitcher.setAttribute('id', '');
+    // langSwitcher.classList.add('langSwitcher');
 
-    language.appendChild(langSwitcher);
+    // const optionsLang = [];
+    // const languages = {
+    //   ru: objTranslate.commonLang['langSelect1_' + local],
+    //   en: objTranslate.commonLang['langSelect2_' + local],
+    //   pl: objTranslate.commonLang['langSelect3_' + local],
+    //   de: objTranslate.commonLang['langSelect4_' + local],
+    //   zh: objTranslate.commonLang['langSelect5_' + local],
+    // };
+    // let i = 0;
+    // let selectIndex = 0;
+    // for (let key in languages) {
+    //   optionsLang[i] = document.createElement('option');
+    //   optionsLang[i].innerHTML = languages[key];
+    //   optionsLang[i].value = key;
+    //   langSwitcher.appendChild(optionsLang[i]);
+    //   if (local === key) {
+    //     selectIndex = i;
+    //   }
+    //   i += 1;
+    // }
+    // optionsLang[selectIndex].selected = true;
+
+    // language.appendChild(langSwitcher);
+    language.innerHTML = langSwitcher;
+
+    const options = Array.from(language.querySelectorAll('option'));
+    const currentLang = options.filter((option) => option.value === local);
+    currentLang[0].selected = true;
 
     return linksContainer;
   },
@@ -93,7 +105,7 @@ const services = {
   createNavigation() {
     const navigation = createDOMElement('nav', 'nav');
 
-    const menuItem1 = createDOMElement('div', 'nav-item-block', null, null, ['id', 'nav-home']);
+    const menuItem1 = createDOMElement('div', 'nav-item-block active', null, null, ['id', 'nav-home']);
     createDOMElement('i', 'material-icons', 'home', menuItem1);
     createDOMElement('div', 'nav-item home', objTranslate.commonLang['main_' + local], menuItem1);
 
@@ -113,38 +125,9 @@ const services = {
     createDOMElement('i', 'material-icons', 'account_balance', menuItem5);
     createDOMElement('div', 'nav-item sights', objTranslate.commonLang['sights_' + local], menuItem5);
 
-    navigation.append(menuItem1, menuItem2, menuItem3, menuItem4, menuItem5);
-    const menuItem1 = createDOMElement(
-      'div',
-      'nav-item home',
-      objTranslate.commonLang['main_' + local]
-    );
-    const menuItem2 = createDOMElement(
-      'div',
-      'nav-item my-trips',
-      objTranslate.commonLang['myTrips_' + local]
-    );
-    const menuItem3 = createDOMElement(
-      'div',
-      'nav-item map',
-      objTranslate.commonLang['map_' + local]
-    );
-    const menuItem4 = createDOMElement(
-      'div',
-      'nav-item notes',
-      objTranslate.commonLang['notes_' + local]
-    );
-    const menuItem5 = createDOMElement(
-      'div',
-      'nav-item sights',
-      objTranslate.commonLang['sights_' + local]
-    );
-
-    const menuItem6 = createDOMElement(
-      'div',
-      'nav-item todo',
-      objTranslate.commonLang['todo_' + local]
-    );
+    const menuItem6 = createDOMElement('div', 'nav-item-block', null, null, ['id', 'nav-todo']);
+    createDOMElement('i', 'material-icons', 'check_box', menuItem6);
+    createDOMElement('div', 'nav-item todo', objTranslate.commonLang['todo_' + local], menuItem6);
 
     navigation.append(menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6);
 

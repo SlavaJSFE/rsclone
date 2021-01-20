@@ -24,9 +24,8 @@ export default class TravelPlaningApp {
     const currency = new Currency();
     currency.handleMethods();
 
-    this.tripsComponent = new Trips();
-    this.tripsComponent.init();
-    // this.fillMainContentSection('home');
+    const navItemHome = document.getElementById('nav-home');
+    this.fillMainContentSection(navItemHome);
 
     // const map = new Map();
     // map.handleApi('london');
@@ -43,14 +42,16 @@ export default class TravelPlaningApp {
     const navItemMap = document.getElementById('nav-map');
     const navItemNotes = document.getElementById('nav-notes');
     const navItemSights = document.getElementById('nav-sights');
+    const navItemTodo = document.getElementById('nav-todo');
 
     this.view.header.addEventListener('click', (event) => this.handleHeaderEvent(event.target));
 
-    navItemHome.addEventListener('click', () => this.fillMainContentSection('home'));
-    navItemMyTrips.addEventListener('click', () => this.fillMainContentSection('my-trips'));
-    navItemMap.addEventListener('click', () => this.fillMainContentSection('map'));
-    navItemNotes.addEventListener('click', () => this.fillMainContentSection('notes'));
-    navItemSights.addEventListener('click', () => this.fillMainContentSection('sights'));
+    navItemHome.addEventListener('click', () => this.fillMainContentSection(navItemHome));
+    navItemMyTrips.addEventListener('click', () => this.fillMainContentSection(navItemMyTrips));
+    navItemMap.addEventListener('click', () => this.fillMainContentSection(navItemMap));
+    navItemNotes.addEventListener('click', () => this.fillMainContentSection(navItemNotes));
+    navItemSights.addEventListener('click', () => this.fillMainContentSection(navItemSights));
+    navItemTodo.addEventListener('click', () => this.fillMainContentSection(navItemTodo));
 
     document.addEventListener('DOMContentLoaded', () => {
       const modal = document.querySelectorAll('.modal');
@@ -97,30 +98,44 @@ export default class TravelPlaningApp {
   }
 
   static fillMainContentSection(currentItem) {
-    if (currentItem === 'home') {
+    const previousNavItem = this.view.navigation.querySelector('.active');
+    previousNavItem.classList.remove('active');
+
+    if (currentItem.id === 'nav-home') {
       this.view.mainContentSection.innerHTML = '<h3>Start Page</h3>';
+      currentItem.classList.add('active');
     }
-    if (currentItem === 'my-trips') {
+
+    if (currentItem.id === 'nav-my-trips') {
       this.view.mainContentSection.innerHTML = '';
       const tripsComponent = new Trips();
       tripsComponent.init();
+      currentItem.classList.add('active');
     }
-    if (currentItem === 'map') {
+
+    if (currentItem.id === 'nav-map') {
       this.view.mainContentSection.innerHTML = '';
       this.view.showMap();
+      currentItem.classList.add('active');
     }
-    if (currentItem === 'notes') {
+
+    if (currentItem.id === 'nav-notes') {
       this.view.mainContentSection.innerHTML = '';
       this.view.showNotes();
+      currentItem.classList.add('active');
     }
-    if (currentItem === 'sights') {
+
+    if (currentItem.id === 'nav-sights') {
       const sights = new Sights();
       this.view.mainContentSection.innerHTML = '';
       sights.createSearcher();
+      currentItem.classList.add('active');
     }
-    if (currentItem === 'todo') {
+
+    if (currentItem.id === 'nav-todo') {
       this.view.mainContentSection.innerHTML = '';
       this.view.showTODOList();
+      currentItem.classList.add('active');
     }
   }
 }

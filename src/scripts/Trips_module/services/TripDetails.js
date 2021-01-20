@@ -14,17 +14,30 @@ export default class TripDetails {
     createDOMElement('div', 'trip-title', this.trip.tripName, tripContainer);
     createDOMElement('div', 'trip-destination', this.trip.tripRoute[0], tripContainer);
     createDOMElement('div', 'trip-date', `Trip date: ${this.trip.startDate} - ${this.trip.endDate}`, tripContainer);
-    const map = createDOMElement('div', 'trip-icon map', 'Map', tripContainer);
+
+    const map = createDOMElement('div', 'trip-icon map', null, tripContainer);
     createDOMElement('img', null, null, map, ['src', './assets/images/icons/map.svg']);
-    const sights = createDOMElement('div', 'trip-icon sights', 'Sights', tripContainer);
+    createDOMElement('span', null, 'Map', map);
+
+    const sights = createDOMElement('div', 'trip-icon sights', null, tripContainer);
     createDOMElement('img', null, null, sights, ['src', './assets/images/icons/cathedral.svg']);
-    const notes = createDOMElement('div', 'trip-icon notes', 'Notes', tripContainer);
+    createDOMElement('span', null, 'Sights', sights);
+
+    const notes = createDOMElement('div', 'trip-icon notes', null, tripContainer);
     createDOMElement('img', null, null, notes, ['src', './assets/images/icons/test.svg']);
-    const weather = createDOMElement('div', 'trip-icon weather', 'Weather', tripContainer);
+    createDOMElement('span', null, 'Notes', notes);
+
+    const weather = createDOMElement('div', 'trip-icon weather', null, tripContainer);
     createDOMElement('img', null, null, weather, ['src', './assets/images/icons/cloudy.svg']);
-    createDOMElement('div', 'trip-icon about-place', `About ${this.trip.tripRoute[0]}`, tripContainer);
-    const important = createDOMElement('div', 'trip-icon important', 'Important', tripContainer);
+    createDOMElement('span', null, 'Weather', weather);
+
+    const todo = createDOMElement('div', 'trip-icon about-place', null, tripContainer);
+    createDOMElement('img', null, null, todo, ['src', './assets/images/icons/school.svg']);
+    createDOMElement('span', null, 'To Do', todo);
+
+    const important = createDOMElement('div', 'trip-icon important', null, tripContainer);
     createDOMElement('img', null, null, important, ['src', './assets/images/icons/school.svg']);
+    createDOMElement('span', null, 'Important', important);
 
     const pagination = createDOMElement('ul', 'pagination', null, tripContainer);
     const paginationContent = `<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>

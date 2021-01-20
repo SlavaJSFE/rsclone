@@ -3,14 +3,11 @@
 @import "map.scss";
 @import "my-trips.scss";
 @import "sights.scss";
-// @import '../assets/images/maldives-1993704_1920.jpg'
 @import "TODO.scss";
 
 $main-color: white;
 $main: none;
 $secondary-color: #272142;
-// $secondary-color: #ffa000;
-// $secondary-color: #131314;
 $primary-color:  #1e1e20;
 
 :root {
@@ -61,18 +58,32 @@ body {
     margin: auto 0;
   
     i {
-      font-size: 30px;
+      font-size: 2.5rem;
       margin-right: 5px;
     }
     .btn {
       background-color: $secondary-color;
       box-shadow: none;
+      padding: 0 1rem;
     }
     .btn:hover {
       background-color: unset;
     }
+    .log-in:hover, .sign-up:hover {
+      color: #ffab00;
+    }
+    .language {
+      display: flex;
+    }
     select {
       display: block;
+      margin-top: 0.3rem;
+      padding-top: 0.3rem;
+      
+      // .pl:before {
+      //   content: '';
+      //   background-image: url('https://www.countryflags.io/pl/flat/32.png');
+      // }
     }
   }
 }
@@ -110,6 +121,9 @@ body {
       background-color:#ffffff18;
       color: #ffab00;
     }
+    .nav-item-block.active {
+      color: #ffab00;
+    }
   }
   .main-content-section {
     position: relative;
@@ -123,7 +137,6 @@ body {
   .side-bar {
     background-color:#ffa000e7;
     color: white;
-    // background-image: url('../assets/images/paper-1074131_640.jpg');
     overflow: hidden;
     margin: 0.7rem;
     border-radius: 0.5rem;

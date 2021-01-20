@@ -170,7 +170,7 @@ export default class Sights {
 
 	  const form = document.createElement('form');
 	  form.setAttribute('id', 'search_form');
-	  form.classList.add('input-group', 'mb-4', 'border', 'p-1');
+	  form.classList.add('input-group', 'mb-4', 'p-1');
 
 	  const form_div = document.createElement('div');
 	  form_div.classList.add('input-group-prepend', 'border-0');
@@ -188,14 +188,14 @@ export default class Sights {
 	  info.classList.add('alert');
 
 	  const mainBlockRow = document.createElement('div');
-	  mainBlockRow.classList.add('row');
+	  mainBlockRow.classList.add('rows');
 
 	  const mainBlockRow_left = document.createElement('div');
 	  mainBlockRow_left.classList.add('col-12', 'col-lg-5');
 	  const list = document.createElement('div');
 	  list.setAttribute('id', 'list');
 	  list.classList.add('list-group');
-	  const mainBlockRow_left_nav = document.createElement('nav');
+	  const mainBlockRow_left_nav = document.createElement('div');
 	  mainBlockRow_left_nav.classList.add('text-center');
 
 	  const mainBlockRow_right = document.createElement('div');
@@ -214,7 +214,7 @@ export default class Sights {
 	  input.setAttribute('type', 'search');
 	  input.setAttribute('placeholder', objTranslate.sightsLang['inputPlaceholder_' + local]);
 	  input.setAttribute('aria-describedby', 'button-search');
-	  input.classList.add('form-control', 'bg-none', 'border-0');
+	  input.classList.add('form-control', 'bg-none', 'border');
 
 	  button.appendChild(button_search_i);
 	  form_div.appendChild(button);
