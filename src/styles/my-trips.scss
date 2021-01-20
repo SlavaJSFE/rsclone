@@ -77,13 +77,17 @@ $main-color: white;
     // background-color: #ffa000;
     background-image: url('../assets/images/paper-1074131_640.jpg');
     padding: 2rem;
-    border-radius: 0.5rem;
+    border-radius: 2rem;
+    user-select: none;
 
     img {
       width: 100%;
       max-width: 5rem;
       justify-self: center;
     }
+  }
+  .trip-icon:hover {
+    cursor: pointer;
   }
   .trip-details-buttons {
 

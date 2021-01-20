@@ -31,7 +31,7 @@ export default class TripDetails {
     createDOMElement('img', null, null, weather, ['src', './assets/images/icons/cloudy.svg']);
     createDOMElement('span', null, 'Weather', weather);
 
-    const todo = createDOMElement('div', 'trip-icon about-place', null, tripContainer);
+    const todo = createDOMElement('div', 'trip-icon todo', null, tripContainer);
     createDOMElement('img', null, null, todo, ['src', './assets/images/icons/school.svg']);
     createDOMElement('span', null, 'To Do', todo);
 
