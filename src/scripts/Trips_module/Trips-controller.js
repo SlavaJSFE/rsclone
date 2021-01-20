@@ -52,9 +52,12 @@ export default class Trips {
       this.view.showTrip(tripDetails);
 
       const tripDetailsContainer = document.querySelector('.trip-details');
-      tripDetailsContainer.addEventListener('click', (e) => {
-        this.handleTripDetailsEvent(e, tripDetailsContainer);
-      });
+      this.addTripDetailsListener(tripDetailsContainer);
+
+      // const tripDetailsContainer = document.querySelector('.trip-details');
+      // tripDetailsContainer.addEventListener('click', (e) => {
+      //   this.handleTripDetailsEvent(e, tripDetailsContainer);
+      // });
     }
   }
 
@@ -78,7 +81,7 @@ export default class Trips {
     }
   }
 
-  handleTripDetailsEvent(event, tripDetailsContainer) {
+  addTripDetailsListener(tripDetailsContainer) {
     // ! make separate function for modal activation to avoid code duplicate
     this.modalWindow = document.getElementById('modal1');
     this.modal = Materialize.Modal.getInstance(this.modalWindow);
@@ -88,39 +91,45 @@ export default class Trips {
     const sights = tripDetailsContainer.querySelector('.sights');
     const notes = tripDetailsContainer.querySelector('.notes');
     const weather = tripDetailsContainer.querySelector('.weather');
+    const todo = tripDetailsContainer.querySelector('.todo');
+    const currentCity = tripDetailsContainer.querySelector('.trip-destination').textContent;
 
-    if (event.target === removeTripBtn) {
+    removeTripBtn.addEventListener('click', () => {
       this.view.fillRemoveTripModal();
       this.modal.open();
       this.addListenerToCloseBtn();
 
       const removeModal = document.getElementById('remove-trip-modal');
-      removeModal.addEventListener('click', (e) => {
-        this.handleTripRemoveModalEvent(e, tripDetailsContainer.id);
+      removeModal.addEventListener('click', (event) => {
+        this.handleTripRemoveModalEvent(event, tripDetailsContainer.id);
       });
-    }
+    });
 
-    if (event.target === addDestinationBtn) {
+    addDestinationBtn.addEventListener('click', () => {
       this.view.fillAddDestinationModal();
       this.modal.open();
       this.addListenerToCloseBtn();
-    }
+    });
 
-    if (event.target === map) {
-      console.log('map')
-    }
+    map.addEventListener('click', () => {
+      console.log(currentCity)
+    });
 
-    if (event.target === sights) {
-      console.log('sights')
-    }
+    sights.addEventListener('click', () => {
+      console.log(currentCity)
+    });
 
-    if (event.target === notes) {
+    notes.addEventListener('click', () => {
       console.log('notes')
-    }
+    });
 
-    if (event.target === weather) {
-      console.log('weather')
-    }
+    weather.addEventListener('click', () => {
+      console.log(currentCity)
+    });
+
+    todo.addEventListener('click', () => {
+      console.log(currentCity)
+    });
   }
 
   async handleTripRemoveModalEvent(event, tripId) {
@@ -145,3 +154,6 @@ export default class Trips {
     });
   }
 }
+
+// OpenTripMap apiKey:
+// 5ae2e3f221c38a28845f05b6d6abeebb861dd05be680cb6c5c452fa0

@@ -48,7 +48,7 @@ export default class TravelPlaningAppView {
   }
 
   createSideBar() {
-    this.sideBar = createDOMElement('aside', 'side-bar');
+    this.sideBar = createDOMElement('aside', 'side-bar z-depth-4');
     this.main.appendChild(this.sideBar);
 
     const clockWidget = createDOMElement('div', 'clock');
