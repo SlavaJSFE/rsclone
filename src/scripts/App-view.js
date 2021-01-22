@@ -76,8 +76,7 @@ export default class TravelPlaningAppView {
     this.mainContentSection.append(mapWidget, content, legend, searchContainer);
 
     const map = new Map();
-    // map.initMap();
-    map.handleApi('london');
+    map.staticInitMap();
   }
 
   showNotes() {
