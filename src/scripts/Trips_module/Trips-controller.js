@@ -1,6 +1,10 @@
 import TripsView from './Trips-view.js';
 import Materialize from 'materialize-css';
 import TripsModel from './Trips-model.js';
+import Map from '../Map_module/Map';
+import createDOMElement from '../services/createDOMElement';
+
+// const mapInit = new Map();
 
 export default class Trips {
   init() {
@@ -27,7 +31,7 @@ export default class Trips {
         const datepicker = document.querySelectorAll('.datepicker');
         Materialize.Datepicker.init(datepicker, {
           firstDay: 1,
-          format: 'dd.mm.yyyy'
+          format: 'dd.mm.yyyy',
         });
 
         this.modal.open();
@@ -112,23 +116,24 @@ export default class Trips {
     });
 
     map.addEventListener('click', () => {
-      console.log(currentCity)
+      console.log(currentCity);
+      this.createMap(currentCity);
     });
 
     sights.addEventListener('click', () => {
-      console.log(currentCity)
+      console.log(currentCity);
     });
 
     notes.addEventListener('click', () => {
-      console.log('notes')
+      console.log('notes');
     });
 
     weather.addEventListener('click', () => {
-      console.log(currentCity)
+      console.log(currentCity);
     });
 
     todo.addEventListener('click', () => {
-      console.log(currentCity)
+      console.log(currentCity);
     });
   }
 
@@ -153,6 +158,24 @@ export default class Trips {
       this.modal.close();
     });
   }
+
+  createMap = (town) => {
+    const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
+    const content = createDOMElement('div', 'content');
+    const legend = createDOMElement(
+      'div',
+      'legend',
+      [createDOMElement('h3', null, 'Legend')],
+      null,
+      ['id', 'legend']
+    );
+    const searchContainer = createDOMElement('div', 'search-container');
+    // !TODO
+    this.mainContentSection.append(mapWidget, content, legend, searchContainer);
+
+    const map = new Map();
+    map.handleApi(town);
+  };
 }
 
 // OpenTripMap apiKey:
