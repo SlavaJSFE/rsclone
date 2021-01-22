@@ -15,18 +15,24 @@
     color: #212529;
     text-align: left;
     margin: 0.7rem 0 0.7rem 0.7rem;
+
+  .input-field {
+    padding: 3rem;
+  } 
 }
 
+
 .input-group {
-    position: relative;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -ms-flex-align: stretch;
-    align-items: stretch;
-    width: 100%;
-    padding: 3rem;
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 1.7rem;
 }
 
 .mb-4{
@@ -53,9 +59,15 @@
 }
 
 .btn-link {
-    font-weight: 400;
-    color: #007bff;
-    text-decoration: none;
+  padding: 5px;
+  text-decoration: none;
+  width: 5.5rem;
+
+  i {
+    font-size: 3rem;
+    line-height: 2.8rem;
+
+  }
 }
 
 // .btn {
@@ -98,10 +110,10 @@
 //     color: #212529;
 //     text-decoration: none;
 // }
-.btn-link:hover {
-    color: #0056b3;
-    text-decoration: underline;
-}
+// .btn-link:hover {
+//     color: #0056b3;
+//     text-decoration: underline;
+// }
 
 .btn-link.focus, .btn-link:focus {
     text-decoration: underline;
@@ -127,26 +139,23 @@
 }
 
 .form-control {
-    display: block;
-    width: 100%;
-    // height: calc(1.5em + .75rem + 2px);
-    height: 3.4rem;
-    padding: .375rem .75rem;
-    font-size: 1.5rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    margin: 0;
+  display: block;
+  width: 100%;
+  // height: calc(1.5em + .75rem + 2px);
+  height: unset !important;
+  padding: 0 1.5rem !important;
+  font-size: 1.5rem;
+  line-height: 1.5;
+  color: #495057;
+  background-clip: padding-box;
+  border: none !important;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  margin: 0 !important;
 }
 
 .form-control:focus {
     color: #495057;
-    background-color: #fff;
+    background-color: #ffffff !important;
     border-color: #80bdff;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);

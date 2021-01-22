@@ -170,18 +170,22 @@ export default class Sights {
 
 	  const form = document.createElement('form');
 	  form.setAttribute('id', 'search_form');
-	  form.classList.add('input-group', 'mb-4', 'p-1');
+		form.classList.add('input-group', 'p-1');
+		
+		const inputField = document.createElement('div');
+		inputField.classList.add('input-field');
+		inputField.appendChild(form);
 
-	  const form_div = document.createElement('div');
-	  form_div.classList.add('input-group-prepend', 'border-0');
+	  // const form_div = document.createElement('div');
+	  // form_div.classList.add('input-group-prepend', 'border-0');
 
-	  const button = document.createElement('button');
-	  // button.setAttribute('id', 'button-search');
-	  button.setAttribute('type', 'button');
-	  button.classList.add('btn', 'btn-link', 'search');
+	  // const button = document.createElement('button');
+	  // // button.setAttribute('id', 'button-search');
+	  // button.setAttribute('type', 'button');
+	  // button.classList.add('btn', 'btn-link', 'search');
 
-	  const button_search_i = document.createElement('i');
-	  button_search_i.classList.add('fa', 'fa-search', 'search');
+	  // const button_search_i = document.createElement('i');
+	  // button_search_i.classList.add('fa', 'fa-search', 'search');
 
 	  const info = document.createElement('div');
 	  info.setAttribute('id', 'info');
@@ -214,12 +218,21 @@ export default class Sights {
 	  input.setAttribute('type', 'search');
 	  input.setAttribute('placeholder', objTranslate.sightsLang['inputPlaceholder_' + local]);
 	  input.setAttribute('aria-describedby', 'button-search');
-	  input.classList.add('form-control', 'bg-none', 'border');
+		input.classList.add('form-control', 'bg-none');
+		
+		const searchButton = document.createElement('button');
+		searchButton.setAttribute('type', 'button');
+		searchButton.classList.add('btn', 'btn-link', 'search');
 
-	  button.appendChild(button_search_i);
-	  form_div.appendChild(button);
-	  form.appendChild(form_div);
-	  form.appendChild(input);
+		const searchIcon = document.createElement('i');
+		searchIcon.classList.add('material-icons');
+		searchIcon.textContent = 'search';
+
+	  // button.appendChild(button_search_i);
+	  // form_div.appendChild(button);
+		// form.appendChild(form_div);
+		searchButton.appendChild(searchIcon);
+	  form.append(input, searchButton);
 
 	  mainBlockRow_left_nav.appendChild(button_next);
 
@@ -230,7 +243,7 @@ export default class Sights {
 	  mainBlockRow.appendChild(mainBlockRow_left);
 	  mainBlockRow.appendChild(mainBlockRow_right);
 
-	  sights_container.appendChild(form);
+	  sights_container.appendChild(inputField);
 	  sights_container.appendChild(info);
 	  sights_container.appendChild(mainBlockRow);
 

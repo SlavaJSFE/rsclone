@@ -6,7 +6,7 @@
 @import "sights.scss";
 @import "TODO.scss";
 
-$main-color: white;
+$main-color: #ffffff;
 $main: none;
 $secondary-color: #272142;
 $primary-color:  #1e1e20;
@@ -70,7 +70,7 @@ body {
     .btn:hover {
       background-color: unset;
     }
-    .log-in:hover, .sign-up:hover {
+    .log-in:hover, .sign-up:hover, .language:hover {
       color: #ffab00;
     }
     .language {
@@ -80,11 +80,16 @@ body {
       display: block;
       margin-top: 0.3rem;
       padding-top: 0.3rem;
-      
-      // .pl:before {
-      //   content: '';
-      //   background-image: url('https://www.countryflags.io/pl/flat/32.png');
-      // }
+      color: $main-color;
+      background-color: $secondary-color;
+      border: none;
+    }
+    select:hover {
+      color: #ffab00;
+      cursor: pointer;
+    }
+    select:focus {
+      color: #ffab00;
     }
   }
 }
@@ -162,8 +167,13 @@ body {
 .btn {
   border-radius: 20px;
   background-color: #ffab00;
-  background-color: $main;
 }
 .btn:hover {
   background-color: #ff6d00;
+}
+.btn:focus {
+  background-color: #ffab00;
+}
+.hidden {
+  display: none;
 }

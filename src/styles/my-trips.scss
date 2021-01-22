@@ -13,9 +13,6 @@ $main-color: white;
   right: 20px;
   bottom: 20px;
 }
-.new-trip-btn:active {
-  background-color: darkblue;
-}
 // .trips-modal {
 //   display: none;
 // }
@@ -50,34 +47,45 @@ $main-color: white;
   text-align: center;
   padding: 0.5rem 3rem;
   gap: 3rem;
+  color: #ffffff;
 
-  .trip-title,
+  .trip-details-header,
   .trip-details-buttons,
   .pagination {
     grid-column: span 3;
   }
-  .trip-title {
-    font-size: 4rem;
-    background-image: url('../assets/images/paper-1074131_640.jpg');
-  }
-  .trip-date {
-    grid-column: span 2;
-    background-image: url('../assets/images/paper-1074131_640.jpg');
-  }
-  .trip-destination {
-    background-image: url('../assets/images/paper-1074131_640.jpg');
+  .trip-details-header {
+    display: grid;
+    background-color: #ffab00;
+    width: 85%;
+    margin: 0 auto;
+    border-radius: 2.5rem 0;
+    padding-bottom: 0.8rem;
+
+    .trip-title {
+      font-size: 4rem;
+      grid-column: span 2;
+    }
+    .trip-destination {
+      font-size: 2rem;
+      line-height: 2rem;
+    }
+    .trip-date {
+      font-size: 1.6rem;
+      line-height: 2.2rem;
+    }    
   }
   .trip-icon {
     display: grid;
     justify-content: center;
     width: 60%;
-    max-width: 17rem;
+    max-width: 15rem;
     justify-self: center;
     font-size: 2rem;
     // background-color: #ffa000;
     background-image: url('../assets/images/paper-1074131_640.jpg');
     padding: 2rem;
-    border-radius: 2rem;
+    border-radius: 2.5rem 0;
     user-select: none;
 
     img {
