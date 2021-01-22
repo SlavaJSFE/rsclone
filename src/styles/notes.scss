@@ -22,12 +22,11 @@
   margin-left: 5%;
 }
 
-.note {
-  // &:hover {
-  //   transform: scale(1.1);
-  // }
-
-  &-content {
+.note-container {
+  .note {
+    display: inline-block;
+  }
+  .note-content {
     font-size: 18px;
     width: 250px;
     height: 250px;
@@ -55,6 +54,7 @@
   width: 275px;
   height: 275px;
   padding: 40px 25px 25px 25px;
+  background-color: blanchedalmond;
 }
 
 .accept-btn,

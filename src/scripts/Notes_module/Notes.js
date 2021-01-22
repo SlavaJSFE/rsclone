@@ -3,7 +3,6 @@ import createDOMElement from '../services/createDOMElement';
 export default class Notes {
   constructor() {
     this.isOpen = false;
-    this.isRewrite = false;
     this.target;
   }
 
@@ -14,7 +13,7 @@ export default class Notes {
       createDOMElement('button', 'btn btn-success btn-create', 'Create Note'),
     ]);
 
-    const notes = createDOMElement('div', 'notes');
+    const notes = createDOMElement('div', 'note-container');
 
     const createNote = createDOMElement('div', 'create_note-container', [
       createDOMElement('form', null, [
@@ -60,34 +59,30 @@ export default class Notes {
   };
 
   createNote = () => {
-    const noteContainer = document.querySelector('.notes');
+    const noteContainer = document.querySelector('.note-container');
     const textArea = document.querySelector('.notes-textarea');
 
-    // textArea.value = '';
+    if (textArea.value === '') return;
 
-    if (this.isRewrite === true) {
-      const noteContent = document.querySelector('.note-content');
-      noteContent.innerHTML = textArea.value;
-      this.isRewrite = false;
-    } else {
-      if (textArea.value === '') return;
+    const note = createDOMElement('div', 'note', null, noteContainer);
+    const noteContent = createDOMElement('div', 'note-content', `${textArea.value}`, note);
 
-      const note = createDOMElement('div', 'note', null, noteContainer);
-      const noteContent = createDOMElement('h1', 'note-content', `${textArea.value}`, note);
+    noteContent.style.transform = `rotate(${this.randomRotateNumber()}deg)`;
+    noteContent.style.backgroundColor = this.randomColorNumber();
 
-      noteContent.style.transform = `rotate(${this.randomRotateNumber()}deg)`;
-      noteContent.style.backgroundColor = this.randomColorNumber();
+    note.addEventListener('mouseenter', () => {
+      note.style.transform = 'scale(1.1)';
+    });
 
-      note.addEventListener('mouseenter', () => {
-        note.style.transform = 'scale(1.1)';
-      });
+    note.addEventListener('mouseleave', () => {
+      note.style.transform = 'scale(1)';
+    });
 
-      note.addEventListener('mouseleave', () => {
-        note.style.transform = 'scale(1)';
-      });
+    note.addEventListener('dblclick', () => {
+      note.remove();
+    });
 
-      note.addEventListener('click', this.rewriteNote);
-    }
+    // note.addEventListener('click', this.rewriteNote);
 
     textArea.value = '';
   };
@@ -114,17 +109,17 @@ export default class Notes {
     textArea.value = '';
   };
 
-  rewriteNote = (event) => {
-    const { target } = event;
-    let textArea = document.querySelector('.notes-textarea');
-    const createContainer = document.querySelector('.create_note-container');
+  // rewriteNote = (event) => {
+  //   const { target } = event;
+  //   let textArea = document.querySelector('.notes-textarea');
+  //   const createContainer = document.querySelector('.create_note-container');
 
-    createContainer.classList.add('open');
-    this.isOpen = true;
+  //   createContainer.classList.add('open');
+  //   this.isOpen = true;
 
-    textArea.value += target.innerHTML;
-    this.isRewrite = true;
+  //   textArea.value += target.innerHTML;
+  //   this.isRewrite = true;
 
-    this.target = target;
-  };
+  //   this.target = target;
+  // };
 }
