@@ -1,7 +1,11 @@
 import createDOMElement from '../services/createDOMElement';
 
 export default class Notes {
-  constructor() {}
+  constructor() {
+    this.isOpen = false;
+    this.isRewrite = false;
+    this.target;
+  }
 
   createNoteContainer = () => {
     const notesContainer = document.querySelector('.notes-container');
@@ -46,18 +50,46 @@ export default class Notes {
   openCreateMenu = () => {
     const createNoteContainer = document.querySelector('.create_note-container');
 
-    createNoteContainer.classList.toggle('open');
+    if (this.isOpen === false) {
+      createNoteContainer.classList.add('open');
+      this.isOpen = true;
+    } else {
+      createNoteContainer.classList.remove('open');
+      this.isOpen = false;
+    }
   };
 
   createNote = () => {
     const noteContainer = document.querySelector('.notes');
     const textArea = document.querySelector('.notes-textarea');
 
-    const note = createDOMElement('div', 'note', null, noteContainer);
-    const noteContent = createDOMElement('h1', 'note-content', `${textArea.value}`, note);
+    // textArea.value = '';
 
-    note.style.transform = `rotate(${this.randomRotateNumber()}deg)`;
-    note.style.backgroundColor = this.randomColorNumber();
+    if (this.isRewrite === true) {
+      const noteContent = document.querySelector('.note-content');
+      noteContent.innerHTML = textArea.value;
+      this.isRewrite = false;
+    } else {
+      if (textArea.value === '') return;
+
+      const note = createDOMElement('div', 'note', null, noteContainer);
+      const noteContent = createDOMElement('h1', 'note-content', `${textArea.value}`, note);
+
+      noteContent.style.transform = `rotate(${this.randomRotateNumber()}deg)`;
+      noteContent.style.backgroundColor = this.randomColorNumber();
+
+      note.addEventListener('mouseenter', () => {
+        note.style.transform = 'scale(1.1)';
+      });
+
+      note.addEventListener('mouseleave', () => {
+        note.style.transform = 'scale(1)';
+      });
+
+      note.addEventListener('click', this.rewriteNote);
+    }
+
+    textArea.value = '';
   };
 
   randomRotateNumber = () => Math.floor(Math.random() * (Math.abs(10 - -10) + 1) + -10);
@@ -67,4 +99,32 @@ export default class Notes {
 
     return RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
   }
+
+  closeNoteCreator = () => {
+    const createContainer = document.querySelector('.create_note-container');
+    const textArea = document.querySelector('.notes-textarea');
+
+    if (this.isRewrite === true) {
+      this.target.remove();
+      this.isRewrite = false;
+    }
+    createContainer.classList.remove('open');
+    this.isOpen = false;
+
+    textArea.value = '';
+  };
+
+  rewriteNote = (event) => {
+    const { target } = event;
+    let textArea = document.querySelector('.notes-textarea');
+    const createContainer = document.querySelector('.create_note-container');
+
+    createContainer.classList.add('open');
+    this.isOpen = true;
+
+    textArea.value += target.innerHTML;
+    this.isRewrite = true;
+
+    this.target = target;
+  };
 }
