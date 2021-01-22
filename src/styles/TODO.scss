@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,700;0,800;1,300;1,400;1,700&display=swap");
+
+@mixin font-main {
+  font-family: "Poppins", sans-serif;
+}
+
+.todo-container {
+  @include font-main;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 500px;
+  height: 500px;
+  background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  color: white;
+}
+.todo-form {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  .todo-input {
+    padding: 0.5rem;
+    font-size: 2rem;
+    border: none;
+    background: white;
+  }
+
+  .todo-button {
+    padding: 0.5rem;
+    font-size: 2rem;
+    border: none;
+    color: #ff6f47;
+    background: #f7fffe;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #ff6f47;
+      color: white;
+    }
+  }
+}
+
+.todoItems-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .todo-list {
+    min-width: 30%;
+    list-style: none;
+  }
+  .todo {
+    margin: 0.5rem;
+    background: white;
+    font-size: 1.5rem;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 1s ease;
+  }
+
+  .todo-item {
+    flex: 1;
+    padding: 0rem 0.5rem;
+  }
+
+  .trash-btn,
+  .complete-btn {
+    color: white;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s ease-in-out;
+  }
+
+  .complete-btn {
+    background: rgb(11, 212, 162);
+    &:hover {
+      color: rgb(13, 199, 13);
+      background: rgb(30, 250, 195);
+    }
+  }
+
+  .trash-btn {
+    background: #ff6f47;
+    &:hover {
+      background: #ffffff;
+      color: crimson;
+    }
+  }
+
+  .fa-trash,
+  .fa-check {
+    pointer-events: none;
+  }
+}
+
+.fall {
+  transform: translateY(10rem) rotateZ(20deg);
+  opacity: 0;
+}
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.5;
+}

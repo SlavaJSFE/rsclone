@@ -1,68 +1,156 @@
 @import "currency.scss";
 @import "clock.scss";
 @import "my-trips.scss";
-@import "sights.scss";
 @import "weather.scss";
+@import "map.scss";
+@import "sights.scss";
+@import "TODO.scss";
 
 $main-color: white;
+$main: none;
+$secondary-color: #272142;
+$primary-color: #1e1e20;
+
+:root {
+  font-size: 10px;
+}
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
+body {
+  background: url("../assets/images/map-2153535_1280.jpg");
+  background-size: cover;
+}
 .title {
   color: $main-color;
   margin: 0;
 }
 .header {
-  background-color: black;
-  height: 10vh;
+  background-color: $secondary-color;
+  height: 8vh;
+  min-height: 4.5rem;
   display: flex;
   justify-content: space-between;
   padding: 0 10px;
-}
-.options {
-  display: flex;
+
+  .modal {
+    max-width: 560px;
+    height: 400px;
+    padding: 15px;
+  }
+  .datepicker-modal {
+    top: 3% !important;
+    height: auto;
+    width: auto;
+  }
+  .close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+  }
+  .close:hover {
+    cursor: pointer;
+  }
+  .header-links {
+    display: flex;
+    margin: auto 0;
+
+    i {
+      font-size: 2.5rem;
+      margin-right: 5px;
+    }
+    .btn {
+      background-color: $secondary-color;
+      box-shadow: none;
+      padding: 0 1rem;
+    }
+    .btn:hover {
+      background-color: unset;
+    }
+    .log-in:hover,
+    .sign-up:hover {
+      color: #ffab00;
+    }
+    .language {
+      display: flex;
+    }
+    select {
+      display: block;
+      margin-top: 0.3rem;
+      padding-top: 0.3rem;
+
+      // .pl:before {
+      //   content: '';
+      //   background-image: url('https://www.countryflags.io/pl/flat/32.png');
+      // }
+    }
+  }
 }
 .main {
   display: grid;
-  grid-template-columns: 15% 63% 22%;
+  grid-template-columns: 10rem 1fr 25rem;
   grid-template-rows: 100%;
-  background-color: yellowgreen;
-  min-height: 80vh;
-}
-.nav {
-  background-color: hotpink;
-  text-align: center;
-  padding-top: 30px;
-}
-.nav-item {
-  margin: 10px auto 0 auto;
-  width: max-content;
-  font-size: 18px;
-}
-.nav-item:hover {
-  cursor: pointer;
-}
-.main-content-section {
-  position: relative;
-  overflow: auto;
-}
-.map-image,
-.notes.image {
-  width: 100%;
-  max-height: 100%;
-}
-.side-bar {
-  background-color: khaki;
-  overflow: hidden;
+  height: 84vh;
+
+  .nav {
+    background-color: #131314;
+    text-align: center;
+    padding-top: 1rem;
+    height: 100%;
+    box-shadow: none;
+
+    .nav-item-block {
+      margin: 1rem auto;
+      z-index: 5;
+
+      .nav-item {
+        margin: 0 auto;
+        width: max-content;
+        font-size: 1.2rem;
+        line-height: 1.5rem;
+        padding-bottom: 10px;
+      }
+      i {
+        font-size: 3.5rem;
+        height: 5rem;
+      }
+    }
+    .nav-item-block:hover {
+      cursor: pointer;
+      background-color: #ffffff18;
+      color: #ffab00;
+    }
+    .nav-item-block.active {
+      color: #ffab00;
+    }
+  }
+  .main-content-section {
+    position: relative;
+    overflow: auto;
+  }
+  .map-image,
+  .notes.image {
+    width: 100%;
+    max-height: 100%;
+  }
+  .side-bar {
+    background-color: #ffa000e7;
+    color: white;
+    overflow: hidden;
+    margin: 0.7rem;
+    border-radius: 0.5rem;
+  }
 }
 .footer {
-  background-color: limegreen;
+  background-color: $secondary-color;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 10vh;
+  height: 8vh;
+  min-height: 4.5rem;
   color: black;
 }
 .authors {
@@ -72,5 +160,13 @@ $main-color: white;
   margin: 0 10px;
 }
 .rss-logo {
-  height: 22px;
+  height: 25px;
+}
+.btn {
+  border-radius: 20px;
+  background-color: #ffab00;
+  background-color: $main;
+}
+.btn:hover {
+  background-color: #ff6d00;
 }
