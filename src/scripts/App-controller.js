@@ -14,19 +14,19 @@ export default class TravelPlaningApp {
   static init() {
     this.model = Model;
     this.view = new TravelPlaningAppView(this.model);
-    this.view.init();
+    // this.view.init();
 
-    const clock1 = new Clock(null, 1, 'Minsk');
-    clock1.createClockView().launchClock();
+    // const clock1 = new Clock(null, 1, 'Minsk');
+    // clock1.createClockView().launchClock();
 
-    const clock2 = new Clock(-3, 2, 'London');
-    clock2.createClockView().launchClock();
+    // const clock2 = new Clock(-3, 2, 'London');
+    // clock2.createClockView().launchClock();
 
-    const currency = new Currency();
-    currency.handleMethods();
+    // const currency = new Currency();
+    // currency.handleMethods();
 
-    const navItemHome = document.getElementById('nav-home');
-    this.fillMainContentSection(navItemHome);
+    // const navItemHome = document.getElementById('nav-home');
+    // this.fillMainContentSection(navItemHome);
 
     // const map = new Map();
     // map.handleApi('london');
@@ -34,8 +34,8 @@ export default class TravelPlaningApp {
     // const todo = new TODO();
     // todo.createTODOElements();
 
-    // const weather = new Weather();
-    // weather.createSearchByCity();
+    const weather = new Weather();
+    weather.createSearchByCity();
 
     this.addAppEventListener();
   }

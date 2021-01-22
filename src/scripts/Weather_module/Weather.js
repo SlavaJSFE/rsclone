@@ -5,13 +5,13 @@ export default class Weather {
   constructor() {}
 
   createSearchByCity = () => {
-    const container = document.querySelector('.container');
+    const container = document.querySelector('.weather-container');
 
-    const title = createDOMElement('h1', 'text-center weather-title', 'Weather in');
+    const title = createDOMElement('h1', 'weather-title', 'Weather in');
     const input = createDOMElement('form', 'search-location', [
       createDOMElement(
         'input',
-        'form-control text-muted form-rounded p-4 shadow-sm',
+        'city-input',
         null,
         null,
         ['type', 'search'],
@@ -67,7 +67,7 @@ export default class Weather {
 
   createWeatherApp = (city) => {
     console.log(city);
-    const container = document.querySelector('.container');
+    const container = document.querySelector('.weather-container');
     const imageName = city.weather[0].icon;
     const iconSrc = `http://openweathermap.org/img/wn/${imageName}@2x.png`;
 
@@ -81,10 +81,10 @@ export default class Weather {
 
     const cardBack = createDOMElement(
       'div',
-      'card rounded my-3 shadow-lg back-card',
+      'card back-card',
       [
-        createDOMElement('div', 'card-top text-center', [
-          createDOMElement('div', 'city-name my-3', [
+        createDOMElement('div', 'card-top', [
+          createDOMElement('div', 'city-name', [
             createDOMElement('p', null, `${city.name}`, null, ['data-night', `${isNight}`]),
             createDOMElement('span', null, '...'),
           ]),
@@ -98,25 +98,25 @@ export default class Weather {
       'div',
       'card-body',
       [
-        createDOMElement('div', 'card-mid row', [
-          createDOMElement('div', 'col-8 text-center temp', [
+        createDOMElement('div', 'card-mid', [
+          createDOMElement('div', 'temp', [
             createDOMElement('span', null, `${this.transferToCelcius(city.main.temp)} &deg;C`),
           ]),
-          createDOMElement('div', 'col-4 condition-temp', [
+          createDOMElement('div', 'condition-temp', [
             createDOMElement('p', 'condition', `${city.weather[0].description}`),
             createDOMElement('p', 'high', `${this.transferToCelcius(city.main.temp_max)} &deg;C`),
             createDOMElement('p', 'low', `${this.transferToCelcius(city.main.temp_min)} &deg;C`),
           ]),
         ]),
-        createDOMElement('div', 'icon-container card shadow mx-auto', [
+        createDOMElement('div', 'icon-container card', [
           createDOMElement('img', null, null, null, ['src', `${iconSrc}`]),
         ]),
-        createDOMElement('div', 'card-bottom px-5 py-5 row', [
-          createDOMElement('div', 'col text-center', [
+        createDOMElement('div', 'card-bottom', [
+          createDOMElement('div', 'feelsLike-container', [
             createDOMElement('p', null, `${this.transferToCelcius(city.main.feels_like)} &deg;C`),
             createDOMElement('span', null, 'Feels Like'),
           ]),
-          createDOMElement('div', 'col text-center', [
+          createDOMElement('div', 'humidity-container', [
             createDOMElement('p', null, `${city.main.humidity} %`),
             createDOMElement('span', 'humidity', 'Humidity'),
           ]),

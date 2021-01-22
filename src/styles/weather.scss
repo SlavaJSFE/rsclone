@@ -4,27 +4,34 @@
   font-family: "Raleway", sans-serif;
 }
 
-.container {
+.weather-container {
   @include font-main;
   font-size: 12px;
   color: #707070;
   max-width: 250px;
   min-width: 100px;
+  margin: 0 auto;
 
   .weather-title {
+    text-align: center;
     font-weight: 700;
     font-size: 30px;
   }
 
-  .form-rounded {
-    border-radius: 2em;
+  .city-input {
+    border: 1px solid black;
+    border-radius: 14px;
   }
 
   .back-card {
-    border-radius: 40px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 40px;
   }
 
   .city-name {
+    text-align: center;
     position: absolute;
     width: 100%;
   }
@@ -42,6 +49,10 @@
     top: -40px;
   }
 
+  .card-img-top {
+    width: 100%;
+  }
+
   .temp span {
     font-weight: 100;
     font-size: 5em;
@@ -51,6 +62,9 @@
 
   .card-body {
     .card-mid {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
       line-height: 0.5;
     }
 
@@ -88,6 +102,10 @@
   }
 
   .icon-container {
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
     border-radius: 100%;
     width: 60px;
     height: 60px;
@@ -100,6 +118,10 @@
   }
 
   .card-bottom {
+    display: flex;
+    margin: 25px 0;
+    justify-content: space-around;
+    align-items: center;
     line-height: 0.5;
   }
   .card-bottom span {
@@ -107,7 +129,7 @@
   }
   .card-bottom p {
     font-size: 20px;
-    font-weight: 100;
+    font-weight: 400;
     letter-spacing: -2px;
   }
 }
