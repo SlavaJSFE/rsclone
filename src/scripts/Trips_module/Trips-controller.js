@@ -27,7 +27,7 @@ export default class Trips {
         const datepicker = document.querySelectorAll('.datepicker');
         Materialize.Datepicker.init(datepicker, {
           firstDay: 1,
-          format: 'dd.mm.yyyy'
+          format: 'dd.mm.yyyy',
         });
 
         this.modal.open();
@@ -112,23 +112,24 @@ export default class Trips {
     });
 
     map.addEventListener('click', () => {
-      console.log(currentCity)
+      console.log(currentCity);
+      this.view.showMap(currentCity);
     });
 
     sights.addEventListener('click', () => {
-      console.log(currentCity)
+      console.log(currentCity);
     });
 
     notes.addEventListener('click', () => {
-      console.log('notes')
+      console.log('notes');
     });
 
     weather.addEventListener('click', () => {
-      console.log(currentCity)
+      console.log(currentCity);
     });
 
     todo.addEventListener('click', () => {
-      console.log(currentCity)
+      console.log(currentCity);
     });
   }
 

@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap");
+
+@mixin font-main {
+  font-family: "Architects Daughter", cursive;
+}
+
+.notes-container {
+  @include font-main;
+  width: 95%;
+  margin: auto;
+}
+
+.button-container {
+  margin-left: 5%;
+}
+
+.notes {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  margin-left: 5%;
+}
+
+.note-container {
+  .note {
+    display: inline-block;
+  }
+  .note-content {
+    font-size: 18px;
+    width: 250px;
+    height: 250px;
+    padding: 25px;
+    margin: 10px;
+    overflow: hidden;
+    box-shadow: 0px 10px 24px 0px rgba(0, 0, 0, 0.75);
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+  }
+}
+
+.create_note-container {
+  display: none;
+  position: absolute;
+  top: 26%;
+  left: 40%;
+}
+
+.notes-textarea {
+  font-size: 24px;
+  box-shadow: 10px 10px 24px 0px rgba(0, 0, 0, 0.75);
+  outline: none;
+  border: none;
+  width: 275px;
+  height: 275px;
+  padding: 40px 25px 25px 25px;
+  background-color: blanchedalmond;
+}
+
+.accept-btn,
+.close-btn {
+  position: absolute;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.accept-btn {
+  font-size: 36px;
+  right: 17%;
+  top: 4%;
+  &:hover {
+    color: green;
+  }
+}
+
+.close-btn {
+  font-size: 36px;
+  right: 5%;
+  top: 4%;
+  &:hover {
+    color: red;
+  }
+}
+
+.open {
+  display: block;
+}

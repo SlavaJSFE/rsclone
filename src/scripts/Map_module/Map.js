@@ -5,6 +5,7 @@ import createHTMLMapMarker from './HTMLMapMarker';
 import { getIcon, layer_names } from '../constants/icon_constants';
 import * as _ from 'lodash';
 import createDOMElement from '../services/createDOMElement';
+import { local } from '../Language_module/languageSwicher';
 
 const requests = [
   'historic_architecture',
@@ -42,12 +43,15 @@ export default class Map {
     this.data = [];
     this.markers = [];
     this.filterData;
-    this.isFirstLaunch = true;
+    // this.isFirstLaunch = true;
   }
 
   handleApi(town) {
     getPlaceCoord(town)
       .then((coord) => {
+        if (!coord) {
+          this.initMap();
+        }
         console.log(coord);
         this.place_LON = coord.lon;
         this.place_LAT = coord.lat;
@@ -69,7 +73,7 @@ export default class Map {
       apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
       version: 'weekly',
       //!TODO
-      language: 'en',
+      language: `${local}`,
     });
 
     loader.load().then(() => {
@@ -94,13 +98,10 @@ export default class Map {
 
       this.createMarkerClusterer();
 
-      if (this.isFirstLaunch === true) {
-        this.createLegend();
-        this.createTownSearch();
-        const button = document.querySelector('.search-button');
-        button.addEventListener('click', this.handleSearchButton);
-        this.isFirstLaunch = false;
-      }
+      this.createLegend();
+      this.createTownSearch();
+      const button = document.querySelector('.search-button');
+      button.addEventListener('click', this.handleSearchButton);
     });
     return this;
   }
@@ -321,6 +322,42 @@ export default class Map {
 
         this.createMarkerClusterer();
       });
+    });
+  };
+
+  staticInitMap = () => {
+    const loader = new Loader({
+      apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
+      version: 'weekly',
+      language: `${local}`,
+    });
+
+    loader.load().then(() => {
+      // coord of current town
+      this.location = new google.maps.LatLng(53.893009, 27.567444);
+
+      this.map = new google.maps.Map(document.getElementById('map'), {
+        center: this.location,
+        zoom: 12,
+        mapTypeControl: false,
+        streetViewControl: false,
+        mapTypeId: google.maps.MapTypeId.TERRAIN,
+      });
+
+      // this.createFilterData(this.data);
+
+      // console.log(this.filterData);
+
+      // this.filterData.forEach((place) => {
+      //   this.createMarker(place);
+      // });
+
+      // this.createMarkerClusterer();
+
+      this.createLegend();
+      this.createTownSearch();
+      const button = document.querySelector('.search-button');
+      button.addEventListener('click', this.handleSearchButton);
     });
   };
 }

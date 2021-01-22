@@ -3,6 +3,7 @@ import createDOMElement from './services/createDOMElement.js';
 import statement from './constants/TravelPlaningApp-constants.js';
 import Map from '../scripts/Map_module/Map';
 import TODO from './TODO_module/TODO';
+import Note from './Notes_module/Notes';
 
 export default class TravelPlaningAppView {
   constructor(model) {
@@ -76,13 +77,14 @@ export default class TravelPlaningAppView {
     this.mainContentSection.append(mapWidget, content, legend, searchContainer);
 
     const map = new Map();
-    // map.initMap();
-    map.handleApi('london');
+    map.staticInitMap();
   }
 
   showNotes() {
-    const notesImage = createDOMElement('img', 'notes-image', null, null, ['src', statement.notes]);
-    this.mainContentSection.appendChild(notesImage);
+    const noteContainer = createDOMElement('div', 'notes-container');
+    this.mainContentSection.appendChild(noteContainer);
+    const note = new Note();
+    note.createNoteContainer();
   }
 
   fillModalAuth() {

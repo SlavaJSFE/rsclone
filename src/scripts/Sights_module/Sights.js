@@ -15,125 +15,125 @@ export default class Sights {
     this.lat = null;
   }
 
-	createSightsInfo = () => {
-	  this.createSearcher();
-	}
+  createSightsInfo = () => {
+    this.createSearcher();
+  };
 
-	apiGet(method, query) {
-	  let otmAPI = `https://api.opentripmap.com/0.1/en/places/${method}?apikey=${this.apiKey}`;
-	  if (query !== undefined) {
-	    otmAPI += '&' + query;
-	  }
-	  return fetch(otmAPI)
-	    .then(response => response.json())
-	    .then((data) => data)
-	    .catch((err) => {
-	      console.log('Fetch Error :-S', err);
-	    });
-	}
+  apiGet(method, query) {
+    let otmAPI = `https://api.opentripmap.com/0.1/en/places/${method}?apikey=${this.apiKey}`;
+    if (query !== undefined) {
+      otmAPI += '&' + query;
+    }
+    return fetch(otmAPI)
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => {
+        console.log('Fetch Error :-S', err);
+      });
+  }
 
-	getCountryName(countryCode) {
-	  if (isoCountries.hasOwnProperty(countryCode)) {
-	    return isoCountries[countryCode];
-	  }
-	  return countryCode;
-	}
+  getCountryName(countryCode) {
+    if (isoCountries.hasOwnProperty(countryCode)) {
+      return isoCountries[countryCode];
+    }
+    return countryCode;
+  }
 
-	capitalizeFirstLetter(string) {
-	  return string.charAt(0).toUpperCase() + string.slice(1);
-	}
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
-	getCategoryName(kinds) {
-	  let names = [];
-	  kinds.split(',').forEach((kind) => {
-	    let item = layer_names[kind];
-	    if (item) names.push(this.parsePlural(item.n)?.single);
-	  });
-	  return names.join(', ');
-	}
+  getCategoryName(kinds) {
+    let names = [];
+    kinds.split(',').forEach((kind) => {
+      let item = layer_names[kind];
+      if (item) names.push(this.parsePlural(item.n)?.single);
+    });
+    return names.join(', ');
+  }
 
-	firstLoad() {
-	  if (this.lat && this.lon) {
-	    this.apiGet(
-	      'radius',
-	      `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=count`
-	    ).then((data) => {
-	      this.count = data.count;
-	      this.offset = 0;
-	      document.querySelector(
-	        '#info'
-	      ).innerHTML += `<p>${this.count} objects with description in a 1km radius</p>`;
-	      this.loadList();
-	    });
-	  }
-	}
+  firstLoad() {
+    if (this.lat && this.lon) {
+      this.apiGet(
+        'radius',
+        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=count`
+      ).then((data) => {
+        this.count = data.count;
+        this.offset = 0;
+        document.querySelector(
+          '#info'
+        ).innerHTML += `<p>${this.count} objects with description in a 1km radius</p>`;
+        this.loadList();
+      });
+    }
+  }
 
-	parsePlural(label) {
-	  var sb_single = new Array('');
-	  var sb_plural = new Array('');
-	  var spaces = 0;
-	  for (var i = 0; i < label.length; i++) {
-	    var ch = label.charAt(i);
-	    if (ch != '[') {
-	      sb_single.push(ch);
-	      sb_plural.push(ch);
-	      if (ch == ' ') {
-	        spaces++;
-	      } else {
-	        spaces = 0;
-	      }
-	    } else {
-	      var sb = new Array('');
-	      var j = i + 1;
-	      for (; j < label.length; j++) {
-	        ch = label.charAt(j);
-	        if (ch == ']') break;
-	        sb.push(ch);
-	      }
-	      var len = j - i - 1;
-	      i = sb_plural.length;
-	      sb_plural.splice(Math.max(0, i - len), len);
-	      sb_plural.push(sb.join(''));
-	      if (spaces != 0) {
-	        i = sb_single.length;
-	        sb_single.splice(Math.max(0, i - spaces), spaces);
-	      }
-	      i = j;
-	    }
-	  }
-	  return {
-	    single: this.capitalizeFirstLetter(sb_single.join('')),
-	    plural: sb_plural.join('')
-	  };
-	}
+  parsePlural(label) {
+    var sb_single = new Array('');
+    var sb_plural = new Array('');
+    var spaces = 0;
+    for (var i = 0; i < label.length; i++) {
+      var ch = label.charAt(i);
+      if (ch != '[') {
+        sb_single.push(ch);
+        sb_plural.push(ch);
+        if (ch == ' ') {
+          spaces++;
+        } else {
+          spaces = 0;
+        }
+      } else {
+        var sb = new Array('');
+        var j = i + 1;
+        for (; j < label.length; j++) {
+          ch = label.charAt(j);
+          if (ch == ']') break;
+          sb.push(ch);
+        }
+        var len = j - i - 1;
+        i = sb_plural.length;
+        sb_plural.splice(Math.max(0, i - len), len);
+        sb_plural.push(sb.join(''));
+        if (spaces != 0) {
+          i = sb_single.length;
+          sb_single.splice(Math.max(0, i - spaces), spaces);
+        }
+        i = j;
+      }
+    }
+    return {
+      single: this.capitalizeFirstLetter(sb_single.join('')),
+      plural: sb_plural.join(''),
+    };
+  }
 
-	loadList() {
-	  if (this.lon && this.lat) {
-	    this.apiGet(
-	      'radius',
-	      `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=json`
-	    ).then((data) => {
-	      let list = document.querySelector('#list');
-	      list.innerHTML = '';
-	      data.forEach(item => {
-	        list.appendChild(this.createListItem(item));
-	      });
-	      let nextBtn = document.querySelector('#next_button');
-	      if (this.count < this.offset + this.pageLength) {
-	        nextBtn.style.visibility = 'hidden';
-	      } else {
-	        nextBtn.style.visibility = 'visible';
-	        nextBtn.innerText = `Next (${this.offset + this.pageLength} of ${this.count})`;
-	      }
-	    });
-	  }
-	}
+  loadList() {
+    if (this.lon && this.lat) {
+      this.apiGet(
+        'radius',
+        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=json`
+      ).then((data) => {
+        let list = document.querySelector('#list');
+        list.innerHTML = '';
+        data.forEach((item) => {
+          list.appendChild(this.createListItem(item));
+        });
+        let nextBtn = document.querySelector('#next_button');
+        if (this.count < this.offset + this.pageLength) {
+          nextBtn.style.visibility = 'hidden';
+        } else {
+          nextBtn.style.visibility = 'visible';
+          nextBtn.innerText = `Next (${this.offset + this.pageLength} of ${this.count})`;
+        }
+      });
+    }
+  }
 
-	createListItem(item) {
-	  let a = document.createElement('a');
-	  a.className = 'list-group-item list-group-item-action';
-	  a.setAttribute('data-id', item.xid);
-	  a.innerHTML = `<h5 class="list-group-item-heading">${item.name}</h5>
+  createListItem(item) {
+    let a = document.createElement('a');
+    a.className = 'list-group-item list-group-item-action';
+    a.setAttribute('data-id', item.xid);
+    a.innerHTML = `<h5 class="list-group-item-heading">${item.name}</h5>
 				<p class="list-group-item-text">${this.getCategoryName(item.kinds)}</p>`;
 
 	  a.addEventListener('click', () => {
