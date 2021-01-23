@@ -5,6 +5,7 @@ import services from './services/tripsViewServices.js';
 import Map from '../Map_module/Map';
 import Notes from '../Notes_module/Notes';
 import Weather from '../Weather_module/Weather';
+import TODO from '../TODO_module/TODO';
 
 export default class TripsView {
   constructor() {
@@ -94,5 +95,15 @@ export default class TripsView {
     const note = new Notes();
 
     note.createNoteContainer();
+  }
+
+  showTODO() {
+    this.mainContentSection.innerHTML = '';
+
+    const todoContainer = createDOMElement('div', 'todo-container');
+    this.mainContentSection.appendChild(todoContainer);
+
+    const todo = new TODO();
+    todo.createTODOElements();
   }
 }

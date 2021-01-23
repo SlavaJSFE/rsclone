@@ -130,6 +130,7 @@ export default class Trips {
     });
 
     todo.addEventListener('click', () => {
+      this.view.showTODO();
       console.log(currentCity);
     });
   }
