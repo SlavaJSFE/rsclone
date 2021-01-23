@@ -44,11 +44,20 @@ $main-color: white;
 .trip-details {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  position: relative;
   text-align: center;
   padding: 0.5rem 3rem;
   gap: 3rem;
   color: #ffffff;
 
+  .back-btn {
+    position: absolute;
+    width: 36px;
+    text-align: center;
+    padding: 0;
+    top: 10px;
+    left: 10px;
+  }
   .trip-details-header,
   .trip-details-buttons,
   .pagination {
@@ -81,6 +90,7 @@ $main-color: white;
     width: 60%;
     max-width: 15rem;
     justify-self: center;
+    align-self: end;
     font-size: 2rem;
     // background-color: #ffa000;
     background-image: url('../assets/images/paper-1074131_640.jpg');

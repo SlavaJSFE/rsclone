@@ -53,11 +53,6 @@ export default class Trips {
 
       const tripDetailsContainer = document.querySelector('.trip-details');
       this.addTripDetailsListener(tripDetailsContainer);
-
-      // const tripDetailsContainer = document.querySelector('.trip-details');
-      // tripDetailsContainer.addEventListener('click', (e) => {
-      //   this.handleTripDetailsEvent(e, tripDetailsContainer);
-      // });
     }
   }
 
@@ -85,6 +80,7 @@ export default class Trips {
     // ! make separate function for modal activation to avoid code duplicate
     this.modalWindow = document.getElementById('modal1');
     this.modal = Materialize.Modal.getInstance(this.modalWindow);
+    const goBackBtn = tripDetailsContainer.querySelector('.back-btn');
     const removeTripBtn = document.getElementById('remove-trip');
     const addDestinationBtn = document.getElementById('add-destination');
     const map = tripDetailsContainer.querySelector('.map');
@@ -94,6 +90,10 @@ export default class Trips {
     const todo = tripDetailsContainer.querySelector('.todo');
     const currentCity = tripDetailsContainer.querySelector('.trip-destination').textContent;
 
+    goBackBtn.addEventListener('click', () => {
+      this.view.goBackToUserTrips();
+    });
+    
     removeTripBtn.addEventListener('click', () => {
       this.view.fillRemoveTripModal();
       this.modal.open();
@@ -109,6 +109,11 @@ export default class Trips {
       this.view.fillAddDestinationModal();
       this.modal.open();
       this.addListenerToCloseBtn();
+
+      const form = document.getElementById('new-destination-form');
+      form.addEventListener('submit', (event) => {
+        this.handleNewDestinationSubmit(event, tripDetailsContainer.id);
+      });
     });
 
     map.addEventListener('click', () => {
@@ -133,6 +138,13 @@ export default class Trips {
       this.view.showTODO();
       console.log(currentCity);
     });
+  }
+
+  handleNewDestinationSubmit(event, tripId) {
+    event.preventDefault();
+
+    TripsModel.setNewDestination(tripId);
+    this.modal.close();
   }
 
   async handleTripRemoveModalEvent(event, tripId) {

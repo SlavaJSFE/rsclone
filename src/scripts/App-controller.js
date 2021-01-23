@@ -27,16 +27,7 @@ export default class TravelPlaningApp {
     const navItemHome = document.getElementById('nav-home');
     this.fillMainContentSection(navItemHome);
 
-    // const map = new Map();
-    // map.handleApi('london');
-
-    // const todo = new TODO();
-    // todo.createTODOElements();
-
     this.addConstDOMElements();
-    // const notes = new Notes();
-    // notes.createNoteContainer();
-
     this.addAppEventListener();
     this.checkAuth();
   }
@@ -139,7 +130,6 @@ export default class TravelPlaningApp {
 
     if (currentItem.id === 'nav-my-trips') {
       this.view.mainContentSection.innerHTML = '';
-      // const tripsComponent = new Trips();
       this.tripsComponent.init();
       currentItem.classList.add('active');
     }

@@ -11,11 +11,14 @@ export default class TripDetails {
   createTripContent() {
     const tripContainer = createDOMElement('section', 'trip-details', null, null, ['id', this.trip.id]);
 
+    const goBackBtn = createDOMElement('div', 'btn back-btn', null, tripContainer);
+    createDOMElement('i', 'material-icons', 'arrow_back', goBackBtn);
+    
     const tripDetailsHeader = createDOMElement('div', 'trip-details-header', null, tripContainer);
-
     createDOMElement('div', 'trip-title', this.trip.tripName, tripDetailsHeader);
     createDOMElement('div', 'trip-destination', this.trip.tripRoute[0], tripDetailsHeader);
-    createDOMElement('div', 'trip-date', `Trip date: ${this.trip.startDate} - ${this.trip.endDate}`,
+    createDOMElement('div', 'trip-date',
+    `Trip date: <span>${this.trip.startDate}</span> - <span>${this.trip.endDate}</span>`,
       tripDetailsHeader);
 
     const map = createDOMElement('div', 'trip-icon map', null, tripContainer);

@@ -47,9 +47,14 @@ export default class TripsView {
   }
 
   showTrip(tripObject) {
-    this.mainContentSection.innerHTML = '';
-    const trip = new TripDetails(tripObject);
-    this.mainContentSection.appendChild(trip);
+    this.myTripsContainer.classList.add('hidden');
+    this.trip = new TripDetails(tripObject);
+    this.mainContentSection.appendChild(this.trip);
+  }
+
+  goBackToUserTrips() {
+    this.trip.remove();
+    this.myTripsContainer.classList.remove('hidden');
   }
 
   setTripCard(tripObject) {
