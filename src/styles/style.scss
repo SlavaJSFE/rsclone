@@ -71,10 +71,10 @@ body {
     .btn:hover {
       background-color: unset;
     }
-<<<<<<< HEAD
-    .log-in:hover, .sign-up:hover, .language:hover {
-=======
->>>>>>> develop
+    .log-in:hover,
+    .log-out:hover,
+    .sign-up:hover,
+    .language:hover {
       color: #ffab00;
     }
     .language {
@@ -84,7 +84,6 @@ body {
       display: block;
       margin-top: 0.3rem;
       padding-top: 0.3rem;
-<<<<<<< HEAD
       color: $main-color;
       background-color: $secondary-color;
       border: none;
@@ -95,8 +94,6 @@ body {
     }
     select:focus {
       color: #ffab00;
-=======
->>>>>>> develop
     }
   }
 }
