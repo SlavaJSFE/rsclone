@@ -22,10 +22,20 @@ export default class TravelPlaningApp {
     const currency = new Currency();
     currency.handleMethods();
 
+    this.tripsComponent = new Trips();
+
     const navItemHome = document.getElementById('nav-home');
     this.fillMainContentSection(navItemHome);
 
+    this.addConstDOMElements();
     this.addAppEventListener();
+    this.checkAuth();
+  }
+
+  static addConstDOMElements() {
+    this.logIn = this.view.header.querySelector('.log-in');
+    this.logOut = this.view.header.querySelector('.log-out');
+    this.singUp = this.view.header.querySelector('.sign-up');
   }
 
   static addAppEventListener() {
@@ -52,11 +62,10 @@ export default class TravelPlaningApp {
   }
 
   static handleHeaderEvent(target) {
-    const authorization = this.view.header.querySelector('.authorization');
     this.modalWindow = document.getElementById('modal1');
     this.modal = Materialize.Modal.getInstance(this.modalWindow);
 
-    if (target === authorization || target === authorization.children[0]) {
+    if (target === this.logIn || target === this.logIn.children[0]) {
       this.view.fillModalAuth();
       this.modal.open();
 
@@ -65,10 +74,25 @@ export default class TravelPlaningApp {
         this.handleAuth(event);
       });
 
-      const closeModalBtn = document.getElementById('close-modal-btn');
-      closeModalBtn.addEventListener('click', () => {
-        this.modal.close();
+      this.addCloseListener();
+    }
+
+    if (target === this.logOut || target === this.logOut.children[0]) {
+      this.model.removeUserFromSessionStorage();
+      this.checkMyTripsActive();
+      this.view.changeAuthIcons();
+    }
+
+    if (target === this.singUp || target === this.singUp.children[0]) {
+      this.modal.open();
+      this.view.fillModalRegistration();
+
+      const form = document.getElementById('sign-up-form');
+      form.addEventListener('submit', (event) => {
+        this.handleSignUp(event);
       });
+
+      this.addCloseListener();
     }
   }
 
@@ -82,11 +106,17 @@ export default class TravelPlaningApp {
 
     if (token) {
       this.model.setUserToSessionStorage(email);
-      this.modal.close();
       this.modalWindow.innerHTML = '';
+      this.modal.close();
+      this.view.changeAuthIcons('user');
 
-      this.tripsComponent.showUserTrips();
+      this.checkMyTripsActive();
     }
+  }
+
+  static async handleSignUp(event) {
+    event.preventDefault();
+    console.log('reg')
   }
 
   static fillMainContentSection(currentItem) {
@@ -100,8 +130,7 @@ export default class TravelPlaningApp {
 
     if (currentItem.id === 'nav-my-trips') {
       this.view.mainContentSection.innerHTML = '';
-      const tripsComponent = new Trips();
-      tripsComponent.init();
+      this.tripsComponent.init();
       currentItem.classList.add('active');
     }
 
@@ -129,5 +158,26 @@ export default class TravelPlaningApp {
       this.view.showTODOList();
       currentItem.classList.add('active');
     }
+  }
+
+  static checkAuth() {
+    const user = this.model.getUserFromSessionStorage();
+
+    this.view.changeAuthIcons(user);
+  }
+
+  static checkMyTripsActive() {
+    const currentNavItem = this.view.navigation.querySelector('.active');
+
+    if (currentNavItem.id === 'nav-my-trips') {
+      this.fillMainContentSection(currentNavItem);
+    }
+  }
+
+  static addCloseListener() {
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    closeModalBtn.addEventListener('click', () => {
+      this.modal.close();
+    });
   }
 }

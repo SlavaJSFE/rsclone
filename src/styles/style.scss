@@ -1,3 +1,4 @@
+@import 'materialize-css/sass/materialize.scss';
 @import "currency.scss";
 @import "clock.scss";
 @import "map.scss";
@@ -7,7 +8,7 @@
 @import "weather.scss";
 @import "notes.scss";
 
-$main-color: white;
+$main-color: #ffffff;
 $main: none;
 $secondary-color: #272142;
 $primary-color: #1e1e20;
@@ -72,7 +73,9 @@ body {
       background-color: unset;
     }
     .log-in:hover,
-    .sign-up:hover {
+    .log-out:hover,
+    .sign-up:hover,
+    .language:hover {
       color: #ffab00;
     }
     .language {
@@ -82,11 +85,16 @@ body {
       display: block;
       margin-top: 0.3rem;
       padding-top: 0.3rem;
-
-      // .pl:before {
-      //   content: '';
-      //   background-image: url('https://www.countryflags.io/pl/flat/32.png');
-      // }
+      color: $main-color;
+      background-color: $secondary-color;
+      border: none;
+    }
+    select:hover {
+      color: #ffab00;
+      cursor: pointer;
+    }
+    select:focus {
+      color: #ffab00;
     }
   }
 }
@@ -99,13 +107,11 @@ body {
   .nav {
     background-color: #131314;
     text-align: center;
-    padding-top: 1rem;
     height: 100%;
     box-shadow: none;
 
     .nav-item-block {
-      margin: 1rem auto;
-      z-index: 5;
+      margin: 0.5rem auto;
 
       .nav-item {
         margin: 0 auto;
@@ -166,8 +172,13 @@ body {
 .btn {
   border-radius: 20px;
   background-color: #ffab00;
-  background-color: $main;
 }
 .btn:hover {
   background-color: #ff6d00;
+}
+.btn:focus {
+  background-color: #ffab00;
+}
+.hidden {
+  display: none;
 }

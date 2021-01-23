@@ -91,9 +91,29 @@ export default class TravelPlaningAppView {
     services.fillModal(this.modal);
   }
 
+  fillModalRegistration() {
+    services.fillModalSignUp(this.modal);
+  }
+
   showTODOList() {
     createDOMElement('div', 'todo-container', null, this.mainContentSection);
     const todo = new TODO();
     todo.createTODOElements();
+  }
+
+  changeAuthIcons(user) {
+    this.logIn = this.links.querySelector('.log-in');
+    this.logOut = this.links.querySelector('.log-out');
+    this.singUp = this.links.querySelector('.sign-up');
+
+    if (user) {
+      this.logOut.classList.remove('hidden');
+      this.logIn.classList.add('hidden');
+      this.singUp.classList.add('hidden');
+    } else {
+      this.logOut.classList.add('hidden');
+      this.logIn.classList.remove('hidden');
+      this.singUp.classList.remove('hidden');
+    }
   }
 }

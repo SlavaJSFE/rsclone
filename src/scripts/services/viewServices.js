@@ -22,6 +22,9 @@ const services = {
     const logIn = createDOMElement('div', 'btn log-in', 'Log In', authorization);
     createDOMElement('i', 'material-icons left', 'fingerprint', logIn);
 
+    const logOut = createDOMElement('div', 'log-out btn', 'Log Out', authorization);
+    createDOMElement('i', 'material-icons left', 'mood', logOut);
+
     const singUp = createDOMElement('div', 'btn sign-up', 'Sing Up', authorization);
     createDOMElement('i', 'material-icons left', 'person_add', singUp);
 
@@ -29,11 +32,12 @@ const services = {
 
     const langSwitcher = `<i class="material-icons left">language</i>
                           <select class="langSwitcher">
-                            <option value="ru">Русский</option>
-                            <option value="en">English</option>
-                            <option value="pl">Polski</option>
-                            <option value="de">Deutsch</option>
-                            <option value="zh">中文</option>
+                            <div><option value="ru">Русский</option></div>
+                            <div><option value="en">English</option></div>
+                            <div><option value="pl">Polski</option></div>
+                            <div><option value="de">Deutsch</option></div>
+                            <div><option value="zh">中文</option></div>
+                            
                           </select>`;
     // document.createElement('select');
     // langSwitcher.setAttribute('name', '');
@@ -94,6 +98,31 @@ const services = {
                               </div>
                               <button id="auth-btn" class="btn waves-effect waves-light" type="submit">
                                 Enter
+                                <i class="material-icons right">send</i>
+                              </button>
+                            </form>
+                          </div>`;
+
+    modalWindow.innerHTML = modalContent;
+  },
+
+  fillModalSignUp(modal) {
+    const modalWindow = modal;
+
+    const modalContent = `<div class="modal-content">
+                            <i class="material-icons close" id="close-modal-btn">close</i>
+                            <h4>Registration</h4>
+                            <form id="sign-up-form">
+                              <div class="input-field">
+                                <input id="email" class="validate" type="email" required>
+                                <label for="email">Email</label>
+                              </div>
+                              <div class="input-field">
+                                <input id="password" class="validate" type="password" required>
+                                <label for="password">Password</label>
+                              </div>
+                              <button id="sign-up-btn" class="btn waves-effect waves-light" type="submit">
+                                Sign Up
                                 <i class="material-icons right">send</i>
                               </button>
                             </form>

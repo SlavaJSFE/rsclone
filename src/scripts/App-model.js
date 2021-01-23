@@ -21,4 +21,13 @@ export default class AppModel {
       email
     }));
   }
+
+  static getUserFromSessionStorage() {
+    const user = sessionStorage.getItem('user');
+    return user;
+  }
+
+  static removeUserFromSessionStorage() {
+    sessionStorage.removeItem('user');
+  }
 }

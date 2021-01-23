@@ -64,6 +64,25 @@ export default class TripsModel {
     return data;
   }
 
+  static async setNewDestination(tripId) {
+    const inputNewDestination = document.getElementById('first-destination');
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const userName = user.email.split('@')[0];
+
+    const response = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${tripId}/tripRoute.json`);
+    const routeArray = await response.json();
+    routeArray.push(inputNewDestination.value);
+
+    const result = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${tripId}/tripRoute.json`, {
+      method: 'PUT',
+      body: JSON.stringify(routeArray),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    console.log(result)
+  }
+
   static async removeTripFromDatabase(id) {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const userName = user.email.split('@')[0];
