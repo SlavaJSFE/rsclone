@@ -6,39 +6,24 @@ import Clock from './Clock_module/Clock';
 import Trips from './Trips_module/Trips-controller.js';
 import Sights from './Sights_module/Sights.js';
 import './Sights_module/EventsSights';
-import Map from './Map_module/Map';
-import TODO from './TODO_module/TODO';
-import Weather from './Weather_module/Weather';
-import Notes from './Notes_module/Notes';
 
 export default class TravelPlaningApp {
   static init() {
     this.model = Model;
     this.view = new TravelPlaningAppView(this.model);
-    // this.view.init();
+    this.view.init();
 
-    // const clock1 = new Clock(null, 1, 'Minsk');
-    // clock1.createClockView().launchClock();
+    const clock1 = new Clock(null, 1, 'Minsk');
+    clock1.createClockView().launchClock();
 
-    // const clock2 = new Clock(-3, 2, 'London');
-    // clock2.createClockView().launchClock();
+    const clock2 = new Clock(-3, 2, 'London');
+    clock2.createClockView().launchClock();
 
-    // const currency = new Currency();
-    // currency.handleMethods();
+    const currency = new Currency();
+    currency.handleMethods();
 
-    // const navItemHome = document.getElementById('nav-home');
-    // this.fillMainContentSection(navItemHome);
-
-    // const map = new Map();
-    // map.handleApi('london');
-
-    // const todo = new TODO();
-    // todo.createTODOElements();
-
-    // const weather = new Weather();
-    // weather.createSearchByCity();
-    // const notes = new Notes();
-    // notes.createNoteContainer();
+    const navItemHome = document.getElementById('nav-home');
+    this.fillMainContentSection(navItemHome);
 
     this.addAppEventListener();
   }

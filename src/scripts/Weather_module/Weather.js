@@ -4,7 +4,7 @@ import createDOMElement from '../services/createDOMElement';
 export default class Weather {
   constructor() {}
 
-  createSearchByCity = () => {
+  createSearchByCity = (town) => {
     const container = document.querySelector('.weather-container');
 
     const title = createDOMElement('h1', 'weather-title', 'Weather in');
@@ -23,6 +23,14 @@ export default class Weather {
 
     container.append(title, input);
     this.setListeners();
+
+    if (town) {
+      getWeatherData(town)
+        .then((data) => {
+          this.createWeatherApp(data);
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   transferToCelcius = (temp) => {
