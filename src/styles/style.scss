@@ -5,6 +5,7 @@
 @import "sights.scss";
 @import "TODO.scss";
 @import "weather.scss";
+@import "notes.scss";
 
 $main-color: white;
 $main: none;
@@ -21,7 +22,7 @@ $primary-color: #1e1e20;
   padding: 0;
 }
 body {
-  // background: url("../assets/images/map-2153535_1280.jpg");
+  background: url("../assets/images/map-2153535_1280.jpg");
   background-size: cover;
 }
 .title {

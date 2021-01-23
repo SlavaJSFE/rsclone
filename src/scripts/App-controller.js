@@ -9,6 +9,7 @@ import './Sights_module/EventsSights';
 import Map from './Map_module/Map';
 import TODO from './TODO_module/TODO';
 import Weather from './Weather_module/Weather';
+import Notes from './Notes_module/Notes';
 
 export default class TravelPlaningApp {
   static init() {
@@ -34,8 +35,10 @@ export default class TravelPlaningApp {
     // const todo = new TODO();
     // todo.createTODOElements();
 
-    const weather = new Weather();
-    weather.createSearchByCity();
+    // const weather = new Weather();
+    // weather.createSearchByCity();
+    // const notes = new Notes();
+    // notes.createNoteContainer();
 
     this.addAppEventListener();
   }

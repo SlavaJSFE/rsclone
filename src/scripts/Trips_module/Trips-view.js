@@ -2,6 +2,7 @@ import createDOMElement from '../services/createDOMElement.js';
 import createTripCard from './services/createTripCard.js';
 import TripDetails from './services/TripDetails.js';
 import services from './services/tripsViewServices.js';
+import Map from '../Map_module/Map';
 
 export default class TripsView {
   constructor() {
@@ -51,5 +52,24 @@ export default class TripsView {
   setTripCard(tripObject) {
     const tripCard = createTripCard(tripObject);
     this.myTripsContainer.appendChild(tripCard);
+  }
+
+  showMap(town) {
+    this.mainContentSection.innerHTML = '';
+
+    const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
+    const content = createDOMElement('div', 'content');
+    const legend = createDOMElement(
+      'div',
+      'legend',
+      [createDOMElement('h3', null, 'Legend')],
+      null,
+      ['id', 'legend']
+    );
+    const searchContainer = createDOMElement('div', 'search-container');
+    this.mainContentSection.append(mapWidget, content, legend, searchContainer);
+
+    const map = new Map();
+    map.handleApi(town);
   }
 }

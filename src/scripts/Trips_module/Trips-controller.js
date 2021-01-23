@@ -1,10 +1,6 @@
 import TripsView from './Trips-view.js';
 import Materialize from 'materialize-css';
 import TripsModel from './Trips-model.js';
-import Map from '../Map_module/Map';
-import createDOMElement from '../services/createDOMElement';
-
-// const mapInit = new Map();
 
 export default class Trips {
   init() {
@@ -117,7 +113,7 @@ export default class Trips {
 
     map.addEventListener('click', () => {
       console.log(currentCity);
-      this.createMap(currentCity);
+      this.view.showMap(currentCity);
     });
 
     sights.addEventListener('click', () => {
@@ -158,24 +154,6 @@ export default class Trips {
       this.modal.close();
     });
   }
-
-  createMap = (town) => {
-    const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
-    const content = createDOMElement('div', 'content');
-    const legend = createDOMElement(
-      'div',
-      'legend',
-      [createDOMElement('h3', null, 'Legend')],
-      null,
-      ['id', 'legend']
-    );
-    const searchContainer = createDOMElement('div', 'search-container');
-    // !TODO
-    this.mainContentSection.append(mapWidget, content, legend, searchContainer);
-
-    const map = new Map();
-    map.handleApi(town);
-  };
 }
 
 // OpenTripMap apiKey:
