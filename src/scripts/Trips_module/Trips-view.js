@@ -3,6 +3,7 @@ import createTripCard from './services/createTripCard.js';
 import TripDetails from './services/TripDetails.js';
 import services from './services/tripsViewServices.js';
 import Map from '../Map_module/Map';
+import Weather from '../Weather_module/Weather';
 
 export default class TripsView {
   constructor() {
@@ -71,5 +72,15 @@ export default class TripsView {
 
     const map = new Map();
     map.handleApi(town);
+  }
+
+  showWeather(town) {
+    this.mainContentSection.innerHTML = '';
+
+    const weatherContainer = createDOMElement('div', 'weather-container');
+    this.mainContentSection.append(weatherContainer);
+
+    const weather = new Weather();
+    weather.createSearchByCity(town);
   }
 }

@@ -125,6 +125,7 @@ export default class Trips {
     });
 
     weather.addEventListener('click', () => {
+      this.view.showWeather(currentCity);
       console.log(currentCity);
     });
 

@@ -6,9 +6,6 @@ import Clock from './Clock_module/Clock';
 import Trips from './Trips_module/Trips-controller.js';
 import Sights from './Sights_module/Sights.js';
 import './Sights_module/EventsSights';
-import Map from './Map_module/Map';
-import TODO from './TODO_module/TODO';
-import Notes from './Notes_module/Notes';
 
 export default class TravelPlaningApp {
   static init() {
@@ -27,15 +24,6 @@ export default class TravelPlaningApp {
 
     const navItemHome = document.getElementById('nav-home');
     this.fillMainContentSection(navItemHome);
-
-    // const map = new Map();
-    // map.handleApi('london');
-
-    // const todo = new TODO();
-    // todo.createTODOElements();
-
-    // const notes = new Notes();
-    // notes.createNoteContainer();
 
     this.addAppEventListener();
   }
