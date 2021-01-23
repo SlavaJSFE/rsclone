@@ -121,14 +121,16 @@ export default class Trips {
     });
 
     notes.addEventListener('click', () => {
-      console.log('notes');
+      this.view.showNotes();
     });
 
     weather.addEventListener('click', () => {
+      this.view.showWeather(currentCity);
       console.log(currentCity);
     });
 
     todo.addEventListener('click', () => {
+      this.view.showTODO();
       console.log(currentCity);
     });
   }

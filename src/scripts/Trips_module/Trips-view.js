@@ -3,6 +3,9 @@ import createTripCard from './services/createTripCard.js';
 import TripDetails from './services/TripDetails.js';
 import services from './services/tripsViewServices.js';
 import Map from '../Map_module/Map';
+import Notes from '../Notes_module/Notes';
+import Weather from '../Weather_module/Weather';
+import TODO from '../TODO_module/TODO';
 
 export default class TripsView {
   constructor() {
@@ -71,5 +74,36 @@ export default class TripsView {
 
     const map = new Map();
     map.handleApi(town);
+  }
+
+  showWeather(town) {
+    this.mainContentSection.innerHTML = '';
+
+    const weatherContainer = createDOMElement('div', 'weather-container');
+    this.mainContentSection.append(weatherContainer);
+
+    const weather = new Weather();
+    weather.createSearchByCity(town);
+  }
+
+  showNotes() {
+    this.mainContentSection.innerHTML = '';
+
+    const noteContainer = createDOMElement('div', 'notes-container');
+    this.mainContentSection.appendChild(noteContainer);
+
+    const note = new Notes();
+
+    note.createNoteContainer();
+  }
+
+  showTODO() {
+    this.mainContentSection.innerHTML = '';
+
+    const todoContainer = createDOMElement('div', 'todo-container');
+    this.mainContentSection.appendChild(todoContainer);
+
+    const todo = new TODO();
+    todo.createTODOElements();
   }
 }

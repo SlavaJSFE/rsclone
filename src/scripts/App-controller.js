@@ -6,9 +6,6 @@ import Clock from './Clock_module/Clock';
 import Trips from './Trips_module/Trips-controller.js';
 import Sights from './Sights_module/Sights.js';
 import './Sights_module/EventsSights';
-import Map from './Map_module/Map';
-import TODO from './TODO_module/TODO';
-import Notes from './Notes_module/Notes';
 
 export default class TravelPlaningApp {
   static init() {
