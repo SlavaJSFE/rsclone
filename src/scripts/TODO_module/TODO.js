@@ -1,8 +1,19 @@
 import createDOMElement from '../services/createDOMElement';
 
 export default class TODO {
+  constructor(id) {
+    this.id = id;
+  }
+
   createTODOElements = () => {
     const container = document.querySelector('.todo-container');
+
+    const goBackBtn = createDOMElement(
+      'div',
+      'btn back-btn todo-back',
+      [createDOMElement('i', 'material-icons', 'arrow_back')],
+      container
+    );
 
     createDOMElement('header', null, [createDOMElement('h1', null, 'TODO List')], container);
 
@@ -50,6 +61,7 @@ export default class TODO {
     );
 
     this.setListeners();
+    this.getPlacesFormDataBase();
   };
 
   setListeners = () => {
@@ -58,14 +70,26 @@ export default class TODO {
 
     const filterTodo = document.querySelector('.filter-todo');
     filterTodo.addEventListener('change', this.filterTodo);
+
+    const backToMenuBtn = document.querySelector('.todo-back');
+    backToMenuBtn.addEventListener('click', this.goBackToMenu);
   };
 
-  addTodoItem = (event) => {
-    event.preventDefault();
+  addTodoItem = (event, place) => {
+    if (event) {
+      event.preventDefault();
+    }
     const todoInput = document.querySelector('.todo-input');
     const todoList = document.querySelector('.todo-list');
+    let inputValue;
 
-    const inputValue = todoInput.value.trim();
+    if (place) {
+      todoInput.value = place;
+      inputValue = todoInput.value.trim();
+    } else {
+      inputValue = todoInput.value.trim();
+    }
+
     if (inputValue === '') return;
 
     const todo = createDOMElement(
@@ -83,6 +107,23 @@ export default class TODO {
 
     todo.addEventListener('click', this.handleTodoItem);
   };
+
+  async getPlacesFormDataBase() {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const email = user.email;
+    const userName = email.split('@')[0];
+
+    let response = await fetch(
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${this.id}/tripRoute.json`
+    );
+
+    const routeArray = await response.json();
+    console.log(routeArray);
+
+    routeArray.forEach((item) => {
+      this.addTodoItem(null, item);
+    });
+  }
 
   handleTodoItem = (event) => {
     const { target } = event;
@@ -127,5 +168,12 @@ export default class TODO {
           }
       }
     });
+  };
+
+  goBackToMenu = () => {
+    const todoContainer = document.querySelector('.todo-container');
+    const tripsDetails = document.querySelector('.trip-details');
+    tripsDetails.classList.remove('hidden');
+    todoContainer.remove();
   };
 }

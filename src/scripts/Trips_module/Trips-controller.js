@@ -135,7 +135,7 @@ export default class Trips {
     });
 
     todo.addEventListener('click', () => {
-      this.view.showTODO();
+      this.view.showTODO(tripDetailsContainer.id);
       console.log(currentCity);
     });
   }
