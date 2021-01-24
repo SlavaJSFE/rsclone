@@ -379,16 +379,6 @@ export default class Map {
         mapTypeId: google.maps.MapTypeId.TERRAIN,
       });
 
-      // this.createFilterData(this.data);
-
-      // console.log(this.filterData);
-
-      // this.filterData.forEach((place) => {
-      //   this.createMarker(place);
-      // });
-
-      // this.createMarkerClusterer();
-
       this.createLegend();
       this.createTownSearch();
       const button = document.querySelector('.search-button');
