@@ -109,7 +109,29 @@ const services = {
                           </div>`;
 
     modalWindow.innerHTML = modalContent;
-  }
+  },
+
+  createPagination(routeArray) {
+    const pagination = document.querySelector('.pagination');
+
+    const leftArrow = createDOMElement('li', 'disabled', null, pagination);
+    const linkLeftArrow = createDOMElement('a', null, null, leftArrow, ['href', '']);
+    createDOMElement('i', 'material-icons', 'chevron_left', linkLeftArrow);
+
+    routeArray.forEach((destination, index) => {
+      const liElement = createDOMElement('li', 'waves-effect', null, pagination);
+      createDOMElement('a', null, `${index + 1}`, liElement, ['href', '']);
+
+      if (index === 0) {
+        // liElement.classList.remove('waves-effect');
+        liElement.classList.add('active');
+      }
+    });
+
+    const rightArrow = createDOMElement('li', 'waves-effect', null, pagination);
+    const linkRightArrow = createDOMElement('a', null, null, rightArrow, ['href', '']);
+    createDOMElement('i', 'material-icons', 'chevron_right', linkRightArrow);
+  },
 };
 
 export default services;

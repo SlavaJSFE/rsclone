@@ -50,11 +50,18 @@ export default class TripsView {
     this.myTripsContainer.classList.add('hidden');
     this.trip = new TripDetails(tripObject);
     this.mainContentSection.appendChild(this.trip);
+
+    services.createPagination(tripObject.tripRoute);
   }
 
   goBackToUserTrips() {
     this.trip.remove();
     this.myTripsContainer.classList.remove('hidden');
+  }
+
+  handleOptionsDropdown() {
+    this.dropdown = document.getElementById('options-dropdown');
+    this.dropdown.classList.toggle('show');
   }
 
   setTripCard(tripObject) {
@@ -72,7 +79,7 @@ export default class TripsView {
       'legend',
       [createDOMElement('h3', null, 'Legend')],
       null,
-      ['id', 'legend']
+      ['id', 'legend'],
     );
     const searchContainer = createDOMElement('div', 'search-container');
     this.mainContentSection.append(mapWidget, content, legend, searchContainer);

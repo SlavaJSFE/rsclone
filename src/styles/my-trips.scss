@@ -50,13 +50,60 @@ $main-color: white;
   gap: 3rem;
   color: #ffffff;
 
-  .back-btn {
+  .back-btn,
+  .options-btn {
     position: absolute;
     width: 36px;
     text-align: center;
     padding: 0;
     top: 10px;
-    left: 10px;
+  }
+  .back-btn {
+    left: 1rem;
+  }
+  .options-btn {
+    right: 1rem;
+
+    .btn {
+      width: 36px;
+      text-align: center;
+      padding: 0;
+    }
+    .drop-content {
+      display: none;
+      position: absolute;
+      top: 4.5rem;
+      right: 0px;
+      font-size: 1.6rem;
+      border-radius: 5px;
+      background-color: #ffa000e7;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+
+      .tooltip {
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        top: -5px;
+        right: 13px;
+        transform: rotate(45deg);
+        background-color: #ffa000e7;
+      }
+      .drop-option {
+        position: relative;
+        padding: 1.5rem;
+        user-select: none;
+        border-radius: 5px;
+      }
+      .drop-option:hover {
+        cursor: pointer;
+        background-color: #ffffff4f;
+      }
+    }
+    .show {
+      display: block;
+    }
   }
   .trip-details-header,
   .trip-details-buttons,
@@ -107,8 +154,13 @@ $main-color: white;
   .trip-icon:hover {
     cursor: pointer;
   }
+  .pagination {
+    background-color: #ffffff;
+    li.active {
+      background-color:  #ffab00;
+    }
+  }
   .trip-details-buttons {
-
     button {
       margin: 0 2rem;
     }

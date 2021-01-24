@@ -1,5 +1,5 @@
-import TripsView from './Trips-view.js';
 import Materialize from 'materialize-css';
+import TripsView from './Trips-view.js';
 import TripsModel from './Trips-model.js';
 
 export default class Trips {
@@ -19,7 +19,7 @@ export default class Trips {
     this.modal = Materialize.Modal.getInstance(this.modalWindow);
 
     if (event.target === this.view.newTripBtn) {
-      let user = sessionStorage.getItem('user');
+      const user = sessionStorage.getItem('user');
 
       if (user) {
         this.view.fillNewTripModal();
@@ -46,7 +46,7 @@ export default class Trips {
 
     if (event.target.className && event.target.className.includes('trip-details-link')) {
       event.preventDefault();
-      const id = event.target.id;
+      const { id } = event.target;
       const tripDetails = await TripsModel.getTripById(id);
 
       this.view.showTrip(tripDetails);
@@ -81,6 +81,7 @@ export default class Trips {
     this.modalWindow = document.getElementById('modal1');
     this.modal = Materialize.Modal.getInstance(this.modalWindow);
     const goBackBtn = tripDetailsContainer.querySelector('.back-btn');
+    const optionsBtn = tripDetailsContainer.querySelector('.options-btn');
     const removeTripBtn = document.getElementById('remove-trip');
     const addDestinationBtn = document.getElementById('add-destination');
     const map = tripDetailsContainer.querySelector('.map');
@@ -93,7 +94,11 @@ export default class Trips {
     goBackBtn.addEventListener('click', () => {
       this.view.goBackToUserTrips();
     });
-    
+
+    optionsBtn.addEventListener('click', () => {
+      this.view.handleOptionsDropdown();
+    });
+
     removeTripBtn.addEventListener('click', () => {
       this.view.fillRemoveTripModal();
       this.modal.open();

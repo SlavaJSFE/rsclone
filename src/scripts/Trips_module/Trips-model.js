@@ -9,7 +9,7 @@ export default class TripsModel {
       tripName: inputName.value,
       tripRoute: [inputDestination.value],
       startDate: inputStartDate.value,
-      endDate: inputEndDate.value
+      endDate: inputEndDate.value,
     };
 
     inputName.innerHTML = '';
@@ -28,8 +28,8 @@ export default class TripsModel {
       method: 'POST',
       body: JSON.stringify(trip),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     });
 
     const data = await response.json();
@@ -39,18 +39,18 @@ export default class TripsModel {
 
   static async getTripsFromDatabase() {
     const user = JSON.parse(sessionStorage.getItem('user'));
-    const email = user.email;
+    const { email } = user;
     const userName = email.split('@')[0];
 
-    let response = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}.json?`);
-    let data = await response.json();
+    const response = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}.json?`);
+    const data = await response.json();
     if (data && data.error) {
       return `<p class="error">${response.error}</p>`;
     }
 
     return data ? Object.keys(data).map((key) => ({
       ...data[key],
-      id: key
+      id: key,
     })) : [];
   }
 
@@ -58,8 +58,8 @@ export default class TripsModel {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const userName = user.email.split('@')[0];
 
-    let response = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}.json`);
-    let data = await response.json();
+    const response = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}.json`);
+    const data = await response.json();
     data.id = id;
     return data;
   }
@@ -73,24 +73,23 @@ export default class TripsModel {
     const routeArray = await response.json();
     routeArray.push(inputNewDestination.value);
 
-    const result = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${tripId}/tripRoute.json`, {
+    await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${tripId}/tripRoute.json`, {
       method: 'PUT',
       body: JSON.stringify(routeArray),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     });
-    console.log(result)
   }
 
   static async removeTripFromDatabase(id) {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const userName = user.email.split('@')[0];
 
-    let response = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}.json`, {
-      method: 'DELETE'
+    const response = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}.json`, {
+      method: 'DELETE',
     });
-    let data = await response.json();
+    const data = await response.json();
     return data;
   }
 }

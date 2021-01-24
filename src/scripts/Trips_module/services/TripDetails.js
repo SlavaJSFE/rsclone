@@ -13,12 +13,15 @@ export default class TripDetails {
 
     const goBackBtn = createDOMElement('div', 'btn back-btn', null, tripContainer);
     createDOMElement('i', 'material-icons', 'arrow_back', goBackBtn);
-    
+
+    const optionsBtn = TripDetails.createOptionsBtn();
+    tripContainer.appendChild(optionsBtn);
+
     const tripDetailsHeader = createDOMElement('div', 'trip-details-header', null, tripContainer);
     createDOMElement('div', 'trip-title', this.trip.tripName, tripDetailsHeader);
     createDOMElement('div', 'trip-destination', this.trip.tripRoute[0], tripDetailsHeader);
     createDOMElement('div', 'trip-date',
-    `Trip date: <span>${this.trip.startDate}</span> - <span>${this.trip.endDate}</span>`,
+      `Trip date: <span>${this.trip.startDate}</span> - <span>${this.trip.endDate}</span>`,
       tripDetailsHeader);
 
     const map = createDOMElement('div', 'trip-icon map', null, tripContainer);
@@ -46,14 +49,14 @@ export default class TripDetails {
     createDOMElement('span', null, 'Important', important);
 
     const pagination = createDOMElement('ul', 'pagination', null, tripContainer);
-    const paginationContent = `<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                                <li class="active"><a href="#!">1</a></li>
-                                <li class="waves-effect"><a href="#!">2</a></li>
-                                <li class="waves-effect"><a href="#!">3</a></li>
-                                <li class="waves-effect"><a href="#!">4</a></li>
-                                <li class="waves-effect"><a href="#!">5</a></li>
-                                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>`;
-    pagination.innerHTML = paginationContent;
+    // const paginationContent = `<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    //                             <li class="active"><a href="#!">1</a></li>
+    //                             <li class="waves-effect"><a href="#!">2</a></li>
+    //                             <li class="waves-effect"><a href="#!">3</a></li>
+    //                             <li class="waves-effect"><a href="#!">4</a></li>
+    //                             <li class="waves-effect"><a href="#!">5</a></li>
+    //                             <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>`;
+    // pagination.innerHTML = paginationContent;
 
     const buttons = createDOMElement('div', 'trip-details-buttons', null, tripContainer);
 
@@ -66,5 +69,22 @@ export default class TripDetails {
     createDOMElement('i', 'material-icons left', 'delete', removeTrip);
 
     return tripContainer;
+  }
+
+  static createOptionsBtn() {
+    const btnWrapper = createDOMElement('div', 'options-btn');
+    const content = `<div id="options-dropdown" class="drop-content">
+                      <div class="drop-option">Change trip name</div>
+                      <div class="divider"></div>
+                      <div class="drop-option">Change dates</div>
+                      <div class="tooltip"></div>
+                    </div>
+                    <div class="btn" data-target="options-dropdown">
+                      <i class="material-icons">settings</i>
+                    </div>`;
+
+    btnWrapper.innerHTML = content;
+
+    return btnWrapper;
   }
 }
