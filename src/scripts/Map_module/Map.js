@@ -6,6 +6,7 @@ import { getIcon, layer_names } from '../constants/icon_constants';
 import * as _ from 'lodash';
 import createDOMElement from '../services/createDOMElement';
 import { local } from '../Language_module/languageSwicher';
+import TripsModel from '../Trips_module/Trips-model';
 
 const requests = [
   'historic_architecture',
@@ -36,7 +37,8 @@ const legendCategories = [
 ];
 
 export default class Map {
-  constructor() {
+  constructor(id) {
+    this.id = id;
     this.place_LON;
     this.place_LAT;
     this.map;
@@ -140,7 +142,7 @@ export default class Map {
           this.infoWindow.addListener('domready', () => {
             this.target = target;
             const button = document.querySelector('.iw-button');
-            button.addEventListener('click', this.addToTODOList);
+            button.addEventListener('click', this.handleButton);
           });
 
           this.map.addListener('click', () => {
@@ -276,7 +278,8 @@ export default class Map {
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
   };
 
-  addToTODOList = () => {
+  handleButton = () => {
+    console.log(this.id);
     const title = document.querySelector('.iw-title');
     console.log(this.target);
     if (this.target.dataset.selected === 'false') {
@@ -285,14 +288,46 @@ export default class Map {
       this.target.dataset.selected = false;
     }
 
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    console.log(user);
+    // console.log(user['email']);
+    const email = user.email;
+    const userName = email.split('@')[0];
+    console.log(userName);
     // return title.innerHTML; // for example London Tower
+
+    this.addToDataBase(userName, this.id, title.innerHTML);
   };
+
+  async addToDataBase(userName, id, placeToVisit) {
+    let response = await fetch(
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/tripRoute.json`
+    );
+
+    const routeArray = await response.json();
+    console.log(routeArray);
+    if (!routeArray.includes(placeToVisit)) {
+      routeArray.push(placeToVisit);
+    }
+
+    const result = await fetch(
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/tripRoute.json`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(routeArray),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    console.log(result);
+  }
 
   handleSearchButton = () => {
     const search = document.querySelector('.search-input');
     const value = search.value.toLowerCase();
-    // console.log(value);
-    // if (value === '') return;
+
     getPlaceCoord(value).then((coord) => {
       this.place_LON = coord.lon;
       this.place_LAT = coord.lat;

@@ -93,7 +93,7 @@ export default class Trips {
     goBackBtn.addEventListener('click', () => {
       this.view.goBackToUserTrips();
     });
-    
+
     removeTripBtn.addEventListener('click', () => {
       this.view.fillRemoveTripModal();
       this.modal.open();
@@ -118,7 +118,7 @@ export default class Trips {
 
     map.addEventListener('click', () => {
       console.log(currentCity);
-      this.view.showMap(currentCity);
+      this.view.showMap(currentCity, tripDetailsContainer.id);
     });
 
     sights.addEventListener('click', () => {

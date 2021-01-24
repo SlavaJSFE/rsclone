@@ -62,7 +62,7 @@ export default class TripsView {
     this.myTripsContainer.appendChild(tripCard);
   }
 
-  showMap(town) {
+  showMap(town, id) {
     this.mainContentSection.innerHTML = '';
 
     const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
@@ -77,7 +77,7 @@ export default class TripsView {
     const searchContainer = createDOMElement('div', 'search-container');
     this.mainContentSection.append(mapWidget, content, legend, searchContainer);
 
-    const map = new Map();
+    const map = new Map(id);
     map.handleApi(town);
   }
 
