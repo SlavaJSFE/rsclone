@@ -250,9 +250,11 @@ export default class Sights {
 	  main_content_block.appendChild(sights_container);
 	}
 
-	search() {
-	  let name = document.querySelector('#textbox').value;
-	  this.apiGet('geoname', 'name=' + name).then((data) => {
+	search(name) {
+    if (name === null) {
+	    name = document.querySelector('#textbox').value;	  
+    }
+    this.apiGet('geoname', 'name=' + name).then((data) => {
 	    let message = 'Name not found';
 	    if (data.status == 'OK') {
 	      message = data.name + ',' + this.getCountryName(data.country);

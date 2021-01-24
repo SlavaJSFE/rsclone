@@ -1,6 +1,7 @@
 import TripsView from './Trips-view.js';
 import Materialize from 'materialize-css';
 import TripsModel from './Trips-model.js';
+import Sights from '../../scripts/Sights_module/Sights.js';
 
 export default class Trips {
   init() {
@@ -93,7 +94,7 @@ export default class Trips {
     goBackBtn.addEventListener('click', () => {
       this.view.goBackToUserTrips();
     });
-    
+
     removeTripBtn.addEventListener('click', () => {
       this.view.fillRemoveTripModal();
       this.modal.open();
@@ -123,6 +124,11 @@ export default class Trips {
 
     sights.addEventListener('click', () => {
       console.log(currentCity);
+      let sights = new Sights;
+      document.querySelector('.main-content-section').innerHTML = '';
+      sights.createSightsInfo();
+      sights.search(currentCity);
+      document.querySelector('.input-field').innerHTML = '';
     });
 
     notes.addEventListener('click', () => {

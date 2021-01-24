@@ -13,7 +13,7 @@ const sights = new Sights();
 document.querySelector("body").addEventListener("click", function (event) {
 	let button_search = event.target.closest('.search');
 	if (button_search !== null) {
-		sights.search();
+		sights.search(null);
 	}
 });
 
