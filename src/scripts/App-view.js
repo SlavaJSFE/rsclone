@@ -4,6 +4,7 @@ import statement from './constants/TravelPlaningApp-constants.js';
 import Map from '../scripts/Map_module/Map';
 import TODO from './TODO_module/TODO';
 import Note from './Notes_module/Notes';
+import initIcon from '../scripts/TravelIcon_module/initIcon';
 
 export default class TravelPlaningAppView {
   constructor(model) {
@@ -17,6 +18,8 @@ export default class TravelPlaningAppView {
     this.createHeader();
     this.createMain();
     this.createFooter();
+
+    initIcon();
   }
 
   createHeader() {
