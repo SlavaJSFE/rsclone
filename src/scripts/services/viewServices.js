@@ -7,9 +7,9 @@ import { local } from '../Language_module/languageSwicher';
 const services = {
   createHeader() {
     const header = createDOMElement('header', 'header');
-    const title = createDOMElement('h1', 'title', 'RYMS Travel');
-
-    header.appendChild(title);
+    const canvas = createDOMElement('canvas');
+    canvas.setAttribute('id', 'canvas');
+    header.appendChild(canvas);
 
     return header;
   },

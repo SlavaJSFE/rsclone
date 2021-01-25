@@ -1,6 +1,9 @@
 import TripsView from './Trips-view.js';
 import Materialize from 'materialize-css';
 import TripsModel from './Trips-model.js';
+import Sights from '../../scripts/Sights_module/Sights.js';
+import objTranslate from '../../scripts/Language_module/sightsLang.component';
+import { local } from '../../scripts/Language_module/languageSwicher';
 
 export default class Trips {
   init() {
@@ -123,6 +126,11 @@ export default class Trips {
 
     sights.addEventListener('click', () => {
       console.log(currentCity);
+      let sights = new Sights;
+      document.querySelector('.main-content-section').innerHTML = '';
+      sights.createSightsInfo();
+      sights.search(currentCity);
+      document.querySelector('#search_form').innerHTML = `${objTranslate.sightsLang['article_' + local]} ${currentCity}`;
     });
 
     notes.addEventListener('click', () => {

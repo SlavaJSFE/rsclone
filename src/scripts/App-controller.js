@@ -6,6 +6,9 @@ import Clock from './Clock_module/Clock';
 import Trips from './Trips_module/Trips-controller.js';
 import Sights from './Sights_module/Sights.js';
 import './Sights_module/EventsSights';
+import Banner from './Banner_module/Banner.js';
+import initBanner from './Banner_module/initBanner.js';
+import MainPageContent from './MainPageContent_module/MainPageContent.js';
 
 export default class TravelPlaningApp {
   static init() {
@@ -124,7 +127,14 @@ export default class TravelPlaningApp {
     previousNavItem.classList.remove('active');
 
     if (currentItem.id === 'nav-home') {
-      this.view.mainContentSection.innerHTML = '<h3>Start Page</h3>';
+      const banner = new Banner();
+      this.view.mainContentSection.innerHTML = '';
+      banner.createBanner();
+      initBanner();
+
+      const mainPageContent = new MainPageContent();
+      mainPageContent.createMainPageContent();
+
       currentItem.classList.add('active');
     }
 
