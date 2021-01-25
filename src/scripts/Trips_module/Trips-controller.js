@@ -126,7 +126,7 @@ export default class Trips {
     });
 
     notes.addEventListener('click', () => {
-      this.view.showNotes();
+      this.view.showNotes(tripDetailsContainer.id);
     });
 
     weather.addEventListener('click', () => {

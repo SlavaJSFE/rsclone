@@ -1,7 +1,8 @@
 import createDOMElement from '../services/createDOMElement';
 
 export default class Notes {
-  constructor() {
+  constructor(id) {
+    this.id = id;
     this.isOpen = false;
     this.target;
   }
@@ -44,13 +45,29 @@ export default class Notes {
 
     const closeBtn = document.querySelector('.close-btn');
     closeBtn.addEventListener('click', this.closeNoteCreator);
+
+    if (this.id) {
+      const backBtn = document.querySelector('.note-back');
+      backBtn.addEventListener('click', this.backToMenu);
+    }
+  };
+
+  backToMenu = () => {
+    const noteContainer = document.querySelector('.notes-container');
+    const backBtn = document.querySelector('.note-back');
+    const tripsDetails = document.querySelector('.trip-details');
+    tripsDetails.classList.remove('hidden');
+    noteContainer.remove();
+    backBtn.remove();
   };
 
   openCreateMenu = () => {
     const createNoteContainer = document.querySelector('.create_note-container');
+    const textArea = document.querySelector('.notes-textarea');
 
     if (this.isOpen === false) {
       createNoteContainer.classList.add('open');
+      textArea.focus();
       this.isOpen = true;
     } else {
       createNoteContainer.classList.remove('open');

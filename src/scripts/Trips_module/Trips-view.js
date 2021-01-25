@@ -96,13 +96,17 @@ export default class TripsView {
     weather.createSearchByCity(town);
   }
 
-  showNotes() {
-    this.mainContentSection.innerHTML = '';
+  showNotes(id) {
+    this.trip.classList.add('hidden');
 
     const noteContainer = createDOMElement('div', 'notes-container');
-    this.mainContentSection.appendChild(noteContainer);
+    const backBtn = createDOMElement('div', 'btn back-btn note-back', [
+      createDOMElement('i', 'material-icons', 'arrow_back'),
+    ]);
 
-    const note = new Notes();
+    this.mainContentSection.append(backBtn, noteContainer);
+
+    const note = new Notes(id);
 
     note.createNoteContainer();
   }
