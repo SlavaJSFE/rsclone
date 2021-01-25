@@ -17,7 +17,7 @@ export default class Sights {
 
   createSightsInfo = () => {
     this.createSearcher();
-  }
+  };
 
   apiGet(method, query) {
     let otmAPI = `https://api.opentripmap.com/0.1/en/places/${method}?apikey=${this.apiKey}`;
@@ -25,7 +25,7 @@ export default class Sights {
       otmAPI += '&' + query;
     }
     return fetch(otmAPI)
-      .then(response => response.json())
+      .then((response) => response.json())
       .then((data) => data)
       .catch((err) => {
         console.log('Fetch Error :-S', err);
@@ -103,7 +103,7 @@ export default class Sights {
     }
     return {
       single: this.capitalizeFirstLetter(sb_single.join('')),
-      plural: sb_plural.join('')
+      plural: sb_plural.join(''),
     };
   }
 
@@ -115,7 +115,7 @@ export default class Sights {
       ).then((data) => {
         let list = document.querySelector('#list');
         list.innerHTML = '';
-        data.forEach(item => {
+        data.forEach((item) => {
           list.appendChild(this.createListItem(item));
         });
         let nextBtn = document.querySelector('#next_button');
@@ -135,7 +135,6 @@ export default class Sights {
     a.setAttribute('data-id', item.xid);
     a.innerHTML = `<h5 class="list-group-item-heading">${item.name}</h5>
 				<p class="list-group-item-text">${this.getCategoryName(item.kinds)}</p>`;
-
     a.addEventListener('click', () => {
       document.querySelectorAll('#list a').forEach((item) => {
         item.classList.remove('active');

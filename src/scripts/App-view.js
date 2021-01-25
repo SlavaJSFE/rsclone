@@ -4,6 +4,7 @@ import statement from './constants/TravelPlaningApp-constants.js';
 import Map from '../scripts/Map_module/Map';
 import TODO from './TODO_module/TODO';
 import initIcon from '../scripts/TravelIcon_module/initIcon';
+import Note from './Notes_module/Notes';
 
 export default class TravelPlaningAppView {
   constructor(model) {
@@ -67,7 +68,6 @@ export default class TravelPlaningAppView {
 
   showMap() {
     const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
-    const content = createDOMElement('div', 'content');
     const legend = createDOMElement(
       'div',
       'legend',
@@ -76,25 +76,47 @@ export default class TravelPlaningAppView {
       ['id', 'legend']
     );
     const searchContainer = createDOMElement('div', 'search-container');
-    this.mainContentSection.append(mapWidget, content, legend, searchContainer);
+
+    this.mainContentSection.append(mapWidget, legend, searchContainer);
 
     const map = new Map();
-    // map.initMap();
-    map.handleApi('london');
+    map.staticInitMap();
   }
 
   showNotes() {
-    const notesImage = createDOMElement('img', 'notes-image', null, null, ['src', statement.notes]);
-    this.mainContentSection.appendChild(notesImage);
+    const noteContainer = createDOMElement('div', 'notes-container');
+    this.mainContentSection.appendChild(noteContainer);
+    const note = new Note();
+    note.createNoteContainer();
   }
 
   fillModalAuth() {
     services.fillModal(this.modal);
   }
 
+  fillModalRegistration() {
+    services.fillModalSignUp(this.modal);
+  }
+
   showTODOList() {
     createDOMElement('div', 'todo-container', null, this.mainContentSection);
     const todo = new TODO();
     todo.createTODOElements();
+  }
+
+  changeAuthIcons(user) {
+    this.logIn = this.links.querySelector('.log-in');
+    this.logOut = this.links.querySelector('.log-out');
+    this.singUp = this.links.querySelector('.sign-up');
+
+    if (user) {
+      this.logOut.classList.remove('hidden');
+      this.logIn.classList.add('hidden');
+      this.singUp.classList.add('hidden');
+    } else {
+      this.logOut.classList.add('hidden');
+      this.logIn.classList.remove('hidden');
+      this.singUp.classList.remove('hidden');
+    }
   }
 }

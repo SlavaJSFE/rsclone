@@ -2,6 +2,10 @@ import createDOMElement from '../services/createDOMElement.js';
 import createTripCard from './services/createTripCard.js';
 import TripDetails from './services/TripDetails.js';
 import services from './services/tripsViewServices.js';
+import Map from '../Map_module/Map';
+import Notes from '../Notes_module/Notes';
+import Weather from '../Weather_module/Weather';
+import TODO from '../TODO_module/TODO';
 
 export default class TripsView {
   constructor() {
@@ -43,13 +47,81 @@ export default class TripsView {
   }
 
   showTrip(tripObject) {
-    this.mainContentSection.innerHTML = '';
-    const trip = new TripDetails(tripObject);
-    this.mainContentSection.appendChild(trip);
+    this.myTripsContainer.classList.add('hidden');
+    this.trip = new TripDetails(tripObject);
+    this.mainContentSection.appendChild(this.trip);
+  }
+
+  goBackToUserTrips() {
+    this.trip.remove();
+    this.myTripsContainer.classList.remove('hidden');
   }
 
   setTripCard(tripObject) {
     const tripCard = createTripCard(tripObject);
     this.myTripsContainer.appendChild(tripCard);
+  }
+
+  showMap(town, id) {
+    this.trip.classList.add('hidden');
+
+    const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
+    const legend = createDOMElement(
+      'div',
+      'legend',
+      [createDOMElement('h3', null, 'Legend')],
+      null,
+      ['id', 'legend']
+    );
+    const searchContainer = createDOMElement('div', 'search-container');
+    const backBtn = createDOMElement('div', 'map_btn-container');
+
+    this.mainContentSection.append(mapWidget, legend, searchContainer, backBtn);
+
+    const map = new Map(town, id);
+    map.handleApi();
+  }
+
+  showWeather(town) {
+    this.trip.classList.add('hidden');
+
+    const backBtn = createDOMElement('div', 'btn back-btn weather-back', [
+      createDOMElement('i', 'material-icons', 'arrow_back'),
+    ]);
+
+    const weatherContainer = createDOMElement('div', 'weather-container');
+    this.mainContentSection.append(backBtn, weatherContainer);
+
+    const weather = new Weather();
+    weather.createSearchByCity(town);
+  }
+
+  showNotes(id) {
+    this.trip.classList.add('hidden');
+
+    const noteContainer = createDOMElement('div', 'notes-container');
+    const backBtn = createDOMElement('div', 'btn back-btn note-back', [
+      createDOMElement('i', 'material-icons', 'arrow_back'),
+    ]);
+
+    this.mainContentSection.append(backBtn, noteContainer);
+
+    const note = new Notes(id);
+
+    note.createNoteContainer();
+  }
+
+  showTODO(town, id) {
+    this.trip.classList.add('hidden');
+
+    const todoContainer = createDOMElement('div', 'todo-container');
+    const backBtn = createDOMElement('div', 'btn back-btn todo-back', [
+      createDOMElement('i', 'material-icons', 'arrow_back'),
+    ]);
+
+    this.mainContentSection.append(backBtn, todoContainer);
+
+    const todo = new TODO(town, id);
+    todo.createTODOElements();
   }
 }

@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime';
-import { getCountriesInfoData, getCurrencyInfoData } from './Data';
+import { getCountriesInfoData, getCurrencyInfoData } from './CurrencyData';
 import createDOMElement from '../services/createDOMElement';
 
 const CURRENCY_RATES = ['EUR', 'RUB', 'BYN', 'GBP', 'AUD', 'BRL', 'CNY', 'CAD', 'JPY'];

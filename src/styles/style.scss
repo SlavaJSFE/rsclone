@@ -1,3 +1,4 @@
+@import 'materialize-css/sass/materialize.scss';
 @import "currency.scss";
 @import "clock.scss";
 @import "map.scss";
@@ -5,11 +6,13 @@
 @import "sights.scss";
 @import "TODO.scss";
 @import "mainPage.scss";
+@import "weather.scss";
+@import "notes.scss";
 
-$main-color: white;
+$main-color: #ffffff;
 $main: none;
 $secondary-color: #272142;
-$primary-color:  #1e1e20;
+$primary-color: #1e1e20;
 
 :root {
   font-size: 10px;
@@ -21,7 +24,7 @@ $primary-color:  #1e1e20;
   padding: 0;
 }
 body {
-  background: url('../assets/images/map-2153535_1280.jpg');
+  background: url("../assets/images/map-2153535_1280.jpg");
   background-size: cover;
 }
 .title {
@@ -57,7 +60,7 @@ body {
   .header-links {
     display: flex;
     margin: auto 0;
-  
+
     i {
       font-size: 2.5rem;
       margin-right: 5px;
@@ -70,7 +73,10 @@ body {
     .btn:hover {
       background-color: unset;
     }
-    .log-in:hover, .sign-up:hover {
+    .log-in:hover,
+    .log-out:hover,
+    .sign-up:hover,
+    .language:hover {
       color: #ffab00;
     }
     .language {
@@ -80,11 +86,16 @@ body {
       display: block;
       margin-top: 0.3rem;
       padding-top: 0.3rem;
-      
-      // .pl:before {
-      //   content: '';
-      //   background-image: url('https://www.countryflags.io/pl/flat/32.png');
-      // }
+      color: $main-color;
+      background-color: $secondary-color;
+      border: none;
+    }
+    select:hover {
+      color: #ffab00;
+      cursor: pointer;
+    }
+    select:focus {
+      color: #ffab00;
     }
   }
 }
@@ -95,15 +106,13 @@ body {
   height: 84vh;
 
   .nav {
-    background-color:#131314;
+    background-color: #131314;
     text-align: center;
-    padding-top: 1rem;
     height: 100%;
     box-shadow: none;
 
     .nav-item-block {
-      margin: 1rem auto;
-      z-index: 5;
+      margin: 0.5rem auto;
 
       .nav-item {
         margin: 0 auto;
@@ -119,7 +128,7 @@ body {
     }
     .nav-item-block:hover {
       cursor: pointer;
-      background-color:#ffffff18;
+      background-color: #ffffff18;
       color: #ffab00;
     }
     .nav-item-block.active {
@@ -136,7 +145,7 @@ body {
     max-height: 100%;
   }
   .side-bar {
-    background-color:#ffa000e7;
+    background-color: #ffa000e7;
     color: white;
     overflow: hidden;
     margin: 0.7rem;
@@ -164,8 +173,13 @@ body {
 .btn {
   border-radius: 20px;
   background-color: #ffab00;
-  background-color: $main;
 }
 .btn:hover {
   background-color: #ff6d00;
+}
+.btn:focus {
+  background-color: #ffab00;
+}
+.hidden {
+  display: none;
 }
