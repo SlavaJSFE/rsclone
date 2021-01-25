@@ -103,13 +103,27 @@ export default class Map {
 
       this.createLegend();
       this.createTownSearch();
-      const button = document.querySelector('.search-button');
-      button.addEventListener('click', this.handleSearchButton);
-      const search = document.querySelector('.search-location');
-      search.addEventListener('submit', this.handleSearchButton);
+      this.createBackButton();
+
+      this.setListeners();
     });
     return this;
   }
+
+  setListeners = () => {
+    const searchBtn = document.querySelector('.search-button');
+    searchBtn.addEventListener('click', this.handleSearchButton);
+
+    const backBtn = document.querySelector('.map-back');
+    backBtn.addEventListener('click', this.goBackToMenu);
+  };
+
+  goBackToMenu = () => {
+    const mapContainer = document.querySelector('#map');
+    const tripsDetails = document.querySelector('.trip-details');
+    tripsDetails.classList.remove('hidden');
+    mapContainer.remove();
+  };
 
   createMarker = (place) => {
     //get coord from api
@@ -145,7 +159,7 @@ export default class Map {
           this.infoWindow.addListener('domready', () => {
             this.target = target;
             const button = document.querySelector('.iw-button');
-            button.addEventListener('click', this.handleButton);
+            button.addEventListener('click', this.handleAddButton);
           });
 
           this.map.addListener('click', () => {
@@ -281,12 +295,23 @@ export default class Map {
       input
     );
 
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
   };
 
-  createBackButton = () => {};
+  createBackButton = () => {
+    const backBtn = document.querySelector('.btn-container');
 
-  handleButton = () => {
+    createDOMElement(
+      'div',
+      'btn back-btn map-back',
+      [createDOMElement('i', 'material-icons', 'arrow_back')],
+      backBtn
+    );
+
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(backBtn);
+  };
+
+  handleAddButton = () => {
     console.log(this.id);
     const title = document.querySelector('.iw-title');
     console.log(this.target);
@@ -405,6 +430,7 @@ export default class Map {
 
       this.createLegend();
       this.createTownSearch();
+
       const button = document.querySelector('.search-button');
       button.addEventListener('click', this.handleSearchButton);
     });

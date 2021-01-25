@@ -13,7 +13,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   devServer: {
-    port: 8000,
+    port: 5000,
     overlay: {
       warnings: true,
       errors: true,
