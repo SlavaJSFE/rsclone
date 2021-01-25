@@ -111,8 +111,11 @@ export default class TripsView {
     this.trip.classList.add('hidden');
 
     const todoContainer = createDOMElement('div', 'todo-container');
+    const backBtn = createDOMElement('div', 'btn back-btn todo-back', [
+      createDOMElement('i', 'material-icons', 'arrow_back'),
+    ]);
 
-    this.mainContentSection.appendChild(todoContainer);
+    this.mainContentSection.append(backBtn, todoContainer);
 
     const todo = new TODO(town, id);
     todo.createTODOElements();
