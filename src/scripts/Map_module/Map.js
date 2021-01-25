@@ -37,7 +37,8 @@ const legendCategories = [
 ];
 
 export default class Map {
-  constructor(id) {
+  constructor(town, id) {
+    this.town = town;
     this.id = id;
     this.place_LON;
     this.place_LAT;
@@ -48,8 +49,8 @@ export default class Map {
     // this.isFirstLaunch = true;
   }
 
-  handleApi(town) {
-    getPlaceCoord(town)
+  handleApi() {
+    getPlaceCoord(this.town)
       .then((coord) => {
         if (!coord) {
           this.initMap();
@@ -104,6 +105,8 @@ export default class Map {
       this.createTownSearch();
       const button = document.querySelector('.search-button');
       button.addEventListener('click', this.handleSearchButton);
+      const search = document.querySelector('.search-location');
+      search.addEventListener('submit', this.handleSearchButton);
     });
     return this;
   }
@@ -259,24 +262,29 @@ export default class Map {
 
   createTownSearch = () => {
     const input = document.querySelector('.search-container');
-
     createDOMElement(
-      'input',
-      'search-input',
-      null,
-      input,
-      ['type', 'search'],
-      ['placeholder', 'Find your city']
-    );
-    createDOMElement(
-      'button',
-      'search-button btn',
-      [createDOMElement('i', 'material-icons', `search`)],
+      'form',
+      'search-location',
+      [
+        createDOMElement(
+          'input',
+          'search-input',
+          null,
+          null,
+          ['type', 'search'],
+          ['placeholder', 'Find your city']
+        ),
+        createDOMElement('button', 'search-button btn', [
+          createDOMElement('i', 'material-icons', `search`),
+        ]),
+      ],
       input
     );
 
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
   };
+
+  createBackButton = () => {};
 
   handleButton = () => {
     console.log(this.id);
@@ -301,30 +309,46 @@ export default class Map {
 
   async addToDataBase(userName, id, placeToVisit) {
     let response = await fetch(
-      `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/tripRoute.json`
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/placeToVisit/${this.town}.json`
     );
+    let arrayOfPlaces = await response.json();
+    console.log(arrayOfPlaces);
 
-    const routeArray = await response.json();
-    console.log(routeArray);
-    if (!routeArray.includes(placeToVisit)) {
-      routeArray.push(placeToVisit);
-    }
+    if (!arrayOfPlaces) {
+      const arrayOfPlaces = [];
+      arrayOfPlaces.push(placeToVisit);
 
-    const result = await fetch(
-      `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/tripRoute.json`,
-      {
-        method: 'PUT',
-        body: JSON.stringify(routeArray),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      let response = await fetch(
+        `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/placeToVisit/${this.town}.json`,
+        {
+          method: 'PUT',
+          body: JSON.stringify(arrayOfPlaces),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    } else {
+      console.log(arrayOfPlaces);
+      if (!arrayOfPlaces.includes(placeToVisit)) {
+        arrayOfPlaces.push(placeToVisit);
       }
-    );
 
-    console.log(result);
+      let response = await fetch(
+        `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/placeToVisit/${this.town}.json`,
+        {
+          method: 'PUT',
+          body: JSON.stringify(arrayOfPlaces),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    }
   }
 
-  handleSearchButton = () => {
+  handleSearchButton = (event) => {
+    event.preventDefault();
     const search = document.querySelector('.search-input');
     const value = search.value.toLowerCase();
 

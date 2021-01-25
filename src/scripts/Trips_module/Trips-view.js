@@ -77,8 +77,8 @@ export default class TripsView {
     const searchContainer = createDOMElement('div', 'search-container');
     this.mainContentSection.append(mapWidget, content, legend, searchContainer);
 
-    const map = new Map(id);
-    map.handleApi(town);
+    const map = new Map(town, id);
+    map.handleApi();
   }
 
   showWeather(town) {
