@@ -1,7 +1,8 @@
 import createDOMElement from '../services/createDOMElement';
 
 export default class TODO {
-  constructor(id) {
+  constructor(town, id) {
+    this.town = town;
     this.id = id;
   }
 
@@ -15,7 +16,7 @@ export default class TODO {
       container
     );
 
-    createDOMElement('header', null, [createDOMElement('h1', null, 'TODO List')], container);
+    createDOMElement('header', null, [createDOMElement('h1', null, 'Places to visit')], container);
 
     createDOMElement(
       'form',
@@ -114,13 +115,13 @@ export default class TODO {
     const userName = email.split('@')[0];
 
     let response = await fetch(
-      `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${this.id}/tripRoute.json`
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${this.id}/placeToVisit/${this.town}.json`
     );
 
-    const routeArray = await response.json();
-    console.log(routeArray);
+    const arrayOfPlaces = await response.json();
+    console.log(arrayOfPlaces);
 
-    routeArray.forEach((item) => {
+    arrayOfPlaces.forEach((item) => {
       this.addTodoItem(null, item);
     });
   }
