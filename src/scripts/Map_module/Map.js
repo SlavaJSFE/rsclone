@@ -298,7 +298,7 @@ export default class Map {
   };
 
   createBackButton = () => {
-    const backBtn = document.querySelector('.btn-container');
+    const backBtn = document.querySelector('.map_btn-container');
 
     createDOMElement(
       'div',

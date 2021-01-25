@@ -74,7 +74,7 @@ export default class TripsView {
       ['id', 'legend']
     );
     const searchContainer = createDOMElement('div', 'search-container');
-    const backBtn = createDOMElement('div', 'btn-container');
+    const backBtn = createDOMElement('div', 'map_btn-container');
 
     this.mainContentSection.append(mapWidget, legend, searchContainer, backBtn);
 
@@ -83,10 +83,14 @@ export default class TripsView {
   }
 
   showWeather(town) {
-    this.mainContentSection.innerHTML = '';
+    this.trip.classList.add('hidden');
+
+    const backBtn = createDOMElement('div', 'btn back-btn weather-back', [
+      createDOMElement('i', 'material-icons', 'arrow_back'),
+    ]);
 
     const weatherContainer = createDOMElement('div', 'weather-container');
-    this.mainContentSection.append(weatherContainer);
+    this.mainContentSection.append(backBtn, weatherContainer);
 
     const weather = new Weather();
     weather.createSearchByCity(town);

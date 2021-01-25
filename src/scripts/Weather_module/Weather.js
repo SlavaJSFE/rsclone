@@ -22,6 +22,7 @@ export default class Weather {
     ]);
 
     container.append(title, input);
+
     this.setListeners();
 
     if (town) {
@@ -41,6 +42,18 @@ export default class Weather {
   setListeners = () => {
     const searchFrom = document.querySelector('.search-location');
     searchFrom.addEventListener('submit', this.handleRequest);
+
+    const backBtn = document.querySelector('.weather-back');
+    backBtn.addEventListener('click', this.goBackToMenu);
+  };
+
+  goBackToMenu = () => {
+    const weatherContainer = document.querySelector('.weather-container');
+    const backBtn = document.querySelector('.weather-back');
+    const tripsDetails = document.querySelector('.trip-details');
+    tripsDetails.classList.remove('hidden');
+    weatherContainer.remove();
+    backBtn.remove();
   };
 
   handleRequest = (event) => {
