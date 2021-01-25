@@ -9,13 +9,6 @@ export default class TODO {
   createTODOElements = () => {
     const container = document.querySelector('.todo-container');
 
-    const goBackBtn = createDOMElement(
-      'div',
-      'btn back-btn todo-back',
-      [createDOMElement('i', 'material-icons', 'arrow_back')],
-      container
-    );
-
     createDOMElement('header', null, [createDOMElement('h1', null, 'Places to visit')], container);
 
     createDOMElement(
@@ -72,8 +65,10 @@ export default class TODO {
     const filterTodo = document.querySelector('.filter-todo');
     filterTodo.addEventListener('change', this.filterTodo);
 
-    const backToMenuBtn = document.querySelector('.todo-back');
-    backToMenuBtn.addEventListener('click', this.goBackToMenu);
+    if (this.id) {
+      const backToMenuBtn = document.querySelector('.todo-back');
+      backToMenuBtn.addEventListener('click', this.goBackToMenu);
+    }
   };
 
   addTodoItem = (event, place) => {
@@ -173,8 +168,10 @@ export default class TODO {
 
   goBackToMenu = () => {
     const todoContainer = document.querySelector('.todo-container');
+    const backBtn = document.querySelector('.todo-back');
     const tripsDetails = document.querySelector('.trip-details');
     tripsDetails.classList.remove('hidden');
     todoContainer.remove();
+    backBtn.remove();
   };
 }
