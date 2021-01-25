@@ -65,7 +65,6 @@ export default class TravelPlaningAppView {
 
   showMap() {
     const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
-    const content = createDOMElement('div', 'content');
     const legend = createDOMElement(
       'div',
       'legend',
@@ -74,7 +73,8 @@ export default class TravelPlaningAppView {
       ['id', 'legend']
     );
     const searchContainer = createDOMElement('div', 'search-container');
-    this.mainContentSection.append(mapWidget, content, legend, searchContainer);
+
+    this.mainContentSection.append(mapWidget, legend, searchContainer);
 
     const map = new Map();
     map.staticInitMap();

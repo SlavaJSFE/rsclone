@@ -63,10 +63,9 @@ export default class TripsView {
   }
 
   showMap(town, id) {
-    this.mainContentSection.innerHTML = '';
+    this.trip.classList.add('hidden');
 
     const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
-    const content = createDOMElement('div', 'content');
     const legend = createDOMElement(
       'div',
       'legend',
@@ -75,10 +74,12 @@ export default class TripsView {
       ['id', 'legend']
     );
     const searchContainer = createDOMElement('div', 'search-container');
-    this.mainContentSection.append(mapWidget, content, legend, searchContainer);
+    const backBtn = createDOMElement('div', 'btn-container');
 
-    const map = new Map(id);
-    map.handleApi(town);
+    this.mainContentSection.append(mapWidget, legend, searchContainer, backBtn);
+
+    const map = new Map(town, id);
+    map.handleApi();
   }
 
   showWeather(town) {
