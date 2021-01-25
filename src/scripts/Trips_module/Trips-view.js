@@ -103,14 +103,14 @@ export default class TripsView {
     note.createNoteContainer();
   }
 
-  showTODO(id) {
+  showTODO(town, id) {
     this.trip.classList.add('hidden');
 
     const todoContainer = createDOMElement('div', 'todo-container');
 
     this.mainContentSection.appendChild(todoContainer);
 
-    const todo = new TODO(id);
+    const todo = new TODO(town, id);
     todo.createTODOElements();
   }
 }

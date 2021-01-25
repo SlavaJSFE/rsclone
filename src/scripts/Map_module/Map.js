@@ -6,7 +6,6 @@ import { getIcon, layer_names } from '../constants/icon_constants';
 import * as _ from 'lodash';
 import createDOMElement from '../services/createDOMElement';
 import { local } from '../Language_module/languageSwicher';
-import TripsModel from '../Trips_module/Trips-model';
 
 const requests = [
   'historic_architecture',
