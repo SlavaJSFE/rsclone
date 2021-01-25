@@ -1,4 +1,4 @@
-import createDOMElement from '../../services/createDOMElement.js';
+import createDOMElement from '../../services/createDOMElement';
 
 const services = {
   createNewTripBtn() {
@@ -113,10 +113,11 @@ const services = {
 
   createPagination(routeArray) {
     const pagination = document.querySelector('.pagination');
+    pagination.innerHTML = '';
 
-    const leftArrow = createDOMElement('li', 'disabled', null, pagination);
+    const leftArrow = createDOMElement('li', 'waves-effect disabled', null, pagination);
     const linkLeftArrow = createDOMElement('a', null, null, leftArrow, ['href', '']);
-    createDOMElement('i', 'material-icons', 'chevron_left', linkLeftArrow);
+    createDOMElement('i', 'material-icons left-arrow', 'chevron_left', linkLeftArrow);
 
     routeArray.forEach((destination, index) => {
       const liElement = createDOMElement('li', 'waves-effect', null, pagination);
@@ -130,7 +131,7 @@ const services = {
 
     const rightArrow = createDOMElement('li', 'waves-effect', null, pagination);
     const linkRightArrow = createDOMElement('a', null, null, rightArrow, ['href', '']);
-    createDOMElement('i', 'material-icons', 'chevron_right', linkRightArrow);
+    createDOMElement('i', 'material-icons right-arrow', 'chevron_right', linkRightArrow);
   },
 };
 

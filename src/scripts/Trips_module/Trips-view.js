@@ -1,7 +1,7 @@
-import createDOMElement from '../services/createDOMElement.js';
-import createTripCard from './services/createTripCard.js';
-import TripDetails from './services/TripDetails.js';
-import services from './services/tripsViewServices.js';
+import createDOMElement from '../services/createDOMElement';
+import createTripCard from './services/createTripCard';
+import TripDetails from './services/TripDetails';
+import services from './services/tripsViewServices';
 import Map from '../Map_module/Map';
 import Notes from '../Notes_module/Notes';
 import Weather from '../Weather_module/Weather';
@@ -49,19 +49,28 @@ export default class TripsView {
   showTrip(tripObject) {
     this.myTripsContainer.classList.add('hidden');
     this.trip = new TripDetails(tripObject);
-    this.mainContentSection.appendChild(this.trip);
+    this.tripDetailsBlock = this.trip.createTripContent();
+    this.mainContentSection.appendChild(this.tripDetailsBlock);
 
     services.createPagination(tripObject.tripRoute);
   }
 
   goBackToUserTrips() {
-    this.trip.remove();
+    this.tripDetailsBlock.remove();
     this.myTripsContainer.classList.remove('hidden');
   }
 
   handleOptionsDropdown() {
     this.dropdown = document.getElementById('options-dropdown');
     this.dropdown.classList.toggle('show');
+  }
+
+  showDestinationDetails(currentActive) {
+    const currentDestination = this.tripDetailsBlock.querySelector('.destination-details');
+    const pageNumber = currentActive.firstChild.textContent;
+
+    currentDestination.remove();
+    this.trip.fillDestination(pageNumber);
   }
 
   setTripCard(tripObject) {

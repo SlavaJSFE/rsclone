@@ -73,6 +73,7 @@ export default class TripsModel {
     const routeArray = await response.json();
     routeArray.push(inputNewDestination.value);
 
+    // const result = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${tripId}/tripRoute.json`, {
     await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${tripId}/tripRoute.json`, {
       method: 'PUT',
       body: JSON.stringify(routeArray),
@@ -80,6 +81,8 @@ export default class TripsModel {
         'Content-Type': 'application/json',
       },
     });
+
+    // return result.json();
   }
 
   static async removeTripFromDatabase(id) {

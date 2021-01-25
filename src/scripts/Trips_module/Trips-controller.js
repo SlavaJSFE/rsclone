@@ -1,6 +1,6 @@
 import Materialize from 'materialize-css';
-import TripsView from './Trips-view.js';
-import TripsModel from './Trips-model.js';
+import TripsView from './Trips-view';
+import TripsModel from './Trips-model';
 
 export default class Trips {
   init() {
@@ -46,14 +46,37 @@ export default class Trips {
 
     if (event.target.className && event.target.className.includes('trip-details-link')) {
       event.preventDefault();
+
       const { id } = event.target;
       const tripDetails = await TripsModel.getTripById(id);
+      this.showTrip(tripDetails);
+      // const { id } = event.target;
+      // const tripDetails = await TripsModel.getTripById(id);
 
-      this.view.showTrip(tripDetails);
+      // this.view.showTrip(tripDetails);
 
-      const tripDetailsContainer = document.querySelector('.trip-details');
-      this.addTripDetailsListener(tripDetailsContainer);
+      // const pagination = document.querySelector('.pagination');
+      // pagination.addEventListener('click', (e) => {
+      //   this.handlePagination(e, pagination);
+      // });
+
+      // this.tripDetailsContainer = document.querySelector('.trip-details');
+      // this.addTripDetailsListeners(this.tripDetailsContainer);
+      // this.addDestinationListeners();
     }
+  }
+
+  async showTrip(tripDetails) {
+    this.view.showTrip(tripDetails);
+
+    const pagination = document.querySelector('.pagination');
+    pagination.addEventListener('click', (event) => {
+      this.handlePagination(event, pagination);
+    });
+
+    this.tripDetailsContainer = document.querySelector('.trip-details');
+    this.addTripDetailsListeners(this.tripDetailsContainer);
+    this.addDestinationListeners();
   }
 
   async handleSubmit(event) {
@@ -76,7 +99,57 @@ export default class Trips {
     }
   }
 
-  addTripDetailsListener(tripDetailsContainer) {
+  handlePagination(event, pagination) {
+    event.preventDefault();
+
+    const currentActive = pagination.querySelector('.active');
+    const leftArrow = pagination.querySelector('.left-arrow');
+    const rightArrow = pagination.querySelector('.right-arrow');
+    const pageNumber = 'a';
+
+    if (event.target === currentActive.firstChild) {
+      return;
+    }
+
+    if (event.target.localName === pageNumber) {
+      currentActive.classList.remove('active');
+      event.target.closest('li').classList.add('active');
+    }
+
+    if (event.target === leftArrow && currentActive.previousSibling !== pagination.firstChild) {
+      currentActive.classList.remove('active');
+      currentActive.previousSibling.classList.add('active');
+    }
+
+    if (event.target === rightArrow && currentActive.nextSibling !== pagination.lastChild) {
+      currentActive.classList.remove('active');
+      currentActive.nextSibling.classList.add('active');
+    }
+
+    const nextActive = pagination.querySelector('.active');
+
+    if (nextActive !== currentActive) {
+      this.view.showDestinationDetails(nextActive);
+      this.addDestinationListeners();
+      Trips.setArrowsDisabled(pagination, nextActive);
+    }
+  }
+
+  static setArrowsDisabled(pagination, currentActive) {
+    if (currentActive.nextSibling === pagination.lastChild) {
+      pagination.lastChild.classList.add('disabled');
+    } else {
+      pagination.lastChild.classList.remove('disabled');
+    }
+
+    if (currentActive.previousSibling === pagination.firstChild) {
+      pagination.firstChild.classList.add('disabled');
+    } else {
+      pagination.firstChild.classList.remove('disabled');
+    }
+  }
+
+  addTripDetailsListeners(tripDetailsContainer) {
     // ! make separate function for modal activation to avoid code duplicate
     this.modalWindow = document.getElementById('modal1');
     this.modal = Materialize.Modal.getInstance(this.modalWindow);
@@ -84,12 +157,6 @@ export default class Trips {
     const optionsBtn = tripDetailsContainer.querySelector('.options-btn');
     const removeTripBtn = document.getElementById('remove-trip');
     const addDestinationBtn = document.getElementById('add-destination');
-    const map = tripDetailsContainer.querySelector('.map');
-    const sights = tripDetailsContainer.querySelector('.sights');
-    const notes = tripDetailsContainer.querySelector('.notes');
-    const weather = tripDetailsContainer.querySelector('.weather');
-    const todo = tripDetailsContainer.querySelector('.todo');
-    const currentCity = tripDetailsContainer.querySelector('.trip-destination').textContent;
 
     goBackBtn.addEventListener('click', () => {
       this.view.goBackToUserTrips();
@@ -120,35 +187,58 @@ export default class Trips {
         this.handleNewDestinationSubmit(event, tripDetailsContainer.id);
       });
     });
+  }
 
-    map.addEventListener('click', () => {
+  addDestinationListeners() {
+    const currentCity = this.tripDetailsContainer.querySelector('.trip-destination').textContent;
+    this.map = this.tripDetailsContainer.querySelector('.map');
+    this.sights = this.tripDetailsContainer.querySelector('.sights');
+    this.notes = this.tripDetailsContainer.querySelector('.notes');
+    this.weather = this.tripDetailsContainer.querySelector('.weather');
+    this.todo = this.tripDetailsContainer.querySelector('.todo');
+    this.important = this.tripDetailsContainer.querySelector('.important');
+
+    this.map.addEventListener('click', () => {
       console.log(currentCity);
       this.view.showMap(currentCity);
     });
 
-    sights.addEventListener('click', () => {
+    this.sights.addEventListener('click', () => {
       console.log(currentCity);
     });
 
-    notes.addEventListener('click', () => {
+    this.notes.addEventListener('click', () => {
       this.view.showNotes();
     });
 
-    weather.addEventListener('click', () => {
+    this.weather.addEventListener('click', () => {
       this.view.showWeather(currentCity);
       console.log(currentCity);
     });
 
-    todo.addEventListener('click', () => {
+    this.todo.addEventListener('click', () => {
       this.view.showTODO();
+      console.log(currentCity);
+    });
+
+    this.important.addEventListener('click', () => {
       console.log(currentCity);
     });
   }
 
-  handleNewDestinationSubmit(event, tripId) {
+  async handleNewDestinationSubmit(event, tripId) {
     event.preventDefault();
 
-    TripsModel.setNewDestination(tripId);
+    await TripsModel.setNewDestination(tripId);
+    const updatedTrip = await TripsModel.getTripById(tripId);
+    this.view.tripDetailsBlock.remove();
+    this.showTrip(updatedTrip);
+
+    const currentDestination = this.view.tripDetailsBlock.querySelector('.destination-details');
+    const lastDestination = updatedTrip.tripRoute.length;
+    currentDestination.remove();
+    this.view.trip.fillDestination(lastDestination);
+
     this.modal.close();
   }
 
