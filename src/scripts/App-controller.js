@@ -10,6 +10,7 @@ import Map from './Map_module/Map';
 import TODO from './TODO_module/TODO';
 import Banner from './Banner_module/Banner.js';
 import initBanner from './Banner_module/initBanner.js';
+import MainPageContent from './MainPageContent_module/MainPageContent.js';
 
 export default class TravelPlaningApp {
   static init() {
@@ -104,11 +105,14 @@ export default class TravelPlaningApp {
     previousNavItem.classList.remove('active');
 
     if (currentItem.id === 'nav-home') {
-      // this.view.mainContentSection.innerHTML = '<h3>Start Page</h3>';
       const banner = new Banner();
       this.view.mainContentSection.innerHTML = '';
       banner.createBanner();
       initBanner();
+
+      const mainPageContent = new MainPageContent();
+      mainPageContent.createMainPageContent();
+
       currentItem.classList.add('active');
     }
 
