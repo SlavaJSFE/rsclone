@@ -119,20 +119,43 @@ export default class TODO {
     });
   }
 
+  async removeFromDatabase(placeToVisit) {
+    const UID = JSON.parse(sessionStorage.getItem('user'));
+
+    let response = await fetch(
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${this.id}/placeToVisit/${this.town}.json`
+    );
+
+    let arrayOfPlaces = await response.json();
+
+    arrayOfPlaces = arrayOfPlaces.filter((place) => place !== placeToVisit);
+
+    await fetch(
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${this.id}/placeToVisit/${this.town}.json`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(arrayOfPlaces),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+  }
+
   handleTodoItem = (event) => {
     const { target } = event;
     const todo = target.parentElement;
-    console.log(target.closest('.trash-btn'));
+    const arrOfChildren = todo.children;
 
     if (target.closest('.trash-btn')) {
       todo.classList.toggle('fall');
       todo.addEventListener('transitionend', () => {
         todo.remove();
       });
+      this.removeFromDatabase(arrOfChildren[0].innerHTML);
     }
     if (target.closest('.complete-btn')) {
       todo.classList.toggle('completed');
-      console.log(todo);
     }
   };
 
