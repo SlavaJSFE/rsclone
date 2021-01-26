@@ -54,10 +54,11 @@ export default class TripsView {
     this.mainContentSection.appendChild(this.tripDetailsBlock);
 
     // === clock render
-    const tripDetailsContainer = document.querySelector('.trip-destination');
-    if (tripDetailsContainer.innerHTML === 'Minsk') return;
-    this.currClock = new Clock(tripDetailsContainer.innerHTML, 2);
-    this.currClock.createClockView().launchClock();
+    this.showClocks();
+    // const tripDetailsContainer = document.querySelector('.trip-destination');
+    // if (tripDetailsContainer.innerHTML === 'Minsk') return;
+    // this.currClock = new Clock(tripDetailsContainer.innerHTML, 2);
+    // this.currClock.createClockView().launchClock();
     // ===
 
     services.createPagination(tripObject.tripRoute);
@@ -67,10 +68,11 @@ export default class TripsView {
     this.tripDetailsBlock.remove();
     this.myTripsContainer.classList.remove('hidden');
 
-    this.currClock.stopClock();
-    const clock = document.querySelector('#clock-container2');
-    console.log(clock);
-    clock.remove();
+    // this.currClock.stopClock();
+    // const clock = document.querySelector('#clock-container2');
+    // console.log(clock);
+    // clock.remove();
+    this.removeClocks();
   }
 
   handleOptionsDropdown() {
@@ -152,5 +154,20 @@ export default class TripsView {
 
     const todo = new TODO(town, id);
     todo.createTODOElements();
+  }
+
+  removeClocks() {
+    this.currClock.stopClock();
+    const clock = document.querySelector('#clock-container2');
+    console.log(clock);
+    clock.remove();
+  }
+
+  showClocks() {
+    const tripDetailsContainer = document.querySelector('.trip-destination');
+    if (tripDetailsContainer.innerHTML !== 'Minsk') {
+      this.currClock = new Clock(tripDetailsContainer.innerHTML, 2);
+      this.currClock.createClockView().launchClock();
+    }
   }
 }

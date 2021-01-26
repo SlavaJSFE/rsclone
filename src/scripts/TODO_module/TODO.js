@@ -105,12 +105,10 @@ export default class TODO {
   };
 
   async getPlacesFormDataBase() {
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    const email = user.email;
-    const userName = email.split('@')[0];
+    const UID = JSON.parse(sessionStorage.getItem('user'));
 
     let response = await fetch(
-      `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${this.id}/placeToVisit/${this.town}.json`
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${this.id}/placeToVisit/${this.town}.json`
     );
 
     const arrayOfPlaces = await response.json();
