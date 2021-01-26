@@ -115,6 +115,10 @@ const services = {
     const pagination = document.querySelector('.pagination');
     pagination.innerHTML = '';
 
+    if (routeArray.length < 2) {
+      pagination.style.visibility = 'hidden';
+    }
+
     const leftArrow = createDOMElement('li', 'waves-effect disabled', null, pagination);
     const linkLeftArrow = createDOMElement('a', null, null, leftArrow, ['href', '']);
     createDOMElement('i', 'material-icons left-arrow', 'chevron_left', linkLeftArrow);

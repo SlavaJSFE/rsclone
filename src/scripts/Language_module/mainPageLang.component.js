@@ -1,13 +1,13 @@
 const mainPageLang = {
-	infoMainPage__article_en: 'Plan your trip with RYMS travel!',
-	infoMainPage__article_ru: 'Запланируй свое путешествие вместе с RYMS travel!',
-	infoMainPage__article_pl: 'Zaplanuj swoją podróż z RYMS travel!',
-	infoMainPage__article_de: 'Planen Sie Ihre Reise mit RYMS travel!',
+	infoMainPage__article_en: 'Plan your trip with RYMS Travel!',
+	infoMainPage__article_ru: 'Запланируй свое путешествие вместе с RYMS Travel!',
+	infoMainPage__article_pl: 'Zaplanuj swoją podróż z RYMS Travel!',
+	infoMainPage__article_de: 'Planen Sie Ihre Reise mit RYMS Travel!',
 	infoMainPage__article_zh: '通過RYMS旅行計劃您的旅行！',
 
 	infoMainPage__articleDescription_en: 'Plan your trip yourself? Easy! The RYMS travel online application will help you find interesting corners of the world. Register!',
 	infoMainPage__articleDescription_ru: 'Запланировать поездку самому? Легко! Онлайн-приложение RYMS travel поможет тебе найти интересные уголки света. Регистрируйся!',
-	infoMainPage__articleDescription_pl: 'Sam zaplanujesz podróż? Łatwy! Aplikacja podróżnicza RYMS online pomoże Ci znaleźć ciekawe zakątki świata. Zarejestrować!',
+	infoMainPage__articleDescription_pl: 'Chcesz sam zaplanować podróż? Łatwo! Aplikacja podróżnicza RYMS online pomoże Ci znaleźć ciekawe zakątki świata. Zarejestruj się!',
 	infoMainPage__articleDescription_de: 'Planen Sie Ihre Reise selbst? Einfach! Die Online-Anwendung RYMS Travel hilft Ihnen dabei, interessante Ecken der Welt zu finden. Registrieren!',
 	infoMainPage__articleDescription_zh: '自己計劃行程？ 簡單！ RYMS旅遊在線應用程序將幫助您找到世界上有趣的角落。 寄存器！',
 
@@ -19,13 +19,13 @@ const mainPageLang = {
 
 	infoMainPage__articleAdvantages__li1_en: 'You do not waste time and effort searching for a country / city you like',
 	infoMainPage__articleAdvantages__li1_ru: 'Вы не тратите время и силы на поиск страны/города по душе',
-	infoMainPage__articleAdvantages__li1_pl: 'Nie tracisz czasu i wysiłku na szukanie kraju / miasta, które lubisz',
+	infoMainPage__articleAdvantages__li1_pl: 'Nie tracisz czasu i wysiłku na poszukiwanie kraju / miasta, które lubisz',
 	infoMainPage__articleAdvantages__li1_de: 'Sie verschwenden keine Zeit und Mühe mit der Suche nach einem Land / einer Stadt, die Sie mögen',
 	infoMainPage__articleAdvantages__li1_zh: '您不會浪費時間和精力來尋找自己喜歡的國家/城市',
 
 	infoMainPage__articleAdvantages__li2_en: 'You successfully combine beach vacations with picturesque landscapes and unique historical sites',
 	infoMainPage__articleAdvantages__li2_ru: 'Вы успешно комбинируете пляжный отдых в сочетании с живописными пейзажами и уникальными историческими местами',
-	infoMainPage__articleAdvantages__li2_pl: 'Z powodzeniem łączysz wakacje na plaży z malowniczymi krajobrazami i wyjątkowymi zabytkami',
+	infoMainPage__articleAdvantages__li2_pl: 'Z powodzeniem połączysz wakacje na plaży z malowniczymi krajobrazami i wyjątkowymi zabytkami',
 	infoMainPage__articleAdvantages__li2_de: 'Sie kombinieren erfolgreich Strandurlaub mit malerischen Landschaften und einzigartigen historischen Stätten',
 	infoMainPage__articleAdvantages__li2_zh: '您可以成功地將海灘度假與風景如畫的風景和獨特的歷史遺跡相結合。',
 

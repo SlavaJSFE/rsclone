@@ -85,9 +85,9 @@ export default class Trips {
   async handleSubmit(event) {
     event.preventDefault();
 
-    const user = JSON.parse(sessionStorage.getItem('user'));
+    const UID = JSON.parse(sessionStorage.getItem('user'));
     const tripObject = TripsModel.setNewTrip();
-    await TripsModel.setToDatabase(tripObject, user.email);
+    await TripsModel.setToDatabase(tripObject, UID);
 
     this.modal.close();
     this.view.setTripCard(tripObject);

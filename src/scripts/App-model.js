@@ -20,29 +20,23 @@ export default class AppModel {
 
   static async signUp(email, password) {
     const { apiKey } = constants;
-    try {
-      const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiKey}`, {
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-          password,
-          returnSecureToken: true,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      return data.localId;
-    } catch (error) {
-      console.log(error)
-    }
+    const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiKey}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        password,
+        returnSecureToken: true,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    return data.localId;
   }
 
-  static setUserToSessionStorage(email) {
-    sessionStorage.setItem('user', JSON.stringify({
-      email,
-    }));
+  static setUserToSessionStorage(UID) {
+    sessionStorage.setItem('user', JSON.stringify(UID));
   }
 
   static getUserFromSessionStorage() {
