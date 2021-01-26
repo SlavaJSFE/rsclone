@@ -105,7 +105,7 @@ export default class TravelPlaningApp {
     const UID = await this.model.authWithEmailAndPassword(email, password);
 
     if (UID) {
-      this.model.setUserToSessionStorage(email);
+      this.model.setUserToSessionStorage(UID);
       this.modalWindow.innerHTML = '';
       this.modal.close();
       this.view.changeAuthIcons('user');
@@ -121,6 +121,15 @@ export default class TravelPlaningApp {
     const password = event.target.querySelector('#password').value;
 
     const UID = await this.model.signUp(email, password);
+
+    if (UID) {
+      this.model.setUserToSessionStorage(UID);
+      this.modalWindow.innerHTML = '';
+      this.modal.close();
+      this.view.changeAuthIcons('user');
+
+      this.checkMyTripsActive();
+    }
 
     console.log(email, password, UID);
   }
