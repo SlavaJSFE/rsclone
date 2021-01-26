@@ -13,6 +13,7 @@ export default class TripsView {
     this.mainContentSection = document.querySelector('.main-content-section');
     this.modal = document.getElementById('modal1');
     this.init();
+    this.currClock;
   }
 
   init() {
@@ -54,11 +55,12 @@ export default class TripsView {
     this.mainContentSection.appendChild(this.tripDetailsBlock);
 
     // === clock render
+    const clockContainer = document.querySelector('#clock-container2');
+    if (clockContainer) {
+      this.removeClocks();
+    }
+
     this.showClocks();
-    // const tripDetailsContainer = document.querySelector('.trip-destination');
-    // if (tripDetailsContainer.innerHTML === 'Minsk') return;
-    // this.currClock = new Clock(tripDetailsContainer.innerHTML, 2);
-    // this.currClock.createClockView().launchClock();
     // ===
 
     services.createPagination(tripObject.tripRoute);
@@ -68,10 +70,6 @@ export default class TripsView {
     this.tripDetailsBlock.remove();
     this.myTripsContainer.classList.remove('hidden');
 
-    // this.currClock.stopClock();
-    // const clock = document.querySelector('#clock-container2');
-    // console.log(clock);
-    // clock.remove();
     this.removeClocks();
   }
 
@@ -157,10 +155,9 @@ export default class TripsView {
   }
 
   removeClocks() {
-    this.currClock.stopClock();
     const clock = document.querySelector('#clock-container2');
-    console.log(clock);
     clock.remove();
+    this.currClock.stopClock();
   }
 
   showClocks() {
