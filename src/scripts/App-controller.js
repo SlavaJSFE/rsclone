@@ -19,9 +19,6 @@ export default class TravelPlaningApp {
     const clock1 = new Clock('Minsk', 1);
     clock1.createClockView().launchClock();
 
-    const clock2 = new Clock('Tokio', 2);
-    clock2.createClockView().launchClock();
-
     const currency = new Currency();
     currency.handleMethods();
 

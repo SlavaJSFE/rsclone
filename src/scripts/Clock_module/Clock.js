@@ -11,6 +11,7 @@ export default class Clock {
     this.degree = 6;
     this.id = id;
     this.diff;
+    this.timer;
   }
 
   async getLocationInfo() {
@@ -104,10 +105,14 @@ export default class Clock {
   }
 
   launchClock() {
-    setInterval(() => {
+    this.timer = setInterval(() => {
       this.renderCircleClock();
       this.renderNumericClock();
     }, 1000);
+  }
+
+  stopClock() {
+    clearInterval(this.timer);
   }
 
   addZeros = (n) => {

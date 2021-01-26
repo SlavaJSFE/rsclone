@@ -6,6 +6,7 @@ import Map from '../Map_module/Map';
 import Notes from '../Notes_module/Notes';
 import Weather from '../Weather_module/Weather';
 import TODO from '../TODO_module/TODO';
+import Clock from '../Clock_module/Clock';
 
 export default class TripsView {
   constructor() {
@@ -50,11 +51,23 @@ export default class TripsView {
     this.myTripsContainer.classList.add('hidden');
     this.trip = new TripDetails(tripObject);
     this.mainContentSection.appendChild(this.trip);
+
+    const tripDetailsContainer = document.querySelector('.trip-destination');
+
+    if (tripDetailsContainer.innerHTML === 'Minsk') return;
+
+    this.currClock = new Clock(tripDetailsContainer.innerHTML, 2);
+    this.currClock.createClockView().launchClock();
   }
 
   goBackToUserTrips() {
     this.trip.remove();
     this.myTripsContainer.classList.remove('hidden');
+
+    this.currClock.stopClock();
+    const clock = document.querySelector('#clock-container2');
+    console.log(clock);
+    clock.remove();
   }
 
   setTripCard(tripObject) {

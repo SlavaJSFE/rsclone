@@ -126,11 +126,13 @@ export default class Trips {
 
     sights.addEventListener('click', () => {
       console.log(currentCity);
-      let sights = new Sights;
+      let sights = new Sights();
       document.querySelector('.main-content-section').innerHTML = '';
       sights.createSightsInfo();
       sights.search(currentCity);
-      document.querySelector('#search_form').innerHTML = `${objTranslate.sightsLang['article_' + local]} ${currentCity}`;
+      document.querySelector('#search_form').innerHTML = `${
+        objTranslate.sightsLang['article_' + local]
+      } ${currentCity}`;
     });
 
     notes.addEventListener('click', () => {
