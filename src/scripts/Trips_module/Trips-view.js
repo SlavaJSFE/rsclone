@@ -6,6 +6,7 @@ import Map from '../Map_module/Map';
 import Notes from '../Notes_module/Notes';
 import Weather from '../Weather_module/Weather';
 import TODO from '../TODO_module/TODO';
+import Clock from '../Clock_module/Clock';
 
 export default class TripsView {
   constructor() {
@@ -52,12 +53,24 @@ export default class TripsView {
     this.tripDetailsBlock = this.trip.createTripContent();
     this.mainContentSection.appendChild(this.tripDetailsBlock);
 
+    // === clock render
+    const tripDetailsContainer = document.querySelector('.trip-destination');
+    if (tripDetailsContainer.innerHTML === 'Minsk') return;
+    this.currClock = new Clock(tripDetailsContainer.innerHTML, 2);
+    this.currClock.createClockView().launchClock();
+    // ===
+
     services.createPagination(tripObject.tripRoute);
   }
 
   goBackToUserTrips() {
     this.tripDetailsBlock.remove();
     this.myTripsContainer.classList.remove('hidden');
+
+    this.currClock.stopClock();
+    const clock = document.querySelector('#clock-container2');
+    console.log(clock);
+    clock.remove();
   }
 
   handleOptionsDropdown() {
@@ -87,7 +100,7 @@ export default class TripsView {
       'legend',
       [createDOMElement('h3', null, 'Legend')],
       null,
-      ['id', 'legend'],
+      ['id', 'legend']
     );
     const searchContainer = createDOMElement('div', 'search-container');
     const backBtn = createDOMElement('div', 'map_btn-container');

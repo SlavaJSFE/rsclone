@@ -19,6 +19,7 @@ $black-color: #000000;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
   // background: #091921;
   padding: 5px;
 }
@@ -118,6 +119,7 @@ $black-color: #000000;
 
 .clock-title {
   font-size: 1.8rem;
+  font-weight: bold;
   color: $black-color;
 }
 
