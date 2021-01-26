@@ -1,32 +1,45 @@
 import createDOMElement from '../services/createDOMElement';
 
 /**
- * @param {Number} timeInTargetCountry
- * @param {Number} clockNumbering
- * @param {String} capitalOfCountry
+ * @param {String} townOfDestination
+ * @param {Number} clockNumber
  */
 
 export default class Clock {
-  constructor(date, numberOfClock, capitalOfCountry) {
-    this.capital = capitalOfCountry;
-    this.date = date;
-    this.number = numberOfClock;
+  constructor(town, id) {
+    this.town = town;
     this.degree = 6;
-    this.hr = 'hr' + this.number;
-    this.min = 'min' + this.number;
-    this.sec = 'sec' + this.number;
-    this.time = 'time' + this.number;
-    this.body = 'body' + this.number;
+    this.id = id;
+    this.diff;
+  }
+
+  async getLocationInfo() {
+    const response = await fetch(`https://api.opentripmap.com/0.1/en/places/geoname?name=${this.town}&apikey=5ae2e3f221c38a28845f05b6b4769a5488ad4d3bf7cfc1d16c76e7a4
+      `);
+
+    const townInfo = await response.json();
+
+    const res = await fetch(`http://api.timezonedb.com/v2.1/get-time-zone?key=1IENVIEJ7OK0&format=json&by=position&lat=${townInfo.lat}&lng=${townInfo.lon}
+    `);
+
+    const timezone = await res.json();
+    const date = new Date(timezone.formatted);
+    const currentDate = new Date();
+
+    this.diff = date.getHours() - currentDate.getHours();
   }
 
   createTitle = (container) => {
-    let titleText = this.capital || 'Local';
+    let titleText = this.town;
     createDOMElement('div', 'clock-title', `${titleText}`, container);
   };
 
   createClockView = () => {
     const clock = document.querySelector('.clock');
-    const clockContainer = createDOMElement('div', 'clock-container', null, clock);
+    const clockContainer = createDOMElement('div', 'clock-container', null, clock, [
+      'id',
+      `clock-container${this.id}`,
+    ]);
 
     this.createTitle(clockContainer);
 
@@ -35,32 +48,35 @@ export default class Clock {
       'clock-body',
       [
         createDOMElement('div', 'hour', [
-          createDOMElement('div', 'hr', null, null, ['id', `${this.hr}`]),
+          createDOMElement('div', 'hr', null, null, ['id', `hr${this.id}`]),
         ]),
         createDOMElement('div', 'min', [
-          createDOMElement('div', 'mn', null, null, ['id', `${this.min}`]),
+          createDOMElement('div', 'mn', null, null, ['id', `mn${this.id}`]),
         ]),
         createDOMElement('div', 'sec', [
-          createDOMElement('div', 'sc', null, null, ['id', `${this.sec}`]),
+          createDOMElement('div', 'sc', null, null, ['id', `sc${this.id}`]),
         ]),
       ],
       clockContainer,
       ['data-clock-night', false],
-      ['id', `${this.body}`]
+      ['id', `body${this.id}`]
     );
 
-    createDOMElement('time', 'time', '10:10:10', clockContainer, ['id', `${this.time}`]);
+    createDOMElement('time', 'time', '10:10:10', clockContainer, ['id', `numClock${this.id}`]);
+
+    this.getLocationInfo();
+
     return this;
   };
 
   renderCircleClock() {
-    const hour = document.querySelector(`#${this.hr}`);
-    const min = document.querySelector(`#${this.min}`);
-    const sec = document.querySelector(`#${this.sec}`);
+    const hour = document.querySelector(`#hr${this.id}`);
+    const min = document.querySelector(`#mn${this.id}`);
+    const sec = document.querySelector(`#sc${this.id}`);
 
     let date = new Date();
 
-    let hh = (date.getHours() + this.date) * 30;
+    let hh = (date.getHours() + this.diff) * 30;
     let mn = date.getMinutes() * this.degree;
     let sc = date.getSeconds() * this.degree;
 
@@ -68,14 +84,14 @@ export default class Clock {
     min.style.transform = `rotateZ(${mn}deg)`;
     sec.style.transform = `rotateZ(${sc}deg)`;
 
-    this.changeClockView(date.getHours() + this.date);
+    this.changeClockView(hh);
   }
 
   renderNumericClock() {
-    const numberClock = document.querySelector(`#${this.time}`);
+    const numberClock = document.querySelector(`#numClock${this.id}`);
     let date = new Date();
 
-    let hh = date.getHours() + this.date;
+    let hh = date.getHours() + this.diff;
     if (hh > 24) {
       hh = hh - 24;
     }
@@ -99,7 +115,7 @@ export default class Clock {
   };
 
   changeClockView = (hour) => {
-    const tableBody = document.querySelector(`#${this.body}`);
+    const tableBody = document.querySelector(`#body${this.id}`);
 
     if (hour >= 17 || hour <= 6) {
       tableBody.dataset.clockNight = true;

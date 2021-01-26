@@ -16,10 +16,10 @@ export default class TravelPlaningApp {
     this.view = new TravelPlaningAppView(this.model);
     this.view.init();
 
-    const clock1 = new Clock(null, 1, 'Minsk');
+    const clock1 = new Clock('Minsk', 1);
     clock1.createClockView().launchClock();
 
-    const clock2 = new Clock(-3, 2, 'London');
+    const clock2 = new Clock('Tokio', 2);
     clock2.createClockView().launchClock();
 
     const currency = new Currency();
@@ -119,7 +119,7 @@ export default class TravelPlaningApp {
 
   static async handleSignUp(event) {
     event.preventDefault();
-    console.log('reg')
+    console.log('reg');
   }
 
   static fillMainContentSection(currentItem) {
