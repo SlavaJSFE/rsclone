@@ -149,6 +149,7 @@ export default class Map {
       getXIdData(place.xid)
         .then((place) => {
           // current marker info
+          event.stopPropagation();
           const { target } = event;
 
           this.createInfoWindow(place);
@@ -156,7 +157,7 @@ export default class Map {
           this.infoWindow.open(this.map, marker);
 
           this.infoWindow.addListener('domready', () => {
-            this.target = target;
+            this.target = event.path[1];
             const button = document.querySelector('.iw-button');
             button.addEventListener('click', this.handleAddButton);
           });
@@ -311,24 +312,21 @@ export default class Map {
   };
 
   handleAddButton = () => {
-    console.log(this.id);
     const title = document.querySelector('.iw-title');
-    console.log(this.target);
+
     if (this.target.dataset.selected === 'false') {
       this.target.dataset.selected = true;
     } else {
       this.target.dataset.selected = false;
     }
 
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    console.log(user);
-    // console.log(user['email']);
-    const email = user.email;
-    const userName = email.split('@')[0];
-    console.log(userName);
-    // return title.innerHTML; // for example London Tower
+    if (this.id) {
+      const user = JSON.parse(sessionStorage.getItem('user'));
+      const email = user.email;
+      const userName = email.split('@')[0];
 
-    this.addToDataBase(userName, this.id, title.innerHTML);
+      this.addToDataBase(userName, this.id, title.innerHTML);
+    }
   };
 
   async addToDataBase(userName, id, placeToVisit) {

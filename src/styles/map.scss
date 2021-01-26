@@ -69,8 +69,10 @@ $color_purple: #ef2fa2;
     font-size: 16px;
     font-weight: bold;
     margin-top: 7px;
+
     .iw-address {
     }
+
     .iw-link {
       color: black;
       margin-top: 5px;
@@ -154,11 +156,12 @@ $color_purple: #ef2fa2;
   cursor: pointer;
   transition: 0.2s ease-in-out;
   width: 5.5rem;
-  
+
   i {
     font-size: 30px;
     line-height: 28px;
   }
+
   &:hover {
     background-color: cadetblue;
   }
@@ -167,45 +170,59 @@ $color_purple: #ef2fa2;
 [data-category="0"] {
   background-color: $color_blue1;
 }
+
 [data-category="1"] {
   background-color: $color_blue2;
 }
+
 [data-category="2"] {
   background-color: $color_blue3;
 }
+
 [data-category="3"] {
   background-color: $color_mint;
 }
+
 [data-category="4"] {
   background-color: $color_green1;
 }
+
 [data-category="5"] {
   background-color: $color_green2;
 }
+
 [data-category="6"] {
   background-color: $color_green3;
 }
+
 [data-category="7"] {
   background-color: $color_yellow;
 }
+
 [data-category="8"] {
   background-color: $color_peach1;
 }
+
 [data-category="9"] {
   background-color: $color_peach2;
 }
+
 [data-category="10"] {
   background-color: $color_peach3;
 }
+
 [data-category="11"] {
   background-color: $color_orange;
 }
+
 [data-category="12"] {
   background-color: $color_pink;
 }
+
 [data-category="13"] {
   background-color: $color_red;
 }
+
 [data-category="14"] {
   background-color: $color_purple;
 }
@@ -214,7 +231,7 @@ $color_purple: #ef2fa2;
   &::after {
     content: "✔️";
     position: absolute;
-    top: -50px;
+    top: -18px;
     left: 24px;
   }
 }
