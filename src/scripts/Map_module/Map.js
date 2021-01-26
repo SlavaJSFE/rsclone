@@ -150,13 +150,13 @@ export default class Map {
         .then((place) => {
           // current marker info
           event.stopPropagation();
-          const { target } = event;
 
           this.createInfoWindow(place);
 
           this.infoWindow.open(this.map, marker);
 
           this.infoWindow.addListener('domready', () => {
+            // get path to marker
             this.target = event.path[1];
             const button = document.querySelector('.iw-button');
             button.addEventListener('click', this.handleAddButton);
