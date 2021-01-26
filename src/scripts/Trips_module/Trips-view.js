@@ -79,7 +79,7 @@ export default class TripsView {
   }
 
   showMap(town, id) {
-    this.trip.classList.add('hidden');
+    this.tripDetailsBlock.classList.add('hidden');
 
     const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
     const legend = createDOMElement(
@@ -99,7 +99,7 @@ export default class TripsView {
   }
 
   showWeather(town) {
-    this.trip.classList.add('hidden');
+    this.tripDetailsBlock.classList.add('hidden');
 
     const backBtn = createDOMElement('div', 'btn back-btn weather-back', [
       createDOMElement('i', 'material-icons', 'arrow_back'),
@@ -113,7 +113,7 @@ export default class TripsView {
   }
 
   showNotes(id) {
-    this.trip.classList.add('hidden');
+    this.tripDetailsBlock.classList.add('hidden');
 
     const noteContainer = createDOMElement('div', 'notes-container');
     const backBtn = createDOMElement('div', 'btn back-btn note-back', [
@@ -128,7 +128,7 @@ export default class TripsView {
   }
 
   showTODO(town, id) {
-    this.trip.classList.add('hidden');
+    this.tripDetailsBlock.classList.add('hidden');
 
     const todoContainer = createDOMElement('div', 'todo-container');
     const backBtn = createDOMElement('div', 'btn back-btn todo-back', [
