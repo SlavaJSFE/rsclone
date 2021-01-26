@@ -3,6 +3,7 @@ import createDOMElement from './services/createDOMElement.js';
 import statement from './constants/TravelPlaningApp-constants.js';
 import Map from '../scripts/Map_module/Map';
 import TODO from './TODO_module/TODO';
+import initIcon from '../scripts/TravelIcon_module/initIcon';
 import Note from './Notes_module/Notes';
 
 export default class TravelPlaningAppView {
@@ -17,6 +18,8 @@ export default class TravelPlaningAppView {
     this.createHeader();
     this.createMain();
     this.createFooter();
+
+    initIcon();
   }
 
   createHeader() {
@@ -65,7 +68,6 @@ export default class TravelPlaningAppView {
 
   showMap() {
     const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
-    const content = createDOMElement('div', 'content');
     const legend = createDOMElement(
       'div',
       'legend',
@@ -74,7 +76,8 @@ export default class TravelPlaningAppView {
       ['id', 'legend']
     );
     const searchContainer = createDOMElement('div', 'search-container');
-    this.mainContentSection.append(mapWidget, content, legend, searchContainer);
+
+    this.mainContentSection.append(mapWidget, legend, searchContainer);
 
     const map = new Map();
     map.staticInitMap();

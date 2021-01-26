@@ -10,6 +10,7 @@ export default class TripsModel {
       tripRoute: [inputDestination.value],
       startDate: inputStartDate.value,
       endDate: inputEndDate.value,
+      // placeToVisit: [inputDestination.value],
     };
 
     inputName.innerHTML = '';
@@ -69,7 +70,9 @@ export default class TripsModel {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const userName = user.email.split('@')[0];
 
-    const response = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${tripId}/tripRoute.json`);
+    const response = await fetch(
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${tripId}/tripRoute.json`
+    );
     const routeArray = await response.json();
     routeArray.push(inputNewDestination.value);
 

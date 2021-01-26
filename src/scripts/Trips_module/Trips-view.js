@@ -78,11 +78,10 @@ export default class TripsView {
     this.myTripsContainer.appendChild(tripCard);
   }
 
-  showMap(town) {
-    this.mainContentSection.innerHTML = '';
+  showMap(town, id) {
+    this.trip.classList.add('hidden');
 
     const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
-    const content = createDOMElement('div', 'content');
     const legend = createDOMElement(
       'div',
       'legend',
@@ -91,40 +90,54 @@ export default class TripsView {
       ['id', 'legend'],
     );
     const searchContainer = createDOMElement('div', 'search-container');
-    this.mainContentSection.append(mapWidget, content, legend, searchContainer);
+    const backBtn = createDOMElement('div', 'map_btn-container');
 
-    const map = new Map();
-    map.handleApi(town);
+    this.mainContentSection.append(mapWidget, legend, searchContainer, backBtn);
+
+    const map = new Map(town, id);
+    map.handleApi();
   }
 
   showWeather(town) {
-    this.mainContentSection.innerHTML = '';
+    this.trip.classList.add('hidden');
+
+    const backBtn = createDOMElement('div', 'btn back-btn weather-back', [
+      createDOMElement('i', 'material-icons', 'arrow_back'),
+    ]);
 
     const weatherContainer = createDOMElement('div', 'weather-container');
-    this.mainContentSection.append(weatherContainer);
+    this.mainContentSection.append(backBtn, weatherContainer);
 
     const weather = new Weather();
     weather.createSearchByCity(town);
   }
 
-  showNotes() {
-    this.mainContentSection.innerHTML = '';
+  showNotes(id) {
+    this.trip.classList.add('hidden');
 
     const noteContainer = createDOMElement('div', 'notes-container');
-    this.mainContentSection.appendChild(noteContainer);
+    const backBtn = createDOMElement('div', 'btn back-btn note-back', [
+      createDOMElement('i', 'material-icons', 'arrow_back'),
+    ]);
 
-    const note = new Notes();
+    this.mainContentSection.append(backBtn, noteContainer);
+
+    const note = new Notes(id);
 
     note.createNoteContainer();
   }
 
-  showTODO() {
-    this.mainContentSection.innerHTML = '';
+  showTODO(town, id) {
+    this.trip.classList.add('hidden');
 
     const todoContainer = createDOMElement('div', 'todo-container');
-    this.mainContentSection.appendChild(todoContainer);
+    const backBtn = createDOMElement('div', 'btn back-btn todo-back', [
+      createDOMElement('i', 'material-icons', 'arrow_back'),
+    ]);
 
-    const todo = new TODO();
+    this.mainContentSection.append(backBtn, todoContainer);
+
+    const todo = new TODO(town, id);
     todo.createTODOElements();
   }
 }

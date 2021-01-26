@@ -36,7 +36,9 @@ const legendCategories = [
 ];
 
 export default class Map {
-  constructor() {
+  constructor(town, id) {
+    this.town = town;
+    this.id = id;
     this.place_LON;
     this.place_LAT;
     this.map;
@@ -46,8 +48,8 @@ export default class Map {
     // this.isFirstLaunch = true;
   }
 
-  handleApi(town) {
-    getPlaceCoord(town)
+  handleApi() {
+    getPlaceCoord(this.town)
       .then((coord) => {
         if (!coord) {
           this.initMap();
@@ -100,11 +102,27 @@ export default class Map {
 
       this.createLegend();
       this.createTownSearch();
-      const button = document.querySelector('.search-button');
-      button.addEventListener('click', this.handleSearchButton);
+      this.createBackButton();
+
+      this.setListeners();
     });
     return this;
   }
+
+  setListeners = () => {
+    const searchBtn = document.querySelector('.search-button');
+    searchBtn.addEventListener('click', this.handleSearchButton);
+
+    const backBtn = document.querySelector('.map-back');
+    backBtn.addEventListener('click', this.goBackToMenu);
+  };
+
+  goBackToMenu = () => {
+    const mapContainer = document.querySelector('#map');
+    const tripsDetails = document.querySelector('.trip-details');
+    tripsDetails.classList.remove('hidden');
+    mapContainer.remove();
+  };
 
   createMarker = (place) => {
     //get coord from api
@@ -131,6 +149,7 @@ export default class Map {
       getXIdData(place.xid)
         .then((place) => {
           // current marker info
+          event.stopPropagation();
           const { target } = event;
 
           this.createInfoWindow(place);
@@ -138,9 +157,9 @@ export default class Map {
           this.infoWindow.open(this.map, marker);
 
           this.infoWindow.addListener('domready', () => {
-            this.target = target;
+            this.target = event.path[1];
             const button = document.querySelector('.iw-button');
-            button.addEventListener('click', this.addToTODOList);
+            button.addEventListener('click', this.handleAddButton);
           });
 
           this.map.addListener('click', () => {
@@ -257,42 +276,104 @@ export default class Map {
 
   createTownSearch = () => {
     const input = document.querySelector('.search-container');
-
     createDOMElement(
-      'input',
-      'search-input',
-      null,
-      input,
-      ['type', 'search'],
-      ['placeholder', 'Find your city']
-    );
-    createDOMElement(
-      'button',
-      'search-button btn',
-      [createDOMElement('i', 'material-icons', `search`)],
+      'form',
+      'search-location',
+      [
+        createDOMElement(
+          'input',
+          'search-input',
+          null,
+          null,
+          ['type', 'search'],
+          ['placeholder', 'Find your city']
+        ),
+        createDOMElement('button', 'search-button btn', [
+          createDOMElement('i', 'material-icons', `search`),
+        ]),
+      ],
       input
     );
 
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
   };
 
-  addToTODOList = () => {
+  createBackButton = () => {
+    const backBtn = document.querySelector('.map_btn-container');
+
+    createDOMElement(
+      'div',
+      'btn back-btn map-back',
+      [createDOMElement('i', 'material-icons', 'arrow_back')],
+      backBtn
+    );
+
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(backBtn);
+  };
+
+  handleAddButton = () => {
     const title = document.querySelector('.iw-title');
-    console.log(this.target);
+
     if (this.target.dataset.selected === 'false') {
       this.target.dataset.selected = true;
     } else {
       this.target.dataset.selected = false;
     }
 
-    // return title.innerHTML; // for example London Tower
+    if (this.id) {
+      const user = JSON.parse(sessionStorage.getItem('user'));
+      const email = user.email;
+      const userName = email.split('@')[0];
+
+      this.addToDataBase(userName, this.id, title.innerHTML);
+    }
   };
 
-  handleSearchButton = () => {
+  async addToDataBase(userName, id, placeToVisit) {
+    let response = await fetch(
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/placeToVisit/${this.town}.json`
+    );
+    let arrayOfPlaces = await response.json();
+    console.log(arrayOfPlaces);
+
+    if (!arrayOfPlaces) {
+      const arrayOfPlaces = [];
+      arrayOfPlaces.push(placeToVisit);
+
+      let response = await fetch(
+        `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/placeToVisit/${this.town}.json`,
+        {
+          method: 'PUT',
+          body: JSON.stringify(arrayOfPlaces),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    } else {
+      console.log(arrayOfPlaces);
+      if (!arrayOfPlaces.includes(placeToVisit)) {
+        arrayOfPlaces.push(placeToVisit);
+      }
+
+      let response = await fetch(
+        `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/placeToVisit/${this.town}.json`,
+        {
+          method: 'PUT',
+          body: JSON.stringify(arrayOfPlaces),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    }
+  }
+
+  handleSearchButton = (event) => {
+    event.preventDefault();
     const search = document.querySelector('.search-input');
     const value = search.value.toLowerCase();
-    // console.log(value);
-    // if (value === '') return;
+
     getPlaceCoord(value).then((coord) => {
       this.place_LON = coord.lon;
       this.place_LAT = coord.lat;
@@ -344,18 +425,9 @@ export default class Map {
         mapTypeId: google.maps.MapTypeId.TERRAIN,
       });
 
-      // this.createFilterData(this.data);
-
-      // console.log(this.filterData);
-
-      // this.filterData.forEach((place) => {
-      //   this.createMarker(place);
-      // });
-
-      // this.createMarkerClusterer();
-
       this.createLegend();
       this.createTownSearch();
+
       const button = document.querySelector('.search-button');
       button.addEventListener('click', this.handleSearchButton);
     });

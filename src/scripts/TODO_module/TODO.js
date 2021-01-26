@@ -1,10 +1,15 @@
 import createDOMElement from '../services/createDOMElement';
 
 export default class TODO {
+  constructor(town, id) {
+    this.town = town;
+    this.id = id;
+  }
+
   createTODOElements = () => {
     const container = document.querySelector('.todo-container');
 
-    createDOMElement('header', null, [createDOMElement('h1', null, 'TODO List')], container);
+    createDOMElement('header', null, [createDOMElement('h1', null, 'Places to visit')], container);
 
     createDOMElement(
       'form',
@@ -50,6 +55,7 @@ export default class TODO {
     );
 
     this.setListeners();
+    this.getPlacesFormDataBase();
   };
 
   setListeners = () => {
@@ -58,14 +64,28 @@ export default class TODO {
 
     const filterTodo = document.querySelector('.filter-todo');
     filterTodo.addEventListener('change', this.filterTodo);
+
+    if (this.id) {
+      const backToMenuBtn = document.querySelector('.todo-back');
+      backToMenuBtn.addEventListener('click', this.goBackToMenu);
+    }
   };
 
-  addTodoItem = (event) => {
-    event.preventDefault();
+  addTodoItem = (event, place) => {
+    if (event) {
+      event.preventDefault();
+    }
     const todoInput = document.querySelector('.todo-input');
     const todoList = document.querySelector('.todo-list');
+    let inputValue;
 
-    const inputValue = todoInput.value.trim();
+    if (place) {
+      todoInput.value = place;
+      inputValue = todoInput.value.trim();
+    } else {
+      inputValue = todoInput.value.trim();
+    }
+
     if (inputValue === '') return;
 
     const todo = createDOMElement(
@@ -83,6 +103,23 @@ export default class TODO {
 
     todo.addEventListener('click', this.handleTodoItem);
   };
+
+  async getPlacesFormDataBase() {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const email = user.email;
+    const userName = email.split('@')[0];
+
+    let response = await fetch(
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${this.id}/placeToVisit/${this.town}.json`
+    );
+
+    const arrayOfPlaces = await response.json();
+    console.log(arrayOfPlaces);
+
+    arrayOfPlaces.forEach((item) => {
+      this.addTodoItem(null, item);
+    });
+  }
 
   handleTodoItem = (event) => {
     const { target } = event;
@@ -127,5 +164,14 @@ export default class TODO {
           }
       }
     });
+  };
+
+  goBackToMenu = () => {
+    const todoContainer = document.querySelector('.todo-container');
+    const backBtn = document.querySelector('.todo-back');
+    const tripsDetails = document.querySelector('.trip-details');
+    tripsDetails.classList.remove('hidden');
+    todoContainer.remove();
+    backBtn.remove();
   };
 }

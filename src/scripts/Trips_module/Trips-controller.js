@@ -1,6 +1,9 @@
 import Materialize from 'materialize-css';
 import TripsView from './Trips-view';
 import TripsModel from './Trips-model';
+import Sights from '../../scripts/Sights_module/Sights.js';
+import objTranslate from '../../scripts/Language_module/sightsLang.component';
+import { local } from '../../scripts/Language_module/languageSwicher';
 
 export default class Trips {
   init() {
@@ -200,15 +203,20 @@ export default class Trips {
 
     this.map.addEventListener('click', () => {
       console.log(currentCity);
-      this.view.showMap(currentCity);
+      this.view.showMap(currentCity, this.tripDetailsContainer.id);
     });
 
     this.sights.addEventListener('click', () => {
       console.log(currentCity);
+      let sights = new Sights;
+      document.querySelector('.main-content-section').innerHTML = '';
+      sights.createSightsInfo();
+      sights.search(currentCity);
+      document.querySelector('#search_form').innerHTML = `${objTranslate.sightsLang['article_' + local]} ${currentCity}`;
     });
 
     this.notes.addEventListener('click', () => {
-      this.view.showNotes();
+      this.view.showNotes(this.tripDetailsContainer.id);
     });
 
     this.weather.addEventListener('click', () => {
@@ -217,7 +225,7 @@ export default class Trips {
     });
 
     this.todo.addEventListener('click', () => {
-      this.view.showTODO();
+      this.view.showTODO(currentCity, this.tripDetailsContainer.id);
       console.log(currentCity);
     });
 
