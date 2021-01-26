@@ -321,17 +321,14 @@ export default class Map {
     }
 
     if (this.id) {
-      const user = JSON.parse(sessionStorage.getItem('user'));
-      const email = user.email;
-      const userName = email.split('@')[0];
-
-      this.addToDataBase(userName, this.id, title.innerHTML);
+      const UID = JSON.parse(sessionStorage.getItem('user'));
+      this.addToDataBase(UID, this.id, title.innerHTML);
     }
   };
 
-  async addToDataBase(userName, id, placeToVisit) {
+  async addToDataBase(UID, id, placeToVisit) {
     let response = await fetch(
-      `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/placeToVisit/${this.town}.json`
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${id}/placeToVisit/${this.town}.json`
     );
     let arrayOfPlaces = await response.json();
     console.log(arrayOfPlaces);
@@ -341,7 +338,7 @@ export default class Map {
       arrayOfPlaces.push(placeToVisit);
 
       let response = await fetch(
-        `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/placeToVisit/${this.town}.json`,
+        `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${id}/placeToVisit/${this.town}.json`,
         {
           method: 'PUT',
           body: JSON.stringify(arrayOfPlaces),
@@ -357,7 +354,7 @@ export default class Map {
       }
 
       let response = await fetch(
-        `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/placeToVisit/${this.town}.json`,
+        `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${id}/placeToVisit/${this.town}.json`,
         {
           method: 'PUT',
           body: JSON.stringify(arrayOfPlaces),

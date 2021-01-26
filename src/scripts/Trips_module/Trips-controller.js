@@ -133,6 +133,10 @@ export default class Trips {
 
     if (nextActive !== currentActive) {
       this.view.showDestinationDetails(nextActive);
+
+      this.view.removeClocks();
+      this.view.showClocks();
+
       this.addDestinationListeners();
       Trips.setArrowsDisabled(pagination, nextActive);
     }
@@ -202,7 +206,6 @@ export default class Trips {
     this.important = this.tripDetailsContainer.querySelector('.important');
 
     this.map.addEventListener('click', () => {
-      console.log(currentCity);
       this.view.showMap(currentCity, this.tripDetailsContainer.id);
     });
 
@@ -228,6 +231,7 @@ export default class Trips {
 
     this.todo.addEventListener('click', () => {
       this.view.showTODO(currentCity, this.tripDetailsContainer.id);
+      console.log(this.tripDetailsContainer.id);
       console.log(currentCity);
     });
 
