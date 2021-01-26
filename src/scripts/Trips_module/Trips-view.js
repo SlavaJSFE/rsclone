@@ -1,7 +1,7 @@
-import createDOMElement from '../services/createDOMElement.js';
-import createTripCard from './services/createTripCard.js';
-import TripDetails from './services/TripDetails.js';
-import services from './services/tripsViewServices.js';
+import createDOMElement from '../services/createDOMElement';
+import createTripCard from './services/createTripCard';
+import TripDetails from './services/TripDetails';
+import services from './services/tripsViewServices';
 import Map from '../Map_module/Map';
 import Notes from '../Notes_module/Notes';
 import Weather from '../Weather_module/Weather';
@@ -49,12 +49,28 @@ export default class TripsView {
   showTrip(tripObject) {
     this.myTripsContainer.classList.add('hidden');
     this.trip = new TripDetails(tripObject);
-    this.mainContentSection.appendChild(this.trip);
+    this.tripDetailsBlock = this.trip.createTripContent();
+    this.mainContentSection.appendChild(this.tripDetailsBlock);
+
+    services.createPagination(tripObject.tripRoute);
   }
 
   goBackToUserTrips() {
-    this.trip.remove();
+    this.tripDetailsBlock.remove();
     this.myTripsContainer.classList.remove('hidden');
+  }
+
+  handleOptionsDropdown() {
+    this.dropdown = document.getElementById('options-dropdown');
+    this.dropdown.classList.toggle('show');
+  }
+
+  showDestinationDetails(currentActive) {
+    const currentDestination = this.tripDetailsBlock.querySelector('.destination-details');
+    const pageNumber = currentActive.firstChild.textContent;
+
+    currentDestination.remove();
+    this.trip.fillDestination(pageNumber);
   }
 
   setTripCard(tripObject) {
@@ -63,7 +79,7 @@ export default class TripsView {
   }
 
   showMap(town, id) {
-    this.trip.classList.add('hidden');
+    this.tripDetailsBlock.classList.add('hidden');
 
     const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
     const legend = createDOMElement(
@@ -71,7 +87,7 @@ export default class TripsView {
       'legend',
       [createDOMElement('h3', null, 'Legend')],
       null,
-      ['id', 'legend']
+      ['id', 'legend'],
     );
     const searchContainer = createDOMElement('div', 'search-container');
     const backBtn = createDOMElement('div', 'map_btn-container');
@@ -83,7 +99,7 @@ export default class TripsView {
   }
 
   showWeather(town) {
-    this.trip.classList.add('hidden');
+    this.tripDetailsBlock.classList.add('hidden');
 
     const backBtn = createDOMElement('div', 'btn back-btn weather-back', [
       createDOMElement('i', 'material-icons', 'arrow_back'),
@@ -97,7 +113,7 @@ export default class TripsView {
   }
 
   showNotes(id) {
-    this.trip.classList.add('hidden');
+    this.tripDetailsBlock.classList.add('hidden');
 
     const noteContainer = createDOMElement('div', 'notes-container');
     const backBtn = createDOMElement('div', 'btn back-btn note-back', [
@@ -112,7 +128,7 @@ export default class TripsView {
   }
 
   showTODO(town, id) {
-    this.trip.classList.add('hidden');
+    this.tripDetailsBlock.classList.add('hidden');
 
     const todoContainer = createDOMElement('div', 'todo-container');
     const backBtn = createDOMElement('div', 'btn back-btn todo-back', [

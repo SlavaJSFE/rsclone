@@ -1,9 +1,9 @@
 import Materialize from 'materialize-css';
-import Model from './App-model.js';
-import TravelPlaningAppView from './App-view.js';
+import Model from './App-model';
+import TravelPlaningAppView from './App-view';
 import Currency from './Currency_module/Currency';
 import Clock from './Clock_module/Clock';
-import Trips from './Trips_module/Trips-controller.js';
+import Trips from './Trips_module/Trips-controller';
 import Sights from './Sights_module/Sights.js';
 import './Sights_module/EventsSights';
 import Banner from './Banner_module/Banner.js';
@@ -105,9 +105,9 @@ export default class TravelPlaningApp {
     const email = event.target.querySelector('#email').value;
     const password = event.target.querySelector('#password').value;
 
-    let token = await this.model.authWithEmailAndPassword(email, password);
+    const UID = await this.model.authWithEmailAndPassword(email, password);
 
-    if (token) {
+    if (UID) {
       this.model.setUserToSessionStorage(email);
       this.modalWindow.innerHTML = '';
       this.modal.close();
@@ -119,7 +119,13 @@ export default class TravelPlaningApp {
 
   static async handleSignUp(event) {
     event.preventDefault();
-    console.log('reg')
+
+    const email = event.target.querySelector('#email').value;
+    const password = event.target.querySelector('#password').value;
+
+    const UID = await this.model.signUp(email, password);
+
+    console.log(email, password, UID);
   }
 
   static fillMainContentSection(currentItem) {
