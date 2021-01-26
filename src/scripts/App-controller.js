@@ -116,9 +116,6 @@ export default class TravelPlaningApp {
 
   static async handleSignUp(event) {
     event.preventDefault();
-<<<<<<< HEAD
-    console.log('reg');
-=======
 
     const email = event.target.querySelector('#email').value;
     const password = event.target.querySelector('#password').value;
@@ -126,7 +123,6 @@ export default class TravelPlaningApp {
     const UID = await this.model.signUp(email, password);
 
     console.log(email, password, UID);
->>>>>>> develop
   }
 
   static fillMainContentSection(currentItem) {

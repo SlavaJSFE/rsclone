@@ -53,12 +53,12 @@ export default class TripsView {
     this.tripDetailsBlock = this.trip.createTripContent();
     this.mainContentSection.appendChild(this.tripDetailsBlock);
 
+    // === clock render
     const tripDetailsContainer = document.querySelector('.trip-destination');
-
     if (tripDetailsContainer.innerHTML === 'Minsk') return;
-
     this.currClock = new Clock(tripDetailsContainer.innerHTML, 2);
     this.currClock.createClockView().launchClock();
+    // ===
 
     services.createPagination(tripObject.tripRoute);
   }
