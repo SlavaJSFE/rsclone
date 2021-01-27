@@ -45,7 +45,6 @@ export default class Map {
     this.data = [];
     this.markers = [];
     this.filterData;
-    // this.isFirstLaunch = true;
   }
 
   handleApi() {
@@ -54,7 +53,6 @@ export default class Map {
         if (!coord) {
           this.initMap();
         }
-        console.log(coord);
         this.place_LON = coord.lon;
         this.place_LAT = coord.lat;
         const promiseArr = requests.map((request) => {
@@ -91,8 +89,6 @@ export default class Map {
       });
 
       this.createFilterData(this.data);
-
-      console.log(this.filterData);
 
       this.filterData.forEach((place) => {
         this.createMarker(place);
@@ -171,8 +167,6 @@ export default class Map {
   };
 
   createInfoWindow = (place) => {
-    console.log(place);
-
     const content = `
     <div class="iw-container">
       <div class="iw-title">${place.name}</div>
@@ -201,7 +195,6 @@ export default class Map {
   };
 
   createFilterData = (data) => {
-    console.log(data);
     let arr = [];
 
     //filter duplicate
@@ -321,27 +314,23 @@ export default class Map {
     }
 
     if (this.id) {
-      const user = JSON.parse(sessionStorage.getItem('user'));
-      const email = user.email;
-      const userName = email.split('@')[0];
-
-      this.addToDataBase(userName, this.id, title.innerHTML);
+      const UID = JSON.parse(sessionStorage.getItem('user'));
+      this.addToDataBase(UID, this.id, title.innerHTML);
     }
   };
 
-  async addToDataBase(userName, id, placeToVisit) {
+  async addToDataBase(UID, id, placeToVisit) {
     let response = await fetch(
-      `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/placeToVisit/${this.town}.json`
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${id}/placeToVisit/${this.town}.json`
     );
     let arrayOfPlaces = await response.json();
-    console.log(arrayOfPlaces);
 
     if (!arrayOfPlaces) {
       const arrayOfPlaces = [];
       arrayOfPlaces.push(placeToVisit);
 
       let response = await fetch(
-        `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/placeToVisit/${this.town}.json`,
+        `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${id}/placeToVisit/${this.town}.json`,
         {
           method: 'PUT',
           body: JSON.stringify(arrayOfPlaces),
@@ -351,13 +340,12 @@ export default class Map {
         }
       );
     } else {
-      console.log(arrayOfPlaces);
       if (!arrayOfPlaces.includes(placeToVisit)) {
         arrayOfPlaces.push(placeToVisit);
       }
 
       let response = await fetch(
-        `https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${id}/placeToVisit/${this.town}.json`,
+        `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${id}/placeToVisit/${this.town}.json`,
         {
           method: 'PUT',
           body: JSON.stringify(arrayOfPlaces),
@@ -394,8 +382,6 @@ export default class Map {
 
       Promise.all(promiseArr).then(() => {
         this.createFilterData(this.data);
-
-        console.log(this.filterData);
 
         this.filterData.forEach((place) => {
           this.createMarker(place);
