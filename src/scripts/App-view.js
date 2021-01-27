@@ -5,6 +5,7 @@ import Map from '../scripts/Map_module/Map';
 import TODO from './TODO_module/TODO';
 import initIcon from '../scripts/TravelIcon_module/initIcon';
 import Note from './Notes_module/Notes';
+import { clockInstance } from '../scripts/Clock_module/Clock';
 
 export default class TravelPlaningAppView {
   constructor(model) {
@@ -67,6 +68,10 @@ export default class TravelPlaningAppView {
   }
 
   showMap() {
+    if (this.isInstanceClock()) {
+      this.removeClocks();
+    }
+
     const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
     const legend = createDOMElement(
       'div',
@@ -84,6 +89,9 @@ export default class TravelPlaningAppView {
   }
 
   showNotes() {
+    if (this.isInstanceClock()) {
+      this.removeClocks();
+    }
     const noteContainer = createDOMElement('div', 'notes-container');
     this.mainContentSection.appendChild(noteContainer);
     const note = new Note();
@@ -99,6 +107,9 @@ export default class TravelPlaningAppView {
   }
 
   showTODOList() {
+    if (this.isInstanceClock()) {
+      this.removeClocks();
+    }
     createDOMElement('div', 'todo-container', null, this.mainContentSection);
     const todo = new TODO();
     todo.createTODOElements();
@@ -118,5 +129,16 @@ export default class TravelPlaningAppView {
       this.logIn.classList.remove('hidden');
       this.singUp.classList.remove('hidden');
     }
+  }
+
+  isInstanceClock = () => {
+    const clock = document.querySelector('#clock-container2');
+    return clock ? true : false;
+  };
+
+  removeClocks() {
+    const clock = document.querySelector('#clock-container2');
+    clock.remove();
+    clockInstance.stopClock();
   }
 }

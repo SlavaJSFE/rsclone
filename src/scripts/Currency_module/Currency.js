@@ -19,9 +19,6 @@ export default class Currency {
     this.countriesInfoData = countriesData;
     this.currencyData = currencyData;
 
-    console.log(this.countriesInfoData);
-    console.log(this.currencyData);
-
     // this.createCurrencySearch();
     this.createCurrencyTitle();
     this.createCurrencyInfo();
@@ -95,6 +92,5 @@ export default class Currency {
   //   const rate = Object.keys(this.currencyData.rates).find(
   //     (item) => this.currencyData.rates[currencyCode]
   //   );
-  //   console.log(rate);
   // };
 }
