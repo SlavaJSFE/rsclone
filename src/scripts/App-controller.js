@@ -139,13 +139,13 @@ export default class TravelPlaningApp {
     previousNavItem.classList.remove('active');
 
     if (currentItem.id === 'nav-home') {
-      const banner = new Banner();
+      // const banner = new Banner();
       this.view.mainContentSection.innerHTML = '';
-      banner.createBanner();
+      Banner.createBanner();
       initBanner();
 
-      const mainPageContent = new MainPageContent();
-      mainPageContent.createMainPageContent();
+      // const mainPageContent = new MainPageContent();
+      MainPageContent.createMainPageContent();
 
       currentItem.classList.add('active');
     }
