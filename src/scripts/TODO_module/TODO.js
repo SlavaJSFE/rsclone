@@ -9,33 +9,34 @@ export default class TODO {
   createTODOElements = () => {
     const container = document.querySelector('.todo-container');
 
-    createDOMElement('header', 'todo-header', [createDOMElement('h2', null, 'Places to visit')], container);
+    createDOMElement(
+      'header',
+      'todo-header',
+      [createDOMElement('h2', null, 'Places to visit')],
+      container
+    );
 
     createDOMElement(
       'form',
       'todo-form',
       [
-        createDOMElement(
-          'div',
-          'input-field',
-          [
-            createDOMElement(
-              'input',
-              'todo-input',
-              null,
-              null,
-              ['type', 'text'],
-              ['placeholder', 'Add your TODO item'],
-            ),
-            createDOMElement(
-              'button',
-              'todo-button btn',
-              [createDOMElement('i', 'material-icons', 'add')],
-              null,
-              ['type', 'submit'],
-            ),
-          ],
-        ),
+        createDOMElement('div', 'input-field', [
+          createDOMElement(
+            'input',
+            'todo-input',
+            null,
+            null,
+            ['type', 'text'],
+            ['placeholder', 'Add your TODO item']
+          ),
+          createDOMElement(
+            'button',
+            'todo-button btn',
+            [createDOMElement('i', 'material-icons', 'add')],
+            null,
+            ['type', 'submit']
+          ),
+        ]),
         createDOMElement('div', 'select', [
           createDOMElement(
             'select',
@@ -46,7 +47,7 @@ export default class TODO {
               createDOMElement('option', null, 'Uncompleted', null, ['value', 'uncompleted']),
             ],
             null,
-            ['name', 'todos'],
+            ['name', 'todos']
           ),
         ]),
       ],
@@ -99,23 +100,70 @@ export default class TODO {
       'todo',
       [
         createDOMElement('li', 'todo-item', inputValue),
-        createDOMElement('button', 'btn complete-btn', [createDOMElement('i', 'material-icons', 'done')]),
-        createDOMElement('button', 'btn trash-btn', [createDOMElement('i', 'material-icons', 'delete')]),
+        createDOMElement('button', 'btn complete-btn', [
+          createDOMElement('i', 'material-icons', 'done'),
+        ]),
+        createDOMElement('button', 'btn trash-btn', [
+          createDOMElement('i', 'material-icons', 'delete'),
+        ]),
       ],
       todoList
     );
 
     todoInput.value = '';
 
+    if (!place) {
+      this.setPlacesToDataBase(inputValue);
+    }
+
     todo.addEventListener('click', this.handleTodoItem);
   };
 
-  async getPlacesFormDataBase() {
+  async setPlacesToDataBase(placeToVisit) {
+    let response;
+    let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
+    let arrayOfPlaces = [];
     const UID = JSON.parse(sessionStorage.getItem('user'));
 
-    let response = await fetch(
-      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${this.id}/placeToVisit/${this.town}.json`
-    );
+    if (this.id) {
+      request += `${UID}/${this.id}/placeToVisit/${this.town}.json`;
+    } else {
+      request += `${UID}/placeToVisit.json`;
+    }
+
+    response = await fetch(request);
+
+    const data = await response.json();
+    if (!data) {
+      arrayOfPlaces.push(placeToVisit);
+    } else {
+      if (!data.includes(placeToVisit)) {
+        data.push(placeToVisit);
+        arrayOfPlaces = data;
+      }
+    }
+
+    await fetch(request, {
+      method: 'PUT',
+      body: JSON.stringify(arrayOfPlaces),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
+  async getPlacesFormDataBase() {
+    let response;
+    let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
+    const UID = JSON.parse(sessionStorage.getItem('user'));
+
+    if (this.id) {
+      request += `${UID}/${this.id}/placeToVisit/${this.town}.json`;
+    } else {
+      request += `${UID}/placeToVisit.json`;
+    }
+
+    response = await fetch(request);
 
     const arrayOfPlaces = await response.json();
     console.log(arrayOfPlaces);
@@ -128,31 +176,34 @@ export default class TODO {
   }
 
   async removeFromDatabase(placeToVisit) {
+    let response;
+    let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
     const UID = JSON.parse(sessionStorage.getItem('user'));
 
-    let response = await fetch(
-      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${this.id}/placeToVisit/${this.town}.json`
-    );
+    if (this.id) {
+      request += `${UID}/${this.id}/placeToVisit/${this.town}.json`;
+    } else {
+      request += `${UID}/placeToVisit.json`;
+    }
+
+    response = await fetch(request);
 
     let arrayOfPlaces = await response.json();
 
     arrayOfPlaces = arrayOfPlaces.filter((place) => place !== placeToVisit);
 
-    await fetch(
-      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${this.id}/placeToVisit/${this.town}.json`,
-      {
-        method: 'PUT',
-        body: JSON.stringify(arrayOfPlaces),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    await fetch(request, {
+      method: 'PUT',
+      body: JSON.stringify(arrayOfPlaces),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 
   handleTodoItem = (event) => {
     const { target } = event;
-    const todo = target.parentElement;
+    const todo = target.closest('.todo');
     const arrOfChildren = todo.children;
 
     if (target.closest('.trash-btn')) {
