@@ -166,7 +166,6 @@ export default class TODO {
     response = await fetch(request);
 
     const arrayOfPlaces = await response.json();
-    console.log(arrayOfPlaces);
 
     if (arrayOfPlaces) {
       arrayOfPlaces.forEach((item) => {

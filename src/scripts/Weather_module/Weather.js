@@ -68,7 +68,6 @@ export default class Weather {
     }
 
     const cityName = cityValue.value.trim().toLowerCase();
-    console.log(cityName);
     searchFrom.reset();
 
     getWeatherData(cityName)
@@ -87,7 +86,6 @@ export default class Weather {
   };
 
   createWeatherApp = (city) => {
-    console.log(city);
     const container = document.querySelector('.weather-container');
     const imageName = city.weather[0].icon;
     const iconSrc = `http://openweathermap.org/img/wn/${imageName}@2x.png`;

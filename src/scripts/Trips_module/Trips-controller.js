@@ -226,13 +226,10 @@ export default class Trips {
 
     this.weather.addEventListener('click', () => {
       this.view.showWeather(currentCity);
-      console.log(currentCity);
     });
 
     this.todo.addEventListener('click', () => {
       this.view.showTODO(currentCity, this.tripDetailsContainer.id);
-      console.log(this.tripDetailsContainer.id);
-      console.log(currentCity);
     });
 
     this.important.addEventListener('click', () => {
