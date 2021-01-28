@@ -79,18 +79,4 @@ export default class Currency {
   findCountryData = (currencyCode) => {
     return this.countriesInfoData.find((item) => item.currencies[0].code === currencyCode);
   };
-
-  // createCurrencySearch = () => {
-  //   const table = document.querySelector('.currency');
-  //   createDOMElement('input', 'currency-search', null, table, [
-  //     'placeholder',
-  //     'Search you currency rate',
-  //   ]);
-  // };
-
-  // findCurrencyRate = (currencyCode) => {
-  //   const rate = Object.keys(this.currencyData.rates).find(
-  //     (item) => this.currencyData.rates[currencyCode]
-  //   );
-  // };
 }

@@ -60,9 +60,7 @@ export default class Notes {
     const noteContainer = document.querySelector('.notes-container');
     const backBtn = document.querySelector('.note-back');
     const tripsDetails = document.querySelector('.trip-details');
-    // const notes = document.querySelectorAll('.note');
 
-    // notes.forEach((note) => note.remove());
     tripsDetails.classList.remove('hidden');
     noteContainer.remove();
     backBtn.remove();
@@ -110,9 +108,7 @@ export default class Notes {
       note.style.transform = 'scale(1)';
     });
 
-    note.addEventListener('dblclick', () => {
-      note.remove();
-    });
+    note.addEventListener('dblclick', this.removeNote);
 
     if (!noteValue) {
       this.addNoteToDatabase(inputValue);
@@ -129,6 +125,12 @@ export default class Notes {
     return RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
   }
 
+  removeNote = (event) => {
+    const { target } = event;
+    this.removeNotesFormDataBase(target.innerHTML);
+    target.remove();
+  };
+
   closeNoteCreator = () => {
     const createContainer = document.querySelector('.create_note-container');
     const textArea = document.querySelector('.notes-textarea');
@@ -144,50 +146,50 @@ export default class Notes {
   };
 
   async addNoteToDatabase(note) {
+    let response;
+    let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
+    let arrayOfNotes = [];
     const UID = JSON.parse(sessionStorage.getItem('user'));
 
-    let response = await fetch(
-      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${this.id}/Notes/${this.town}.json`
-    );
-
-    let arrayOfNotes = await response.json();
-
-    if (!arrayOfNotes) {
-      const arrayOfNotes = [];
-      arrayOfNotes.push(note);
-
-      let response = await fetch(
-        `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${this.id}/Notes/${this.town}.json`,
-        {
-          method: 'PUT',
-          body: JSON.stringify(arrayOfNotes),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+    if (this.id) {
+      request += `${UID}/${this.id}/Notes/${this.town}.json`;
     } else {
-      arrayOfNotes.push(note);
-
-      let response = await fetch(
-        `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${this.id}/Notes/${this.town}.json`,
-        {
-          method: 'PUT',
-          body: JSON.stringify(arrayOfNotes),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      request += `${UID}/Notes.json`;
     }
+
+    response = await fetch(request);
+
+    const data = await response.json();
+    if (!data) {
+      arrayOfNotes.push(note);
+    } else {
+      if (!data.includes(note)) {
+        data.push(note);
+        arrayOfNotes = data;
+      }
+    }
+
+    await fetch(request, {
+      method: 'PUT',
+      body: JSON.stringify(arrayOfNotes),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 
   async getNotesFormDataBase() {
+    let response;
+    let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
     const UID = JSON.parse(sessionStorage.getItem('user'));
 
-    let response = await fetch(
-      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${this.id}/Notes/${this.town}.json`
-    );
+    if (this.id) {
+      request += `${UID}/${this.id}/Notes/${this.town}.json`;
+    } else {
+      request += `${UID}/Notes.json`;
+    }
+
+    response = await fetch(request);
 
     const arrayOfNotes = await response.json();
 
@@ -196,5 +198,31 @@ export default class Notes {
         this.createNote(null, note);
       });
     }
+  }
+
+  async removeNotesFormDataBase(removeNote) {
+    let response;
+    let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
+    const UID = JSON.parse(sessionStorage.getItem('user'));
+
+    if (this.id) {
+      request += `${UID}/${this.id}/Notes/${this.town}.json`;
+    } else {
+      request += `${UID}/Notes.json`;
+    }
+
+    response = await fetch(request);
+
+    let arrayOfNotes = await response.json();
+
+    arrayOfNotes = arrayOfNotes.filter((note) => note !== removeNote);
+
+    await fetch(request, {
+      method: 'PUT',
+      body: JSON.stringify(arrayOfNotes),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 }
