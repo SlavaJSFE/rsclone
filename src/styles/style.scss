@@ -79,7 +79,7 @@ body {
       display: flex;
     }
     select {
-      display: block;
+      // display: block;
       margin-top: 0.3rem;
       padding-top: 0.3rem;
       color: $main-color;
@@ -172,6 +172,10 @@ body {
 .btn {
   border-radius: 20px;
   background-color: #ffab00;
+
+  .material-icons {
+    font-size: 2.4rem;
+  }
 }
 .btn:hover {
   background-color: #ff6d00;
@@ -181,4 +185,7 @@ body {
 }
 .hidden {
   display: none;
+}
+select {
+  display: block;
 }

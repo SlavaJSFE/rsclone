@@ -4,11 +4,11 @@ import TravelPlaningAppView from './App-view';
 import Currency from './Currency_module/Currency';
 import Clock from './Clock_module/Clock';
 import Trips from './Trips_module/Trips-controller';
-import Sights from './Sights_module/Sights.js';
+import Sights from './Sights_module/Sights';
 import './Sights_module/EventsSights';
-import Banner from './Banner_module/Banner.js';
-import initBanner from './Banner_module/initBanner.js';
-import MainPageContent from './MainPageContent_module/MainPageContent.js';
+import Banner from './Banner_module/Banner';
+import initBanner from './Banner_module/initBanner';
+import MainPageContent from './MainPageContent_module/MainPageContent';
 
 export default class TravelPlaningApp {
   static init() {
@@ -130,8 +130,6 @@ export default class TravelPlaningApp {
 
       this.checkMyTripsActive();
     }
-
-    console.log(email, password, UID);
   }
 
   static fillMainContentSection(currentItem) {
@@ -139,12 +137,10 @@ export default class TravelPlaningApp {
     previousNavItem.classList.remove('active');
 
     if (currentItem.id === 'nav-home') {
-      // const banner = new Banner();
       this.view.mainContentSection.innerHTML = '';
       Banner.createBanner();
       initBanner();
 
-      // const mainPageContent = new MainPageContent();
       MainPageContent.createMainPageContent();
 
       currentItem.classList.add('active');

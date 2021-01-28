@@ -9,26 +9,32 @@ export default class TODO {
   createTODOElements = () => {
     const container = document.querySelector('.todo-container');
 
-    createDOMElement('header', null, [createDOMElement('h1', null, 'Places to visit')], container);
+    createDOMElement('header', 'todo-header', [createDOMElement('h2', null, 'Places to visit')], container);
 
     createDOMElement(
       'form',
       'todo-form',
       [
         createDOMElement(
-          'input',
-          'todo-input',
-          null,
-          null,
-          ['type', 'text'],
-          ['placeholder', 'Add your TODO item']
-        ),
-        createDOMElement(
-          'button',
-          'todo-button',
-          [createDOMElement('i', 'fas fa-plus-square')],
-          null,
-          ['type', 'submit']
+          'div',
+          'input-field',
+          [
+            createDOMElement(
+              'input',
+              'todo-input',
+              null,
+              null,
+              ['type', 'text'],
+              ['placeholder', 'Add your TODO item'],
+            ),
+            createDOMElement(
+              'button',
+              'todo-button btn',
+              [createDOMElement('i', 'material-icons', 'add')],
+              null,
+              ['type', 'submit'],
+            ),
+          ],
         ),
         createDOMElement('div', 'select', [
           createDOMElement(
@@ -40,7 +46,7 @@ export default class TODO {
               createDOMElement('option', null, 'Uncompleted', null, ['value', 'uncompleted']),
             ],
             null,
-            ['name', 'todos']
+            ['name', 'todos'],
           ),
         ]),
       ],
@@ -93,8 +99,8 @@ export default class TODO {
       'todo',
       [
         createDOMElement('li', 'todo-item', inputValue),
-        createDOMElement('button', 'complete-btn', [createDOMElement('i', 'fas fa-check')]),
-        createDOMElement('button', 'trash-btn', [createDOMElement('i', 'fas fa-trash')]),
+        createDOMElement('button', 'btn complete-btn', [createDOMElement('i', 'material-icons', 'done')]),
+        createDOMElement('button', 'btn trash-btn', [createDOMElement('i', 'material-icons', 'delete')]),
       ],
       todoList
     );
