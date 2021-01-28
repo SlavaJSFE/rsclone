@@ -6,7 +6,7 @@ import Map from '../Map_module/Map';
 import Notes from '../Notes_module/Notes';
 import Weather from '../Weather_module/Weather';
 import TODO from '../TODO_module/TODO';
-import Clock from '../Clock_module/Clock';
+import { clockInstance } from '../Clock_module/Clock';
 
 export default class TripsView {
   constructor() {
@@ -157,14 +157,13 @@ export default class TripsView {
   removeClocks() {
     const clock = document.querySelector('#clock-container2');
     clock.remove();
-    this.currClock.stopClock();
+    clockInstance.stopClock();
   }
 
   showClocks() {
     const tripDetailsContainer = document.querySelector('.trip-destination');
     if (tripDetailsContainer.innerHTML !== 'Minsk') {
-      this.currClock = new Clock(tripDetailsContainer.innerHTML, 2);
-      this.currClock.createClockView().launchClock();
+      clockInstance.createClockView(tripDetailsContainer.innerHTML, 2).launchClock();
     }
   }
 }

@@ -16,8 +16,8 @@ export default class TravelPlaningApp {
     this.view = new TravelPlaningAppView(this.model);
     this.view.init();
 
-    const clock1 = new Clock('Minsk', 1);
-    clock1.createClockView().launchClock();
+    const clock1 = new Clock();
+    clock1.createClockView('Minsk', 1).launchClock();
 
     const currency = new Currency();
     currency.handleMethods();

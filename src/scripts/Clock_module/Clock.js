@@ -6,10 +6,10 @@ import createDOMElement from '../services/createDOMElement';
  */
 
 export default class Clock {
-  constructor(town, id) {
-    this.town = town;
+  constructor() {
+    this.town;
     this.degree = 6;
-    this.id = id;
+    this.id;
     this.diff;
     this.timer;
   }
@@ -35,7 +35,9 @@ export default class Clock {
     createDOMElement('div', 'clock-title', `${titleText}`, container);
   };
 
-  createClockView = () => {
+  createClockView = (town, id) => {
+    this.town = town;
+    this.id = id;
     const clock = document.querySelector('.clock');
     const clockContainer = createDOMElement('div', 'clock-container', null, clock, [
       'id',
@@ -129,3 +131,5 @@ export default class Clock {
     }
   };
 }
+
+export const clockInstance = new Clock();
