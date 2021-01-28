@@ -27,7 +27,7 @@ export default class Notes {
           null,
           ['placeholder', 'Write note...'],
           ['id', 'note-text'],
-          ['maxlength', '96'],
+          ['maxlength', '96']
         ),
       ]),
       createDOMElement('i', 'material-icons accept-btn', 'check_circle_outline'),
@@ -114,8 +114,6 @@ export default class Notes {
       note.remove();
     });
 
-    debugger;
-
     if (!noteValue) {
       this.addNoteToDatabase(inputValue);
     }
@@ -192,7 +190,6 @@ export default class Notes {
     );
 
     const arrayOfNotes = await response.json();
-    debugger;
 
     if (arrayOfNotes) {
       arrayOfNotes.forEach((note) => {
