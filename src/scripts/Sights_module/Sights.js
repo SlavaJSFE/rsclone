@@ -169,18 +169,31 @@ export default class Sights {
 
     const form = document.createElement('form');
     form.setAttribute('id', 'search_form');
-    form.classList.add('input-group', 'mb-4', 'p-1');
+    form.classList.add('input-group');
 
-    const form_div = document.createElement('div');
-    form_div.classList.add('input-group-prepend', 'border-0');
+    const searchInputField = document.createElement('div');
+    searchInputField.classList.add('input-field');
 
-    const button = document.createElement('button');
+    form.appendChild(searchInputField);
+
+    const searchInput = document.createElement('input');
+    searchInput.setAttribute('id', 'textbox');
+    searchInput.setAttribute('type', 'search');
+    searchInput.setAttribute('placeholder', objTranslate.sightsLang['inputPlaceholder_' + local]);
+    searchInput.setAttribute('aria-describedby', 'button-search');
+    searchInput.classList.add('sights-search');
+
+    const searchButton = document.createElement('button');
     // button.setAttribute('id', 'button-search');
-    button.setAttribute('type', 'button');
-    button.classList.add('btn', 'btn-link', 'search');
+    searchButton.setAttribute('type', 'button');
+    searchButton.classList.add('btn', 'btn-link', 'search');
 
-    const button_search_i = document.createElement('i');
-    button_search_i.classList.add('fa', 'fa-search', 'search');
+    const searchButtonIcon = document.createElement('i');
+    searchButtonIcon.classList.add('material-icons');
+    searchButtonIcon.textContent = 'search';
+
+    searchButton.appendChild(searchButtonIcon);
+    searchInputField.append(searchInput, searchButton);
 
     const info = document.createElement('div');
     info.setAttribute('id', 'info');
@@ -208,17 +221,10 @@ export default class Sights {
     button_next.classList.add('btn', 'btn-primary');
     button_next.innerHTML = 'button_next';
 
-    const input = document.createElement('input');
-    input.setAttribute('id', 'textbox');
-    input.setAttribute('type', 'search');
-    input.setAttribute('placeholder', objTranslate.sightsLang['inputPlaceholder_' + local]);
-    input.setAttribute('aria-describedby', 'button-search');
-    input.classList.add('form-control', 'bg-none', 'border');
-
-    button.appendChild(button_search_i);
-    form_div.appendChild(button);
-    form.appendChild(form_div);
-    form.appendChild(input);
+    // button.appendChild(button_search_i);
+    // form_div.appendChild(button);
+    // form.appendChild(form_div);
+    // form.appendChild(input);
 
     mainBlockRow_left_nav.appendChild(button_next);
 

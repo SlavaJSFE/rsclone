@@ -11,9 +11,10 @@ export default class Notes {
   createNoteContainer = () => {
     const notesContainer = document.querySelector('.notes-container');
 
-    const buttonContainer = createDOMElement('div', 'button-container', [
-      createDOMElement('button', 'btn btn-success btn-create', 'Create Note'),
-    ]);
+    // const buttonContainer = createDOMElement('div', 'button-container', [
+    const createBtn = createDOMElement('button', 'btn btn-success btn-create', 'Create Note');
+    createDOMElement('i', 'material-icons left', 'edit', createBtn);
+    // ]);
 
     const notes = createDOMElement('div', 'note-container');
 
@@ -26,14 +27,14 @@ export default class Notes {
           null,
           ['placeholder', 'Write note...'],
           ['id', 'note-text'],
-          ['maxlength', '96']
+          ['maxlength', '96'],
         ),
       ]),
       createDOMElement('i', 'material-icons accept-btn', 'check_circle_outline'),
       createDOMElement('i', 'material-icons close-btn', 'highlight_off'),
     ]);
 
-    notesContainer.append(buttonContainer, notes, createNote);
+    notesContainer.append(createBtn, notes, createNote);
     this.setListeners();
 
     this.getNotesFormDataBase();
