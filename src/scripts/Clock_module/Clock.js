@@ -110,7 +110,7 @@ export default class Clock {
     this.timer = setInterval(() => {
       this.renderCircleClock();
       this.renderNumericClock();
-    }, 1000);
+    }, 0);
   }
 
   stopClock() {
