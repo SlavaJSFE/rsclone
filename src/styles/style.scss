@@ -1,4 +1,4 @@
-@import 'materialize-css/sass/materialize.scss';
+// @import 'materialize-css/sass/materialize.scss';
 @import "currency.scss";
 @import "clock.scss";
 @import "map.scss";
@@ -26,10 +26,6 @@ $primary-color: #1e1e20;
 body {
   background: url("../assets/images/map-2153535_1280.jpg");
   background-size: cover;
-}
-.title {
-  color: $main-color;
-  margin: 0;
 }
 .header {
   background-color: $secondary-color;
@@ -83,7 +79,7 @@ body {
       display: flex;
     }
     select {
-      display: block;
+      // display: block;
       margin-top: 0.3rem;
       padding-top: 0.3rem;
       color: $main-color;
@@ -160,19 +156,26 @@ body {
   height: 8vh;
   min-height: 4.5rem;
   color: black;
-}
-.authors {
-  margin: 0 40px 0 5px;
-}
-.gh-link {
-  margin: 0 10px;
-}
-.rss-logo {
-  height: 25px;
+
+  .authors {
+    margin: 0 40px 0 5px;
+
+    .gh-link {
+      margin: 0 10px;
+      font-size: 1.4rem;
+    }
+  }
+  .rss-logo {
+    height: 25px;
+  }
 }
 .btn {
   border-radius: 20px;
   background-color: #ffab00;
+
+  .material-icons {
+    font-size: 2.4rem;
+  }
 }
 .btn:hover {
   background-color: #ff6d00;
@@ -182,4 +185,7 @@ body {
 }
 .hidden {
   display: none;
+}
+select {
+  display: block;
 }

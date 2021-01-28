@@ -1,15 +1,30 @@
 .sights-container{
     background-image: url('../assets/images/paper-1074131_1920.jpg');
     width: 99%;
-    height: 97%;
+    min-height: 97%;
     font-size: 1.5rem;
     line-height: 1.5;
     color: #212529;
     text-align: left;
     margin: 0.7rem 0 0.7rem 0.7rem;
+    padding: 3rem;
 
   .input-field {
-    padding: 3rem;
+    display: flex;
+    background-color: #ffffff;
+    height: 3.6rem;
+    border-radius: 1.7rem;
+    width: 80%;
+    margin: 0 auto;
+
+    .sights-search {
+      margin: 0 ;
+      border: 0;
+      padding: 0.2rem 1.5rem;
+    }
+    input[type=search]:focus {
+      border-radius: 1.7rem;
+    }
   } 
 }
 
@@ -22,8 +37,8 @@
   -ms-flex-align: stretch;
   align-items: stretch;
   width: 100%;
-  background-color: #ffffff;
   border-radius: 1.7rem;
+  padding-bottom: 1.5rem;
 }
 
 .mb-4{
@@ -37,7 +52,8 @@
 .input-group-prepend {
     display: -ms-flexbox;
     display: flex;
-	margin-right: -1px;
+    margin-right: -1px;
+    background-color: #ffffff;
 }
 
 .border-0 {
@@ -109,24 +125,35 @@
 }
 
 .form-control:focus {
-    color: #495057;
-    background-color: #ffffff !important;
-    border-color: #80bdff;
-    outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+  color: #495057;
+  background-color: #ffffff !important;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }
 
 .alert-primary {
-    color: #004085;
-    background-color: #dfdfdf;
+  color: #004085;
+  background-color: #ffab00;
 }
 
 .alert {
-    position: relative;
-    padding: .75rem 1.25rem;
-    margin-bottom: 1rem;
-    border: 1px solid transparent;
-    border-radius: .25rem;
+  position: relative;
+  padding: .75rem 1.25rem;
+  margin: 1rem auto;
+  border-radius: 0.5rem;
+  text-align: center;
+  max-width: 70%;
+
+  :first-child {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+}
+
+.alert:first-child {
+  font-size: 2.2rem;
+  font-weight: bold;
 }
 
 .list-group {
@@ -134,7 +161,7 @@
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
-    padding-left: 0;
+    padding: 0 1.5rem;
     margin-bottom: 0;
 }
 
@@ -252,7 +279,7 @@ btn-primary:hover {
     flex-wrap: wrap;
 }
 #poi{
-	padding-bottom: 2rem;
+	padding: 0 1.5rem;
 }
 #poi img {
     margin: auto;
@@ -278,14 +305,10 @@ btn-primary:hover {
 
 @media (min-width: 992px){
 .col-lg-7 {
-    -ms-flex: 0 0 58.333333%;
-    flex: 0 0 56%;
-    max-width: 56%;
+    flex: 0 0 75%;
 }
 .col-lg-5 {
-    -ms-flex: 0 0 40%;
-    flex: 0 0 40%;
-    max-width: 40%;
+    flex: 0 0 25%;
 }
 }
 

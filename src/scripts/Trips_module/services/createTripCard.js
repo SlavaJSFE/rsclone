@@ -1,9 +1,9 @@
-import createDOMElement from '../../services/createDOMElement.js';
+import createDOMElement from '../../services/createDOMElement';
 
 export default function createTripCard(tripObject) {
   let tripRoute = '';
   tripObject.tripRoute.forEach((place) => {
-    tripRoute = tripRoute + place + ' - ';
+    tripRoute = `${tripRoute + place} - `;
   });
   const route = tripRoute.slice(0, -3);
 
