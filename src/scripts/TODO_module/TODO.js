@@ -120,9 +120,11 @@ export default class TODO {
     const arrayOfPlaces = await response.json();
     console.log(arrayOfPlaces);
 
-    arrayOfPlaces.forEach((item) => {
-      this.addTodoItem(null, item);
-    });
+    if (arrayOfPlaces) {
+      arrayOfPlaces.forEach((item) => {
+        this.addTodoItem(null, item);
+      });
+    }
   }
 
   async removeFromDatabase(placeToVisit) {

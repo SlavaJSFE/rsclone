@@ -221,7 +221,7 @@ export default class Trips {
     });
 
     this.notes.addEventListener('click', () => {
-      this.view.showNotes(this.tripDetailsContainer.id);
+      this.view.showNotes(currentCity, this.tripDetailsContainer.id);
     });
 
     this.weather.addEventListener('click', () => {
