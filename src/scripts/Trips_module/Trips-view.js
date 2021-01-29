@@ -25,7 +25,12 @@ export default class TripsView {
   }
 
   renderTripsCards(userTripsArray) {
+    console.log()
     const trips = userTripsArray;
+    if (userTripsArray.length === 0) {
+      const noTripsInfo = services.createNoTripsInfo();
+      this.myTripsContainer.appendChild(noTripsInfo);
+    }
     trips.forEach((trip) => {
       const tripCard = createTripCard(trip);
       this.myTripsContainer.appendChild(tripCard);
@@ -89,6 +94,14 @@ export default class TripsView {
   setTripCard(tripObject) {
     const tripCard = createTripCard(tripObject);
     this.myTripsContainer.appendChild(tripCard);
+  }
+
+  checkNoTrips() {
+    const noTripsBlock = this.myTripsContainer.querySelector('.no-trips');
+
+    if (noTripsBlock) {
+      noTripsBlock.remove();
+    }
   }
 
   showMap(town, id) {

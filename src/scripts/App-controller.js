@@ -6,12 +6,14 @@ import Clock from './Clock_module/Clock';
 import Trips from './Trips_module/Trips-controller';
 import Sights from './Sights_module/Sights';
 import './Sights_module/EventsSights';
+import services from './services/appControllerServices';
 import Banner from './Banner_module/Banner';
 import initBanner from './Banner_module/initBanner';
 import MainPageContent from './MainPageContent_module/MainPageContent';
 
 export default class TravelPlaningApp {
   static init() {
+    services.setLanguage();
     this.model = Model;
     this.view = new TravelPlaningAppView(this.model);
     this.view.init();
@@ -36,9 +38,13 @@ export default class TravelPlaningApp {
     this.logIn = this.view.header.querySelector('.log-in');
     this.logOut = this.view.header.querySelector('.log-out');
     this.singUp = this.view.header.querySelector('.sign-up');
+
+    const modal = document.querySelectorAll('.modal');
+    Materialize.Modal.init(modal, { opacity: 0.6 });
   }
 
   static addAppEventListener() {
+    const langSwitcher = document.querySelector('.langSwitcher');
     const navItemHome = document.getElementById('nav-home');
     const navItemMyTrips = document.getElementById('nav-my-trips');
     const navItemMap = document.getElementById('nav-map');
@@ -48,17 +54,14 @@ export default class TravelPlaningApp {
 
     this.view.header.addEventListener('click', (event) => this.handleHeaderEvent(event.target));
 
+    langSwitcher.addEventListener('change', () => this.changeLanguage(langSwitcher));
+
     navItemHome.addEventListener('click', () => this.fillMainContentSection(navItemHome));
     navItemMyTrips.addEventListener('click', () => this.fillMainContentSection(navItemMyTrips));
     navItemMap.addEventListener('click', () => this.fillMainContentSection(navItemMap));
     navItemNotes.addEventListener('click', () => this.fillMainContentSection(navItemNotes));
     navItemSights.addEventListener('click', () => this.fillMainContentSection(navItemSights));
     navItemTodo.addEventListener('click', () => this.fillMainContentSection(navItemTodo));
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const modal = document.querySelectorAll('.modal');
-      Materialize.Modal.init(modal, { opacity: 0.6 });
-    });
   }
 
   static handleHeaderEvent(target) {
@@ -130,6 +133,14 @@ export default class TravelPlaningApp {
 
       this.checkMyTripsActive();
     }
+  }
+
+  static changeLanguage(langSwitcher) {
+    const currentLanguage = langSwitcher.value;
+
+    services.changeLanguage(currentLanguage);
+    this.view.appWrapper.remove();
+    TravelPlaningApp.init();
   }
 
   static fillMainContentSection(currentItem) {

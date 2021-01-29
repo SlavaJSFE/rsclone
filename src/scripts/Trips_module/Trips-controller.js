@@ -1,9 +1,10 @@
 import Materialize from 'materialize-css';
 import TripsView from './Trips-view';
 import TripsModel from './Trips-model';
-import Sights from '../../scripts/Sights_module/Sights.js';
-import objTranslate from '../../scripts/Language_module/sightsLang.component';
-import { local } from '../../scripts/Language_module/languageSwicher';
+import Sights from '../Sights_module/Sights';
+import objTranslate from '../Language_module/sightsLang.component';
+import { local } from '../constants/language';
+import services from './services/tripsControllerServices';
 
 export default class Trips {
   init() {
@@ -53,19 +54,6 @@ export default class Trips {
       const { id } = event.target;
       const tripDetails = await TripsModel.getTripById(id);
       this.showTrip(tripDetails);
-      // const { id } = event.target;
-      // const tripDetails = await TripsModel.getTripById(id);
-
-      // this.view.showTrip(tripDetails);
-
-      // const pagination = document.querySelector('.pagination');
-      // pagination.addEventListener('click', (e) => {
-      //   this.handlePagination(e, pagination);
-      // });
-
-      // this.tripDetailsContainer = document.querySelector('.trip-details');
-      // this.addTripDetailsListeners(this.tripDetailsContainer);
-      // this.addDestinationListeners();
     }
   }
 
@@ -91,6 +79,7 @@ export default class Trips {
 
     this.modal.close();
     this.view.setTripCard(tripObject);
+    this.view.checkNoTrips();
   }
 
   async showUserTrips() {
@@ -106,54 +95,24 @@ export default class Trips {
     event.preventDefault();
 
     const currentActive = pagination.querySelector('.active');
-    const leftArrow = pagination.querySelector('.left-arrow');
-    const rightArrow = pagination.querySelector('.right-arrow');
-    const pageNumber = 'a';
 
-    if (event.target === currentActive.firstChild) {
-      return;
-    }
-
-    if (event.target.localName === pageNumber) {
-      currentActive.classList.remove('active');
-      event.target.closest('li').classList.add('active');
-    }
-
-    if (event.target === leftArrow && currentActive.previousSibling !== pagination.firstChild) {
-      currentActive.classList.remove('active');
-      currentActive.previousSibling.classList.add('active');
-    }
-
-    if (event.target === rightArrow && currentActive.nextSibling !== pagination.lastChild) {
-      currentActive.classList.remove('active');
-      currentActive.nextSibling.classList.add('active');
-    }
+    services.switchPagination(event, pagination, currentActive);
 
     const nextActive = pagination.querySelector('.active');
 
     if (nextActive !== currentActive) {
-      this.view.showDestinationDetails(nextActive);
-
-      this.view.removeClocks();
-      this.view.showClocks();
-
-      this.addDestinationListeners();
-      Trips.setArrowsDisabled(pagination, nextActive);
+      this.showChosenDestination(pagination, nextActive);
     }
   }
 
-  static setArrowsDisabled(pagination, currentActive) {
-    if (currentActive.nextSibling === pagination.lastChild) {
-      pagination.lastChild.classList.add('disabled');
-    } else {
-      pagination.lastChild.classList.remove('disabled');
-    }
+  showChosenDestination(pagination, nextActive) {
+    this.view.showDestinationDetails(nextActive);
 
-    if (currentActive.previousSibling === pagination.firstChild) {
-      pagination.firstChild.classList.add('disabled');
-    } else {
-      pagination.firstChild.classList.remove('disabled');
-    }
+    this.view.removeClocks();
+    this.view.showClocks();
+
+    this.addDestinationListeners();
+    services.setArrowsDisabled(pagination, nextActive);
   }
 
   addTripDetailsListeners(tripDetailsContainer) {
@@ -178,8 +137,8 @@ export default class Trips {
       this.modal.open();
       this.addListenerToCloseBtn();
 
-      const removeModal = document.getElementById('remove-trip-modal');
-      removeModal.addEventListener('click', (event) => {
+      const removeTripModal = document.getElementById('remove-trip-modal');
+      removeTripModal.addEventListener('click', (event) => {
         this.handleTripRemoveModalEvent(event, tripDetailsContainer.id);
       });
     });
@@ -210,13 +169,12 @@ export default class Trips {
     });
 
     this.sights.addEventListener('click', () => {
-      console.log(currentCity);
-      let sights = new Sights();
-      document.querySelector('.main-content-section').innerHTML = '';
+      const sights = new Sights();
+      this.view.mainContentSection.innerHTML = '';
       sights.createSightsInfo();
       sights.search(currentCity);
       document.querySelector('#search_form').innerHTML = `${
-        objTranslate.sightsLang['article_' + local]
+        objTranslate.sightsLang[`article_${local}`]
       } ${currentCity}`;
     });
 
@@ -245,10 +203,18 @@ export default class Trips {
     this.view.tripDetailsBlock.remove();
     this.showTrip(updatedTrip);
 
-    const currentDestination = this.view.tripDetailsBlock.querySelector('.destination-details');
-    const lastDestination = updatedTrip.tripRoute.length;
-    currentDestination.remove();
-    this.view.trip.fillDestination(lastDestination);
+    const pagination = document.querySelector('.pagination');
+    const currentActive = pagination.querySelector('.active');
+    currentActive.classList.remove('active');
+    const newDestinationPage = pagination.lastChild.previousSibling;
+    newDestinationPage.classList.add('active');
+
+    this.showChosenDestination(pagination, newDestinationPage);
+
+    // const currentDestination = this.view.tripDetailsBlock.querySelector('.destination-details');
+    // const lastDestination = updatedTrip.tripRoute.length;
+    // currentDestination.remove();
+    // this.view.trip.fillDestination(lastDestination);
 
     this.modal.close();
   }
@@ -275,6 +241,3 @@ export default class Trips {
     });
   }
 }
-
-// OpenTripMap apiKey:
-// 5ae2e3f221c38a28845f05b6d6abeebb861dd05be680cb6c5c452fa0

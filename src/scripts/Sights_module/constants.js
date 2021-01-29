@@ -1,4 +1,4 @@
-const layer_names = {
+const layerNames = {
 	tidal_islands: { n: "tidal island [s]", e: "🏝️" },
 	inland_islands: { n: "inland island [s]", e: "🏝️" },
 	coral_islands: { n: "coral island [s]", e: "🏝️" },
@@ -494,4 +494,4 @@ const isoCountries = {
 	ZW: "Zimbabwe"
 };
 
-export { isoCountries, layer_names };
+export { isoCountries, layerNames };

@@ -1,7 +1,7 @@
 import 'regenerator-runtime/runtime';
-import { isoCountries, layer_names } from './constants';
+import { isoCountries, layerNames } from './constants';
 import objTranslate from '../Language_module/sightsLang.component';
-import { local } from '../Language_module/languageSwicher';
+import { local } from '../constants/language';
 
 export default class Sights {
   constructor() {
@@ -44,9 +44,9 @@ export default class Sights {
   }
 
   getCategoryName(kinds) {
-    let names = [];
+    const names = [];
     kinds.split(',').forEach((kind) => {
-      let item = layer_names[kind];
+      const item = layerNames[kind];
       if (item) names.push(this.parsePlural(item.n)?.single);
     });
     return names.join(', ');

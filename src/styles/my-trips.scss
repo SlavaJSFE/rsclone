@@ -7,47 +7,44 @@ $main-color: white;
   margin: 4rem;
   overflow: auto;
   height: 80%;
-}
-.new-trip-btn {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
-}
-// .trips-modal {
-//   display: none;
-// }
-// .trips-modal.active {
-//   display: block;
-//   position: absolute;
-//   top: 10px;
-//   background-color: $main-color;
-//   width: 70%;
-//   height: 400px;
 
-  
-//   #trip-create-form {
-//     width: 70%;
-//     margin: 45px auto 0;
+  .card-content {
+    font-size: 1.6rem;
+    padding: 1rem 2rem !important;
+    max-height: unset !important;
+  }
+  .card-action {
+    font-size: 1.6rem;
+    padding: 2rem;
+  }
+  .new-trip-btn {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+  }
+  .submit-btn {
+    margin: 10px;
+  }
+  .no-trips {
+    grid-column: span 3;
+    justify-self: center;
+    background-color: #ffffff;
+    width: 42.5rem;
+    height: 37rem;
+    padding: 1.5rem;
+    margin: auto;
+    transform: rotate(-6deg);
 
-//     #new-trip-submit {
-//       border-radius: 20px;
-//     }
-//   }
-// }
-// .select {
-//   font-size: 18px;
-//   margin: 30px;
-// }
-.submit-btn {
-  margin: 10px;
+    .no-trips-image {
+      width: 100%;
+    }
+    .no-trips-title {
+      font-size: 2rem;
+      margin: 1rem;
+    }
+  }
 }
 .trip-details {
-  // display: grid;
-  // grid-template-columns: repeat(3, 1fr);
-  // position: relative;
-  // text-align: center;
-  // padding: 0.5rem 3rem;
-  // gap: 3rem;
   color: #ffffff;
 
   .back-btn,
@@ -196,12 +193,4 @@ $main-color: white;
       margin: 0 2rem;
     }
   }
-}
-.card-content {
-  font-size: 1.6rem;
-  padding: 1rem 2rem;
-}
-.card-action {
-  font-size: 1.6rem;
-  padding: 2rem;
 }

@@ -2,10 +2,10 @@ import { Loader } from '@googlemaps/js-api-loader';
 import MarkerClusterer from '@googlemaps/markerclustererplus';
 import { getPlaceCoord, getPlaceData, getXIdData } from './Data';
 import createHTMLMapMarker from './HTMLMapMarker';
-import { getIcon, layer_names } from '../constants/icon_constants';
+import { getIcon, layerNames } from '../constants/icon_constants';
 import * as _ from 'lodash';
 import createDOMElement from '../services/createDOMElement';
-import { local } from '../Language_module/languageSwicher';
+import { local } from '../constants/language';
 
 const requests = [
   'historic_architecture',
