@@ -1,5 +1,5 @@
-import TravelPlaningApp from './scripts/TravelPlaningApp.js';
-import 'normalize.css';
+import TravelPlaningApp from './scripts/App-controller.js';
+import 'materialize-css/sass/materialize.scss';
 import './styles/style.scss';
 
 TravelPlaningApp.init();

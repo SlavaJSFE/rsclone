@@ -1,0 +1,147 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,200;1,300;1,400;1,700;1,900&display=swap");
+
+@mixin font-main {
+  font-family: "Raleway", sans-serif;
+}
+
+.weather-container {
+  @include font-main;
+  font-size: 12px;
+  color: #707070;
+  max-width: 250px;
+  min-width: 100px;
+  margin: 0 auto;
+
+  .weather-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 30px;
+  }
+
+  .city-input {
+    border: 1px solid black;
+    border-radius: 14px;
+  }
+
+  .back-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 40px;
+  }
+
+  .city-name {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+  }
+
+  .city-name p {
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .city-name span {
+    font-weight: 400;
+    font-size: 36px;
+    font-family: "Times New Roman", Times, serif;
+    position: relative;
+    top: -40px;
+  }
+
+  .card-img-top {
+    width: 100%;
+  }
+
+  .temp span {
+    font-weight: 100;
+    font-size: 5em;
+    letter-spacing: -5px;
+    white-space: nowrap;
+  }
+
+  .card-body {
+    .card-mid {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      line-height: 0.5;
+    }
+
+    .condition {
+      line-height: 1em;
+      font-weight: 700;
+      font-size: 1em;
+      text-transform: capitalize;
+    }
+  }
+  .condition-temp {
+    .high {
+      &::before {
+        content: "";
+        background: url("../assets/up.svg") no-repeat;
+        width: 10px;
+        height: 15px;
+        display: inline-block;
+        position: relative;
+        top: 3px;
+      }
+    }
+
+    .low {
+      &::before {
+        content: "";
+        background: url("../assets/down.svg") no-repeat;
+        width: 10px;
+        height: 15px;
+        display: inline-block;
+        position: relative;
+        top: 3px;
+      }
+    }
+  }
+
+  .icon-container {
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+    background: #202020;
+  }
+  .icon-container img {
+    width: 50px;
+    height: 50px;
+    margin: auto;
+  }
+
+  .card-bottom {
+    display: flex;
+    margin: 25px 0;
+    justify-content: space-around;
+    align-items: center;
+    line-height: 0.5;
+  }
+  .card-bottom span {
+    font-size: 10px;
+  }
+  .card-bottom p {
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: -2px;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+  }
+}
+
+[data-night="false"] {
+  color: black;
+}
+
+[data-night="true"] {
+  color: white;
+}

@@ -1,0 +1,125 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,700;0,800;1,300;1,400;1,700&display=swap");
+
+@mixin font-main {
+  font-family: "Poppins", sans-serif;
+}
+
+.todo-container {
+  @include font-main;
+  display: flex;
+  flex-direction: column;
+  background-image: url('../assets/images/paper-1074131_1920.jpg');
+  background-size: cover;
+  color: white;
+  min-height: 97%;
+  margin: 0.7rem 0 0.7rem 0.7rem;
+}
+.todo-header {
+  margin-left: 15%;
+}
+.todo-form {
+  display: flex;
+  width: 60%;
+  margin-left: 15%;
+
+  .input-field {
+    display: flex;
+    background-color: #ffffff;
+    height: 3.6rem;
+    border-radius: 1.7rem;
+    width: 100%;
+
+    .todo-input {
+      padding-top: 0.3rem;
+      padding-left: 1.5rem;
+      font-size: 1.6rem;
+      border: none;
+
+    }
+
+    input[type=text]:focus {
+     border-bottom: none;
+     box-shadow: none;
+   }
+  
+    .todo-button {
+      transition: all 0.3s ease;
+    }
+  }
+  .select {
+    margin: 1rem;
+  }
+  .filter-todo {
+    height: 3.6rem;
+  }
+}
+
+.todoItems-container {
+  display: flex;
+  margin-left: 15%;
+
+  .todo-list {
+    min-width: 30%;
+    list-style: none;
+  }
+  .todo {
+    margin: 0.5rem;
+    font-size: 1.5rem;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 1s ease;
+  }
+
+  .todo-item {
+    flex: 1;
+    padding: 0.7rem 0.5rem;
+    background: #ffffff;
+    height: 3.6rem;
+    margin-right: 0.3;
+    border-radius: 0.3rem;
+  }
+
+  .trash-btn,
+  .complete-btn {
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    margin: 0 0.3rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s ease-in-out;
+  }
+
+  .complete-btn {
+    background: rgb(11, 212, 162);
+    &:hover {
+      color: rgb(13, 199, 13);
+      background: rgb(30, 250, 195);
+    }
+  }
+
+  .trash-btn {
+    background: #ff6f47;
+    &:hover {
+      background: #ffffff;
+      color: crimson;
+    }
+  }
+
+  .fa-trash,
+  .fa-check {
+    pointer-events: none;
+  }
+}
+
+.fall {
+  transform: translateY(10rem) rotateZ(20deg);
+  opacity: 0;
+}
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
