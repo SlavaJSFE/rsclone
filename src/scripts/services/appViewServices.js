@@ -1,9 +1,12 @@
-import createDOMElement from './createDOMElement.js';
+import createDOMElement from './createDOMElement';
 import statement from '../constants/TravelPlaningApp-constants';
 import objTranslate from '../Language_module/commonLang.component';
-import '../Language_module/languageSwicher';
-import { local } from '../Language_module/languageSwicher';
+// import '../Language_module/languageSwicher';
+// import { local } from '../Language_module/languageSwicher';
+// let local = localStorage.getItem('lang') ? JSON.parse(localStorage.getItem('lang')) : 'ru';
+import { local } from '../constants/language';
 
+console.log(local)
 const services = {
   createHeader() {
     const header = createDOMElement('header', 'header');
@@ -32,12 +35,11 @@ const services = {
 
     const langSwitcher = `<i class="material-icons left">language</i>
                           <select class="langSwitcher">
-                            <div><option value="ru">Русский</option></div>
-                            <div><option value="en">English</option></div>
-                            <div><option value="pl">Polski</option></div>
-                            <div><option value="de">Deutsch</option></div>
-                            <div><option value="zh">中文</option></div>
-                            
+                            <option value="ru">Русский</option>
+                            <option value="en">English</option>
+                            <option value="pl">Polski</option>
+                            <option value="de">Deutsch</option>
+                            <option value="zh">中文</option>
                           </select>`;
     // document.createElement('select');
     // langSwitcher.setAttribute('name', '');
@@ -71,6 +73,7 @@ const services = {
 
     const options = Array.from(language.querySelectorAll('option'));
     const currentLang = options.filter((option) => option.value === local);
+
     currentLang[0].selected = true;
 
     return linksContainer;

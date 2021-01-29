@@ -137,6 +137,20 @@ const services = {
     const linkRightArrow = createDOMElement('a', null, null, rightArrow, ['href', '']);
     createDOMElement('i', 'material-icons right-arrow', 'chevron_right', linkRightArrow);
   },
+
+  createNoTripsInfo() {
+    const infoContainer = createDOMElement('div', 'no-trips z-depth-5');
+
+    const image = createDOMElement('img', 'no-trips-image', null, null,
+      ['src', './assets/images/bicycle-4426751_1280.jpg']);
+
+    const title = createDOMElement('h2', 'no-trips-title',
+      'You have no trips yet. Create new trip and plan your journey!');
+
+    infoContainer.append(image, title);
+
+    return infoContainer;
+  },
 };
 
 export default services;

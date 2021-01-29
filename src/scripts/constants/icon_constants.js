@@ -1,4 +1,4 @@
-export const layer_names = {
+export const layerNames = {
   tidal_islands: { n: 'tidal island [s]', e: '🏝️' },
   inland_islands: { n: 'inland island [s]', e: '🏝️' },
   coral_islands: { n: 'coral island [s]', e: '🏝️' },
@@ -495,8 +495,8 @@ export const isoCountries = {
 };
 
 export const getIcon = (kinds) => {
-  const icon = Object.keys(layer_names).find((item) => kinds.includes(item));
-  return layer_names[icon];
+  const icon = Object.keys(layerNames).find((item) => kinds.includes(item));
+  return layerNames[icon];
 };
 
-// export { isoCountries, layer_names, getIcon };
+// export { isoCountries, layerNames, getIcon };
