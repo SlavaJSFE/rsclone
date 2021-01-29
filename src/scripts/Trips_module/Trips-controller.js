@@ -179,7 +179,7 @@ export default class Trips {
     });
 
     this.notes.addEventListener('click', () => {
-      this.view.showNotes(this.tripDetailsContainer.id);
+      this.view.showNotes(currentCity, this.tripDetailsContainer.id);
     });
 
     this.weather.addEventListener('click', () => {
@@ -188,7 +188,6 @@ export default class Trips {
 
     this.todo.addEventListener('click', () => {
       this.view.showTODO(currentCity, this.tripDetailsContainer.id);
-      console.log(this.tripDetailsContainer.id);
     });
 
     this.important.addEventListener('click', () => {

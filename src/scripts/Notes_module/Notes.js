@@ -1,7 +1,8 @@
 import createDOMElement from '../services/createDOMElement';
 
 export default class Notes {
-  constructor(id) {
+  constructor(town, id) {
+    this.town = town;
     this.id = id;
     this.isOpen = false;
     this.target;
@@ -26,7 +27,7 @@ export default class Notes {
           null,
           ['placeholder', 'Write note...'],
           ['id', 'note-text'],
-          ['maxlength', '96'],
+          ['maxlength', '96']
         ),
       ]),
       createDOMElement('i', 'material-icons accept-btn', 'check_circle_outline'),
@@ -35,6 +36,8 @@ export default class Notes {
 
     notesContainer.append(createBtn, notes, createNote);
     this.setListeners();
+
+    this.getNotesFormDataBase();
   };
 
   setListeners = () => {
@@ -57,6 +60,7 @@ export default class Notes {
     const noteContainer = document.querySelector('.notes-container');
     const backBtn = document.querySelector('.note-back');
     const tripsDetails = document.querySelector('.trip-details');
+
     tripsDetails.classList.remove('hidden');
     noteContainer.remove();
     backBtn.remove();
@@ -76,14 +80,22 @@ export default class Notes {
     }
   };
 
-  createNote = () => {
+  createNote = (event, noteValue) => {
     const noteContainer = document.querySelector('.note-container');
     const textArea = document.querySelector('.notes-textarea');
+    let inputValue;
+
+    if (noteValue) {
+      textArea.value = noteValue;
+      inputValue = textArea.value.trim();
+    } else {
+      inputValue = textArea.value.trim();
+    }
 
     if (textArea.value === '') return;
 
     const note = createDOMElement('div', 'note', null, noteContainer);
-    const noteContent = createDOMElement('div', 'note-content', `${textArea.value}`, note);
+    const noteContent = createDOMElement('div', 'note-content', inputValue, note);
 
     noteContent.style.transform = `rotate(${this.randomRotateNumber()}deg)`;
     noteContent.style.backgroundColor = this.randomColorNumber();
@@ -96,11 +108,11 @@ export default class Notes {
       note.style.transform = 'scale(1)';
     });
 
-    note.addEventListener('dblclick', () => {
-      note.remove();
-    });
+    note.addEventListener('dblclick', this.removeNote);
 
-    // note.addEventListener('click', this.rewriteNote);
+    if (!noteValue) {
+      this.addNoteToDatabase(inputValue);
+    }
 
     textArea.value = '';
   };
@@ -112,6 +124,12 @@ export default class Notes {
 
     return RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
   }
+
+  removeNote = (event) => {
+    const { target } = event;
+    this.removeNotesFormDataBase(target.innerHTML);
+    target.remove();
+  };
 
   closeNoteCreator = () => {
     const createContainer = document.querySelector('.create_note-container');
@@ -127,17 +145,84 @@ export default class Notes {
     textArea.value = '';
   };
 
-  // rewriteNote = (event) => {
-  //   const { target } = event;
-  //   let textArea = document.querySelector('.notes-textarea');
-  //   const createContainer = document.querySelector('.create_note-container');
+  async addNoteToDatabase(note) {
+    let response;
+    let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
+    let arrayOfNotes = [];
+    const UID = JSON.parse(sessionStorage.getItem('user'));
 
-  //   createContainer.classList.add('open');
-  //   this.isOpen = true;
+    if (this.id) {
+      request += `${UID}/${this.id}/Notes/${this.town}.json`;
+    } else {
+      request += `${UID}/Notes.json`;
+    }
 
-  //   textArea.value += target.innerHTML;
-  //   this.isRewrite = true;
+    response = await fetch(request);
 
-  //   this.target = target;
-  // };
+    const data = await response.json();
+    if (!data) {
+      arrayOfNotes.push(note);
+    } else {
+      if (!data.includes(note)) {
+        data.push(note);
+        arrayOfNotes = data;
+      }
+    }
+
+    await fetch(request, {
+      method: 'PUT',
+      body: JSON.stringify(arrayOfNotes),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
+  async getNotesFormDataBase() {
+    let response;
+    let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
+    const UID = JSON.parse(sessionStorage.getItem('user'));
+
+    if (this.id) {
+      request += `${UID}/${this.id}/Notes/${this.town}.json`;
+    } else {
+      request += `${UID}/Notes.json`;
+    }
+
+    response = await fetch(request);
+
+    const arrayOfNotes = await response.json();
+
+    if (arrayOfNotes) {
+      arrayOfNotes.forEach((note) => {
+        this.createNote(null, note);
+      });
+    }
+  }
+
+  async removeNotesFormDataBase(removeNote) {
+    let response;
+    let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
+    const UID = JSON.parse(sessionStorage.getItem('user'));
+
+    if (this.id) {
+      request += `${UID}/${this.id}/Notes/${this.town}.json`;
+    } else {
+      request += `${UID}/Notes.json`;
+    }
+
+    response = await fetch(request);
+
+    let arrayOfNotes = await response.json();
+
+    arrayOfNotes = arrayOfNotes.filter((note) => note !== removeNote);
+
+    await fetch(request, {
+      method: 'PUT',
+      body: JSON.stringify(arrayOfNotes),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
 }

@@ -138,7 +138,7 @@ export default class TripsView {
     weather.createSearchByCity(town);
   }
 
-  showNotes(id) {
+  showNotes(town, id) {
     this.tripDetailsBlock.classList.add('hidden');
 
     const noteContainer = createDOMElement('div', 'notes-container');
@@ -148,7 +148,7 @@ export default class TripsView {
 
     this.mainContentSection.append(backBtn, noteContainer);
 
-    const note = new Notes(id);
+    const note = new Notes(town, id);
 
     note.createNoteContainer();
   }

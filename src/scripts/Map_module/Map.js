@@ -313,54 +313,48 @@ export default class Map {
       this.target.dataset.selected = false;
     }
 
-    if (this.id) {
-      const UID = JSON.parse(sessionStorage.getItem('user'));
-      this.addToDataBase(UID, this.id, title.innerHTML);
-    }
+    const UID = JSON.parse(sessionStorage.getItem('user'));
+    this.addToDataBase(UID, this.id, title.innerHTML);
   };
 
   async addToDataBase(UID, id, placeToVisit) {
-    let response = await fetch(
-      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${id}/placeToVisit/${this.town}.json`
-    );
-    let arrayOfPlaces = await response.json();
+    let response;
+    let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
+    let arrayOfPlaces = [];
 
-    if (!arrayOfPlaces) {
-      const arrayOfPlaces = [];
-      arrayOfPlaces.push(placeToVisit);
-
-      let response = await fetch(
-        `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${id}/placeToVisit/${this.town}.json`,
-        {
-          method: 'PUT',
-          body: JSON.stringify(arrayOfPlaces),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+    if (id) {
+      request += `${UID}/${id}/placeToVisit/${this.town}.json`;
     } else {
-      if (!arrayOfPlaces.includes(placeToVisit)) {
-        arrayOfPlaces.push(placeToVisit);
-      }
-
-      let response = await fetch(
-        `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${id}/placeToVisit/${this.town}.json`,
-        {
-          method: 'PUT',
-          body: JSON.stringify(arrayOfPlaces),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      request += `${UID}/placeToVisit.json`;
     }
+
+    response = await fetch(request);
+
+    const data = await response.json();
+
+    if (!data) {
+      arrayOfPlaces.push(placeToVisit);
+    } else {
+      if (!data.includes(placeToVisit)) {
+        data.push(placeToVisit);
+        arrayOfPlaces = data;
+      }
+    }
+
+    await fetch(request, {
+      method: 'PUT',
+      body: JSON.stringify(arrayOfPlaces),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 
   handleSearchButton = (event) => {
     event.preventDefault();
     const search = document.querySelector('.search-input');
     const value = search.value.toLowerCase();
+    // this.town = search.value.toLowerCase();
 
     getPlaceCoord(value).then((coord) => {
       this.place_LON = coord.lon;
