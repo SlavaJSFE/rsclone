@@ -134,13 +134,21 @@ const services = {
   createNavigation() {
     const navigation = createDOMElement('nav', 'nav');
 
-    const menuItem1 = createDOMElement('div', 'nav-item-block active', null, null, ['id', 'nav-home']);
+    const menuItem1 = createDOMElement('div', 'nav-item-block active', null, null, [
+      'id',
+      'nav-home',
+    ]);
     createDOMElement('i', 'material-icons', 'home', menuItem1);
     createDOMElement('div', 'nav-item home', objTranslate.commonLang['main_' + local], menuItem1);
 
     const menuItem2 = createDOMElement('div', 'nav-item-block', null, null, ['id', 'nav-my-trips']);
     createDOMElement('i', 'material-icons', 'airport_shuttle', menuItem2);
-    createDOMElement('div', 'nav-item my-trips', objTranslate.commonLang['myTrips_' + local], menuItem2);
+    createDOMElement(
+      'div',
+      'nav-item my-trips',
+      objTranslate.commonLang['myTrips_' + local],
+      menuItem2
+    );
 
     const menuItem3 = createDOMElement('div', 'nav-item-block', null, null, ['id', 'nav-map']);
     createDOMElement('i', 'material-icons', 'place', menuItem3);
@@ -152,7 +160,12 @@ const services = {
 
     const menuItem5 = createDOMElement('div', 'nav-item-block', null, null, ['id', 'nav-sights']);
     createDOMElement('i', 'material-icons', 'account_balance', menuItem5);
-    createDOMElement('div', 'nav-item sights', objTranslate.commonLang['sights_' + local], menuItem5);
+    createDOMElement(
+      'div',
+      'nav-item sights',
+      objTranslate.commonLang['sights_' + local],
+      menuItem5
+    );
 
     const menuItem6 = createDOMElement('div', 'nav-item-block', null, null, ['id', 'nav-todo']);
     createDOMElement('i', 'material-icons', 'check_box', menuItem6);
@@ -171,14 +184,49 @@ const services = {
     ]);
 
     const authorsArray = [
-      createDOMElement('a', 'gh-link', 'Roman', null, ['href', statement.roman]),
-      createDOMElement('a', 'gh-link', 'Maria', null, ['href', statement.maria]),
-      createDOMElement('a', 'gh-link', 'Yulia', null, ['href', statement.julia]),
-      createDOMElement('a', 'gh-link', 'Slava', null, ['href', statement.slava]),
+      createDOMElement(
+        'a',
+        'gh-link',
+        [createDOMElement('span', 'roman-link', 'Roman')],
+        null,
+        ['href', statement.roman],
+        ['target', 'blank']
+      ),
+      createDOMElement(
+        'a',
+        'gh-link',
+        [createDOMElement('span', 'maria-link', 'Maria')],
+        null,
+        ['href', statement.maria],
+        ['target', 'blank']
+      ),
+      createDOMElement(
+        'a',
+        'gh-link',
+        [createDOMElement('span', 'yulia-link', 'Yulia')],
+        null,
+        ['href', statement.julia],
+        ['target', 'blank']
+      ),
+      createDOMElement(
+        'a',
+        'gh-link',
+        [createDOMElement('span', 'slava-link', 'Slava')],
+        null,
+        ['href', statement.slava],
+        ['target', 'blank']
+      ),
     ];
     const authors = createDOMElement('div', 'authors', authorsArray);
     const rssLogo = createDOMElement('img', 'rss-logo', null, null, ['src', statement.rssLogo]);
-    const rsschoolLink = createDOMElement('a', 'rss-link', null, null, ['href', statement.rssLink]);
+    const rsschoolLink = createDOMElement(
+      'a',
+      'rss-link',
+      null,
+      null,
+      ['href', statement.rssLink],
+      ['target', 'blank']
+    );
 
     rsschoolLink.appendChild(rssLogo);
     footer.append(githubLogo, authors, rsschoolLink);
