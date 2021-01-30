@@ -8,52 +8,62 @@
   @include font-main;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  max-width: 500px;
-  height: 500px;
-  background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  background-image: url('../assets/images/paper-1074131_1920.jpg');
+  background-size: cover;
   color: white;
+  min-height: 97%;
+  margin: 0.7rem 0 0.7rem 0.7rem;
+}
+.todo-header {
+  margin-left: 15%;
 }
 .todo-form {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  .todo-input {
-    padding: 0.5rem;
-    font-size: 2rem;
-    border: none;
-    background: white;
-  }
+  width: 60%;
+  margin-left: 15%;
 
-  .todo-button {
-    padding: 0.5rem;
-    font-size: 2rem;
-    border: none;
-    color: #ff6f47;
-    background: #f7fffe;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  .input-field {
+    display: flex;
+    background-color: #ffffff;
+    height: 3.6rem;
+    border-radius: 1.7rem;
+    width: 100%;
 
-    &:hover {
-      background: #ff6f47;
-      color: white;
+    .todo-input {
+      padding-top: 0.3rem;
+      padding-left: 1.5rem;
+      font-size: 1.6rem;
+      border: none;
+
     }
+
+    input[type=text]:focus {
+     border-bottom: none;
+     box-shadow: none;
+   }
+  
+    .todo-button {
+      transition: all 0.3s ease;
+    }
+  }
+  .select {
+    margin: 1rem;
+  }
+  .filter-todo {
+    height: 3.6rem;
   }
 }
 
 .todoItems-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-left: 15%;
+
   .todo-list {
     min-width: 30%;
     list-style: none;
   }
   .todo {
     margin: 0.5rem;
-    background: white;
     font-size: 1.5rem;
     color: black;
     display: flex;
@@ -64,14 +74,19 @@
 
   .todo-item {
     flex: 1;
-    padding: 0rem 0.5rem;
+    padding: 0.7rem 0.5rem;
+    background: #ffffff;
+    height: 3.6rem;
+    margin-right: 0.3;
+    border-radius: 0.3rem;
   }
 
   .trash-btn,
   .complete-btn {
     color: white;
     border: none;
-    padding: 1rem;
+    border-radius: 0.3rem;
+    margin: 0 0.3rem;
     cursor: pointer;
     font-size: 1rem;
     transition: 0.3s ease-in-out;

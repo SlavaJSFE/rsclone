@@ -1,3 +1,4 @@
+// @import 'materialize-css/sass/materialize.scss';
 @import "currency.scss";
 @import "clock.scss";
 @import "map.scss";
@@ -5,11 +6,13 @@
 @import "sights.scss";
 @import "TODO.scss";
 @import "mainPage.scss";
+@import "weather.scss";
+@import "notes.scss";
 
-$main-color: white;
+$main-color: #ffffff;
 $main: none;
 $secondary-color: #272142;
-$primary-color:  #1e1e20;
+$primary-color: #1e1e20;
 
 :root {
   font-size: 10px;
@@ -21,16 +24,12 @@ $primary-color:  #1e1e20;
   padding: 0;
 }
 body {
-  background: url('../assets/images/map-2153535_1280.jpg');
+  background: url("../assets/images/map-2153535_1280.jpg");
   background-size: cover;
-}
-.title {
-  color: $main-color;
-  margin: 0;
 }
 .header {
   background-color: $secondary-color;
-  height: 8vh;
+  height: 9vh;
   min-height: 4.5rem;
   display: flex;
   justify-content: space-between;
@@ -41,69 +40,88 @@ body {
     height: 400px;
     padding: 15px;
   }
+
   .datepicker-modal {
     top: 3% !important;
     height: auto;
     width: auto;
   }
+
   .close {
     position: absolute;
     top: 12px;
     right: 15px;
   }
+
   .close:hover {
     cursor: pointer;
   }
+
   .header-links {
     display: flex;
     margin: auto 0;
-  
+
     i {
       font-size: 2.5rem;
       margin-right: 5px;
     }
+
     .btn {
       background-color: $secondary-color;
       box-shadow: none;
       padding: 0 1rem;
     }
+
     .btn:hover {
       background-color: unset;
     }
-    .log-in:hover, .sign-up:hover {
+
+    .log-in:hover,
+    .log-out:hover,
+    .sign-up:hover,
+    .language:hover {
       color: #ffab00;
     }
+
     .language {
       display: flex;
     }
+
     select {
-      display: block;
+      // display: block;
       margin-top: 0.3rem;
       padding-top: 0.3rem;
-      
-      // .pl:before {
-      //   content: '';
-      //   background-image: url('https://www.countryflags.io/pl/flat/32.png');
-      // }
+      color: $main-color;
+      background-color: $secondary-color;
+      border: none;
+    }
+
+    select:hover {
+      color: #ffab00;
+      cursor: pointer;
+    }
+
+    select:focus {
+      color: #ffab00;
     }
   }
 }
+
 .main {
   display: grid;
   grid-template-columns: 10rem 1fr 25rem;
   grid-template-rows: 100%;
   height: 84vh;
+  background-color: rgba(0, 0, 0, 0.62);
 
   .nav {
-    background-color:#131314;
+    background-color: #131314;
     text-align: center;
-    padding-top: 1rem;
     height: 100%;
     box-shadow: none;
 
     .nav-item-block {
-      margin: 1rem auto;
-      z-index: 5;
+      margin: 0.5rem auto;
 
       .nav-item {
         margin: 0 auto;
@@ -112,37 +130,44 @@ body {
         line-height: 1.5rem;
         padding-bottom: 10px;
       }
+
       i {
         font-size: 3.5rem;
         height: 5rem;
       }
     }
+
     .nav-item-block:hover {
       cursor: pointer;
-      background-color:#ffffff18;
+      background-color: #ffffff18;
       color: #ffab00;
     }
+
     .nav-item-block.active {
       color: #ffab00;
     }
   }
+
   .main-content-section {
     position: relative;
     overflow: auto;
   }
+
   .map-image,
   .notes.image {
     width: 100%;
     max-height: 100%;
   }
+
   .side-bar {
-    background-color:#ffa000e7;
+    background-color: #ffa000e7;
     color: white;
     overflow: hidden;
     margin: 0.7rem;
     border-radius: 0.5rem;
   }
 }
+
 .footer {
   background-color: $secondary-color;
   display: flex;
@@ -151,21 +176,132 @@ body {
   height: 8vh;
   min-height: 4.5rem;
   color: black;
+
+  .authors {
+    margin: 0 40px 0 5px;
+
+    .gh-link {
+      margin: 0 10px;
+      font-size: 1.7rem;
+      color: #ffab00;
+      transition: 0.5s ease-in-out;
+      text-shadow: 0 0.1em 20px rgba(0, 0, 0, 1), 0.05em -0.03em 0 rgba(0, 0, 0, 1), 0.05em 0.005em 0 rgba(0, 0, 0, 1),
+        0em 0.08em 0 rgba(0, 0, 0, 1), 0.05em 0.08em 0 rgba(0, 0, 0, 1), 0px -0.03em 0 rgba(0, 0, 0, 1),
+        -0.03em -0.03em 0 rgba(0, 0, 0, 1), -0.03em 0.08em 0 rgba(0, 0, 0, 1), -0.03em 0 0 rgba(0, 0, 0, 1);
+      &:hover {
+        color: #916205;
+      }
+    }
+    span {
+      transform: scale(0.9);
+      display: inline-block;
+    }
+
+    .roman-link {
+      animation: bopB 1s 0.2s cubic-bezier(0.775, 0.985, 0.42, 1.675) forwards infinite alternate;
+    }
+    .maria-link {
+      animation: bopB 1s 0.2s cubic-bezier(0.575, 0.785, 0.32, 1.575) forwards infinite alternate;
+    }
+    .yulia-link {
+      animation: bopB 1s 0.2s cubic-bezier(0.375, 0.955, 0.72, 1.375) forwards infinite alternate;
+    }
+    .slava-link {
+      animation: bopB 1s 0.2s cubic-bezier(0.175, 0.685, 0.62, 1.875) forwards infinite alternate;
+    }
+  }
+  .rss-logo {
+    height: 25px;
+  }
 }
-.authors {
-  margin: 0 40px 0 5px;
-}
-.gh-link {
-  margin: 0 10px;
-}
-.rss-logo {
-  height: 25px;
-}
+
 .btn {
   border-radius: 20px;
   background-color: #ffab00;
-  background-color: $main;
+
+  .material-icons {
+    font-size: 2.4rem;
+  }
 }
+
 .btn:hover {
   background-color: #ff6d00;
 }
+
+.btn:focus {
+  background-color: #ffab00;
+}
+
+.hidden {
+  display: none;
+}
+
+select {
+  display: block;
+}
+
+@media (max-width: 916px) {
+  .header {
+    #canvas {
+      flex-grow: 1;
+    }
+    .header-links {
+      flex-direction: column;
+
+      .authorization {
+        display: flex;
+        .btn {
+          padding: 0;
+          font-size: 12px;
+          margin: 0 10px 0 0;
+        }
+      }
+      .language {
+        padding: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    grid-template-columns: 10rem 1fr;
+    .side-bar {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 509px) {
+  .header {
+    .header-links {
+      .authorization {
+        .btn {
+          font-size: 10px;
+          margin: 0 5px 0 0;
+        }
+      }
+    }
+  }
+  .footer {
+    .authors {
+      margin: 0 10px 0 5px;
+      .gh-link {
+        margin: 0 5px;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+// === Animation ===
+@keyframes bopB {
+  0% {
+    transform: scale(0.9);
+  }
+  80%,
+  100% {
+    transform: scale(1) rotateZ(-3deg);
+  }
+}
+// === /Animation ===

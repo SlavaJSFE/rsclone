@@ -1,7 +1,7 @@
 import 'regenerator-runtime/runtime';
-import { isoCountries, layer_names } from './constants';
+import { isoCountries, layerNames } from './constants';
 import objTranslate from '../Language_module/sightsLang.component';
-import { local } from '../Language_module/languageSwicher';
+import { local } from '../constants/language';
 
 export default class Sights {
   constructor() {
@@ -17,15 +17,15 @@ export default class Sights {
 
   createSightsInfo = () => {
     this.createSearcher();
-  }
+  };
 
   apiGet(method, query) {
     let otmAPI = `https://api.opentripmap.com/0.1/en/places/${method}?apikey=${this.apiKey}`;
     if (query !== undefined) {
-      otmAPI += '&' + query;
+      otmAPI += `&${query}`;
     }
     return fetch(otmAPI)
-      .then(response => response.json())
+      .then((response) => response.json())
       .then((data) => data)
       .catch((err) => {
         console.log('Fetch Error :-S', err);
@@ -33,7 +33,7 @@ export default class Sights {
   }
 
   getCountryName(countryCode) {
-    if (isoCountries.hasOwnProperty(countryCode)) {
+    if (Object.prototype.hasOwnProperty.call(isoCountries, this.countryCode)) {
       return isoCountries[countryCode];
     }
     return countryCode;
@@ -44,9 +44,9 @@ export default class Sights {
   }
 
   getCategoryName(kinds) {
-    let names = [];
+    const names = [];
     kinds.split(',').forEach((kind) => {
-      let item = layer_names[kind];
+      const item = layerNames[kind];
       if (item) names.push(this.parsePlural(item.n)?.single);
     });
     return names.join(', ');
@@ -56,54 +56,54 @@ export default class Sights {
     if (this.lat && this.lon) {
       this.apiGet(
         'radius',
-        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=count`
+        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=count`,
       ).then((data) => {
         this.count = data.count;
         this.offset = 0;
         document.querySelector(
-          '#info'
-        ).innerHTML += `<p>${this.count} ${objTranslate.sightsLang['articleDescription_' + local]}</p>`;
+          '#info',
+        ).innerHTML += `<p>${this.count} ${objTranslate.sightsLang[`articleDescription_${local}`]}</p>`;
         this.loadList();
       });
     }
   }
 
   parsePlural(label) {
-    var sb_single = new Array('');
-    var sb_plural = new Array('');
-    var spaces = 0;
-    for (var i = 0; i < label.length; i++) {
-      var ch = label.charAt(i);
-      if (ch != '[') {
-        sb_single.push(ch);
-        sb_plural.push(ch);
-        if (ch == ' ') {
-          spaces++;
+    const sbSingle = new Array('');
+    const sbPlural = new Array('');
+    let spaces = 0;
+    for (let i = 0; i < label.length; i += 1) {
+      let ch = label.charAt(i);
+      if (ch !== '[') {
+        sbSingle.push(ch);
+        sbPlural.push(ch);
+        if (ch === ' ') {
+          spaces += 1;
         } else {
           spaces = 0;
         }
       } else {
-        var sb = new Array('');
-        var j = i + 1;
-        for (; j < label.length; j++) {
+        const sb = new Array('');
+        let j = i + 1;
+        for (; j < label.length; j += 1) {
           ch = label.charAt(j);
-          if (ch == ']') break;
+          if (ch === ']') break;
           sb.push(ch);
         }
-        var len = j - i - 1;
-        i = sb_plural.length;
-        sb_plural.splice(Math.max(0, i - len), len);
-        sb_plural.push(sb.join(''));
-        if (spaces != 0) {
-          i = sb_single.length;
-          sb_single.splice(Math.max(0, i - spaces), spaces);
+        const len = j - i - 1;
+        i = sbPlural.length;
+        sbPlural.splice(Math.max(0, i - len), len);
+        sbPlural.push(sb.join(''));
+        if (spaces !== 0) {
+          i = sbSingle.length;
+          sbSingle.splice(Math.max(0, i - spaces), spaces);
         }
         i = j;
       }
     }
     return {
-      single: this.capitalizeFirstLetter(sb_single.join('')),
-      plural: sb_plural.join('')
+      single: this.capitalizeFirstLetter(sbSingle.join('')),
+      plural: sbPlural.join(''),
     };
   }
 
@@ -111,14 +111,14 @@ export default class Sights {
     if (this.lon && this.lat) {
       this.apiGet(
         'radius',
-        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=json`
+        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=json`,
       ).then((data) => {
-        let list = document.querySelector('#list');
+        const list = document.querySelector('#list');
         list.innerHTML = '';
-        data.forEach(item => {
+        data.forEach((item) => {
           list.appendChild(this.createListItem(item));
         });
-        let nextBtn = document.querySelector('#next_button');
+        const nextBtn = document.querySelector('#nextButton');
         if (this.count < this.offset + this.pageLength) {
           nextBtn.style.visibility = 'hidden';
         } else {
@@ -130,28 +130,27 @@ export default class Sights {
   }
 
   createListItem(item) {
-    let a = document.createElement('a');
+    const a = document.createElement('a');
     a.className = 'list-group-item list-group-item-action';
     a.setAttribute('data-id', item.xid);
     a.innerHTML = `<h5 class="list-group-item-heading">${item.name}</h5>
-				<p class="list-group-item-text">${this.getCategoryName(item.kinds)}</p>`;
-
+                  <p class="list-group-item-text">${this.getCategoryName(item.kinds)}</p>`;
     a.addEventListener('click', () => {
-      document.querySelectorAll('#list a').forEach((item) => {
-        item.classList.remove('active');
+      document.querySelectorAll('#list a').forEach((i) => {
+        i.classList.remove('active');
       });
       a.classList.add('active');
-      let xid = a.getAttribute('data-id');
-      this.apiGet('xid/' + xid).then((data) => { this.onShowPOI(data); });
+      const xid = a.getAttribute('data-id');
+      this.apiGet(`xid/${xid}`).then((data) => { this.onShowPOI(data); });
     });
     return a;
   }
 
   onShowPOI(data) {
-    let poi = document.querySelector('#poi');
+    const poi = document.querySelector('#poi');
     poi.innerHTML = '';
     if (data.preview) {
-      poi.innerHTML += `<img src = "${data.preview.source}"> `;
+      poi.innerHTML += `<img class= "imgSights" src = "${data.preview.source}"> `;
     }
     poi.innerHTML += data.wikipedia_extracts
       ? data.wikipedia_extracts.html
@@ -170,18 +169,31 @@ export default class Sights {
 
     const form = document.createElement('form');
     form.setAttribute('id', 'search_form');
-    form.classList.add('input-group', 'mb-4', 'p-1');
+    form.classList.add('input-group');
 
-    const form_div = document.createElement('div');
-    form_div.classList.add('input-group-prepend', 'border-0');
+    const searchInputField = document.createElement('div');
+    searchInputField.classList.add('input-field');
 
-    const button = document.createElement('button');
+    form.appendChild(searchInputField);
+
+    const searchInput = document.createElement('input');
+    searchInput.setAttribute('id', 'textbox');
+    searchInput.setAttribute('type', 'search');
+    searchInput.setAttribute('placeholder', objTranslate.sightsLang[`inputPlaceholder_${local}`]);
+    searchInput.setAttribute('aria-describedby', 'button-search');
+    searchInput.classList.add('sights-search');
+
+    const searchButton = document.createElement('button');
     // button.setAttribute('id', 'button-search');
-    button.setAttribute('type', 'button');
-    button.classList.add('btn', 'btn-link', 'search');
+    searchButton.setAttribute('type', 'button');
+    searchButton.classList.add('btn', 'btn-link', 'search');
 
-    const button_search_i = document.createElement('i');
-    button_search_i.classList.add('fa', 'fa-search', 'search');
+    const searchButtonIcon = document.createElement('i');
+    searchButtonIcon.classList.add('material-icons');
+    searchButtonIcon.textContent = 'search';
+
+    searchButton.appendChild(searchButtonIcon);
+    searchInputField.append(searchInput, searchButton);
 
     const info = document.createElement('div');
     info.setAttribute('id', 'info');
@@ -203,23 +215,11 @@ export default class Sights {
     const poi = document.createElement('div');
     poi.setAttribute('id', 'poi');
 
-    let button_next = document.createElement('button');
-    button_next.setAttribute('id', 'next_button');
+    const button_next = document.createElement('button');
+    button_next.setAttribute('id', 'nextButton');
     button_next.setAttribute('type', 'button');
     button_next.classList.add('btn', 'btn-primary');
     button_next.innerHTML = 'button_next';
-
-    const input = document.createElement('input');
-    input.setAttribute('id', 'textbox');
-    input.setAttribute('type', 'search');
-    input.setAttribute('placeholder', objTranslate.sightsLang['inputPlaceholder_' + local]);
-    input.setAttribute('aria-describedby', 'button-search');
-    input.classList.add('form-control', 'bg-none', 'border');
-
-    button.appendChild(button_search_i);
-    form_div.appendChild(button);
-    form.appendChild(form_div);
-    form.appendChild(input);
 
     mainBlockRow_left_nav.appendChild(button_next);
 
@@ -241,10 +241,10 @@ export default class Sights {
     if (name === null) {
       name = document.querySelector('#textbox').value;
     }
-    this.apiGet('geoname', 'name=' + name).then((data) => {
+    this.apiGet('geoname', `name=${name}`).then((data) => {
       let message = 'Name not found';
-      if (data.status == 'OK') {
-        message = data.name + ',' + this.getCountryName(data.country);
+      if (data.status === 'OK') {
+        message = `${data.name},${this.getCountryName(data.country)}`;
         // console.log(data)
         this.lon = data.lon;
         this.lat = data.lat;

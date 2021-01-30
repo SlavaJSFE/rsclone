@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime';
-import { getCountriesInfoData, getCurrencyInfoData } from './Data';
+import { getCountriesInfoData, getCurrencyInfoData } from './CurrencyData';
 import createDOMElement from '../services/createDOMElement';
 
 const CURRENCY_RATES = ['EUR', 'RUB', 'BYN', 'GBP', 'AUD', 'BRL', 'CNY', 'CAD', 'JPY'];
@@ -18,9 +18,6 @@ export default class Currency {
 
     this.countriesInfoData = countriesData;
     this.currencyData = currencyData;
-
-    console.log(this.countriesInfoData);
-    console.log(this.currencyData);
 
     // this.createCurrencySearch();
     this.createCurrencyTitle();
@@ -82,19 +79,4 @@ export default class Currency {
   findCountryData = (currencyCode) => {
     return this.countriesInfoData.find((item) => item.currencies[0].code === currencyCode);
   };
-
-  // createCurrencySearch = () => {
-  //   const table = document.querySelector('.currency');
-  //   createDOMElement('input', 'currency-search', null, table, [
-  //     'placeholder',
-  //     'Search you currency rate',
-  //   ]);
-  // };
-
-  // findCurrencyRate = (currencyCode) => {
-  //   const rate = Object.keys(this.currencyData.rates).find(
-  //     (item) => this.currencyData.rates[currencyCode]
-  //   );
-  //   console.log(rate);
-  // };
 }

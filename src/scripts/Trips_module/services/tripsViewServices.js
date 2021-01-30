@@ -1,4 +1,4 @@
-import createDOMElement from '../../services/createDOMElement.js';
+import createDOMElement from '../../services/createDOMElement';
 
 const services = {
   createNewTripBtn() {
@@ -109,7 +109,48 @@ const services = {
                           </div>`;
 
     modalWindow.innerHTML = modalContent;
-  }
+  },
+
+  createPagination(routeArray) {
+    const pagination = document.querySelector('.pagination');
+    pagination.innerHTML = '';
+
+    if (routeArray.length < 2) {
+      pagination.style.visibility = 'hidden';
+    }
+
+    const leftArrow = createDOMElement('li', 'waves-effect disabled', null, pagination);
+    const linkLeftArrow = createDOMElement('a', null, null, leftArrow, ['href', '']);
+    createDOMElement('i', 'material-icons left-arrow', 'chevron_left', linkLeftArrow);
+
+    routeArray.forEach((destination, index) => {
+      const liElement = createDOMElement('li', 'waves-effect', null, pagination);
+      createDOMElement('a', null, `${index + 1}`, liElement, ['href', '']);
+
+      if (index === 0) {
+        // liElement.classList.remove('waves-effect');
+        liElement.classList.add('active');
+      }
+    });
+
+    const rightArrow = createDOMElement('li', 'waves-effect', null, pagination);
+    const linkRightArrow = createDOMElement('a', null, null, rightArrow, ['href', '']);
+    createDOMElement('i', 'material-icons right-arrow', 'chevron_right', linkRightArrow);
+  },
+
+  createNoTripsInfo() {
+    const infoContainer = createDOMElement('div', 'no-trips z-depth-5');
+
+    const image = createDOMElement('img', 'no-trips-image', null, null,
+      ['src', './assets/images/bicycle-4426751_1280.jpg']);
+
+    const title = createDOMElement('h2', 'no-trips-title',
+      'You have no trips yet. Create new trip and plan your journey!');
+
+    infoContainer.append(image, title);
+
+    return infoContainer;
+  },
 };
 
 export default services;

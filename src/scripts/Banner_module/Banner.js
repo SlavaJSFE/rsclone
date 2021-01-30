@@ -1,18 +1,20 @@
 import 'regenerator-runtime/runtime';
 
 export default class Banner {
-	constructor() {
-	}
-	createBanner() {
-		const main_content_block = document.querySelector('.main-content-section');
+  static createBanner() {
+    const mainContentBlock = document.querySelector('.main-content-section');
 
-		const banner_container = document.createElement('div');
-		banner_container.classList.add('banner-container');
+    const mainPageWrapper = document.createElement('div');
+    mainPageWrapper.classList.add('main-page-wrapper');
 
-		const canvas = document.createElement('canvas');
-		canvas.setAttribute('id', 'canvas2');
+    const bannerContainer = document.createElement('div');
+    bannerContainer.classList.add('banner-container');
 
-		banner_container.appendChild(canvas);
-		main_content_block.appendChild(banner_container);
-	}
+    const canvas = document.createElement('canvas');
+    canvas.setAttribute('id', 'canvas2');
+
+    bannerContainer.appendChild(canvas);
+    mainPageWrapper.appendChild(bannerContainer);
+    mainContentBlock.appendChild(mainPageWrapper);
+  }
 }

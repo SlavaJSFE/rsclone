@@ -2,9 +2,10 @@ import { Loader } from '@googlemaps/js-api-loader';
 import MarkerClusterer from '@googlemaps/markerclustererplus';
 import { getPlaceCoord, getPlaceData, getXIdData } from './Data';
 import createHTMLMapMarker from './HTMLMapMarker';
-import { getIcon, layer_names } from '../constants/icon_constants';
+import { getIcon, layerNames } from '../constants/icon_constants';
 import * as _ from 'lodash';
 import createDOMElement from '../services/createDOMElement';
+import { local } from '../constants/language';
 
 const requests = [
   'historic_architecture',
@@ -35,20 +36,23 @@ const legendCategories = [
 ];
 
 export default class Map {
-  constructor() {
+  constructor(town, id) {
+    this.town = town;
+    this.id = id;
     this.place_LON;
     this.place_LAT;
     this.map;
     this.data = [];
     this.markers = [];
     this.filterData;
-    this.isFirstLaunch = true;
   }
 
-  handleApi(town) {
-    getPlaceCoord(town)
+  handleApi() {
+    getPlaceCoord(this.town)
       .then((coord) => {
-        console.log(coord);
+        if (!coord) {
+          this.initMap();
+        }
         this.place_LON = coord.lon;
         this.place_LAT = coord.lat;
         const promiseArr = requests.map((request) => {
@@ -69,7 +73,7 @@ export default class Map {
       apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
       version: 'weekly',
       //!TODO
-      language: 'en',
+      language: `${local}`,
     });
 
     loader.load().then(() => {
@@ -86,24 +90,35 @@ export default class Map {
 
       this.createFilterData(this.data);
 
-      console.log(this.filterData);
-
       this.filterData.forEach((place) => {
         this.createMarker(place);
       });
 
       this.createMarkerClusterer();
 
-      if (this.isFirstLaunch === true) {
-        this.createLegend();
-        this.createTownSearch();
-        const button = document.querySelector('.search-button');
-        button.addEventListener('click', this.handleSearchButton);
-        this.isFirstLaunch = false;
-      }
+      this.createLegend();
+      this.createTownSearch();
+      this.createBackButton();
+
+      this.setListeners();
     });
     return this;
   }
+
+  setListeners = () => {
+    const searchBtn = document.querySelector('.search-button');
+    searchBtn.addEventListener('click', this.handleSearchButton);
+
+    const backBtn = document.querySelector('.map-back');
+    backBtn.addEventListener('click', this.goBackToMenu);
+  };
+
+  goBackToMenu = () => {
+    const mapContainer = document.querySelector('#map');
+    const tripsDetails = document.querySelector('.trip-details');
+    tripsDetails.classList.remove('hidden');
+    mapContainer.remove();
+  };
 
   createMarker = (place) => {
     //get coord from api
@@ -130,16 +145,17 @@ export default class Map {
       getXIdData(place.xid)
         .then((place) => {
           // current marker info
-          const { target } = event;
+          event.stopPropagation();
 
           this.createInfoWindow(place);
 
           this.infoWindow.open(this.map, marker);
 
           this.infoWindow.addListener('domready', () => {
-            this.target = target;
+            // get path to marker
+            this.target = event.path[1];
             const button = document.querySelector('.iw-button');
-            button.addEventListener('click', this.addToTODOList);
+            button.addEventListener('click', this.handleAddButton);
           });
 
           this.map.addListener('click', () => {
@@ -151,8 +167,6 @@ export default class Map {
   };
 
   createInfoWindow = (place) => {
-    console.log(place);
-
     const content = `
     <div class="iw-container">
       <div class="iw-title">${place.name}</div>
@@ -181,7 +195,6 @@ export default class Map {
   };
 
   createFilterData = (data) => {
-    console.log(data);
     let arr = [];
 
     //filter duplicate
@@ -256,42 +269,93 @@ export default class Map {
 
   createTownSearch = () => {
     const input = document.querySelector('.search-container');
-
     createDOMElement(
-      'input',
-      'search-input',
-      null,
-      input,
-      ['type', 'search'],
-      ['placeholder', 'Search your town']
-    );
-    createDOMElement(
-      'button',
-      'search-button',
-      [createDOMElement('i', 'material-icons', `search`)],
+      'form',
+      'search-location',
+      [
+        createDOMElement(
+          'input',
+          'search-input',
+          null,
+          null,
+          ['type', 'search'],
+          ['placeholder', 'Find your city']
+        ),
+        createDOMElement('button', 'search-button btn', [
+          createDOMElement('i', 'material-icons', `search`),
+        ]),
+      ],
       input
     );
 
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
   };
 
-  addToTODOList = () => {
+  createBackButton = () => {
+    const backBtn = document.querySelector('.map_btn-container');
+
+    createDOMElement(
+      'div',
+      'btn back-btn map-back',
+      [createDOMElement('i', 'material-icons', 'arrow_back')],
+      backBtn
+    );
+
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(backBtn);
+  };
+
+  handleAddButton = () => {
     const title = document.querySelector('.iw-title');
-    console.log(this.target);
+
     if (this.target.dataset.selected === 'false') {
       this.target.dataset.selected = true;
     } else {
       this.target.dataset.selected = false;
     }
 
-    // return title.innerHTML; // for example London Tower
+    const UID = JSON.parse(sessionStorage.getItem('user'));
+    this.addToDataBase(UID, this.id, title.innerHTML);
   };
 
-  handleSearchButton = () => {
+  async addToDataBase(UID, id, placeToVisit) {
+    let response;
+    let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
+    let arrayOfPlaces = [];
+
+    if (id) {
+      request += `${UID}/${id}/placeToVisit/${this.town}.json`;
+    } else {
+      request += `${UID}/placeToVisit.json`;
+    }
+
+    response = await fetch(request);
+
+    const data = await response.json();
+
+    if (!data) {
+      arrayOfPlaces.push(placeToVisit);
+    } else {
+      if (!data.includes(placeToVisit)) {
+        data.push(placeToVisit);
+        arrayOfPlaces = data;
+      }
+    }
+
+    await fetch(request, {
+      method: 'PUT',
+      body: JSON.stringify(arrayOfPlaces),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
+  handleSearchButton = (event) => {
+    event.preventDefault();
     const search = document.querySelector('.search-input');
     const value = search.value.toLowerCase();
-    // console.log(value);
-    // if (value === '') return;
+    // this.town = search.value.toLowerCase();
+
     getPlaceCoord(value).then((coord) => {
       this.place_LON = coord.lon;
       this.place_LAT = coord.lat;
@@ -313,14 +377,39 @@ export default class Map {
       Promise.all(promiseArr).then(() => {
         this.createFilterData(this.data);
 
-        console.log(this.filterData);
-
         this.filterData.forEach((place) => {
           this.createMarker(place);
         });
 
         this.createMarkerClusterer();
       });
+    });
+  };
+
+  staticInitMap = () => {
+    const loader = new Loader({
+      apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
+      version: 'weekly',
+      language: `${local}`,
+    });
+
+    loader.load().then(() => {
+      // coord of current town
+      this.location = new google.maps.LatLng(53.893009, 27.567444);
+
+      this.map = new google.maps.Map(document.getElementById('map'), {
+        center: this.location,
+        zoom: 12,
+        mapTypeControl: false,
+        streetViewControl: false,
+        mapTypeId: google.maps.MapTypeId.TERRAIN,
+      });
+
+      this.createLegend();
+      this.createTownSearch();
+
+      const button = document.querySelector('.search-button');
+      button.addEventListener('click', this.handleSearchButton);
     });
   };
 }

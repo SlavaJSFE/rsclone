@@ -7,7 +7,8 @@ const statement = {
   rssLink: 'https://rs.school/js/',
   githubLogo: 'assets/images/GitHub-Mark-Light-32px.png',
   map: 'assets/images/map1.png',
-  notes: 'assets/images/notes1.png'
+  notes: 'assets/images/notes1.png',
+  apiKey: 'AIzaSyDgKLFvYaOMMroest_opHKECaaiY4_lwaU',
 };
 
 export default statement;

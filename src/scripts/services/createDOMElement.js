@@ -35,7 +35,11 @@ export default function createDOMElement(elem, className, child, parent, ...data
       if (attrValue === '') {
         element.setAttribute(attrName, '');
       }
-      if (attrName.match(/id|src|href|data-clock-night|placeholder|type|data-category/)) {
+      if (
+        attrName.match(
+          /id|src|href|data-clock-night|placeholder|type|data-category|name|autocomplete|data-night|maxlength|data-target|target/
+        )
+      ) {
         element.setAttribute(attrName, attrValue);
       }
     });

@@ -1,9 +1,10 @@
-import TripsView from './Trips-view.js';
 import Materialize from 'materialize-css';
-import TripsModel from './Trips-model.js';
-import Sights from '../../scripts/Sights_module/Sights.js';
-import objTranslate from '../../scripts/Language_module/sightsLang.component';
-import { local } from '../../scripts/Language_module/languageSwicher';
+import TripsView from './Trips-view';
+import TripsModel from './Trips-model';
+import Sights from '../Sights_module/Sights';
+import objTranslate from '../Language_module/sightsLang.component';
+import { local } from '../constants/language';
+import services from './services/tripsControllerServices';
 
 export default class Trips {
   init() {
@@ -22,7 +23,7 @@ export default class Trips {
     this.modal = Materialize.Modal.getInstance(this.modalWindow);
 
     if (event.target === this.view.newTripBtn) {
-      let user = sessionStorage.getItem('user');
+      const user = sessionStorage.getItem('user');
 
       if (user) {
         this.view.fillNewTripModal();
@@ -30,7 +31,7 @@ export default class Trips {
         const datepicker = document.querySelectorAll('.datepicker');
         Materialize.Datepicker.init(datepicker, {
           firstDay: 1,
-          format: 'dd.mm.yyyy'
+          format: 'dd.mm.yyyy',
         });
 
         this.modal.open();
@@ -49,30 +50,36 @@ export default class Trips {
 
     if (event.target.className && event.target.className.includes('trip-details-link')) {
       event.preventDefault();
-      const id = event.target.id;
+
+      const { id } = event.target;
       const tripDetails = await TripsModel.getTripById(id);
-
-      this.view.showTrip(tripDetails);
-
-      const tripDetailsContainer = document.querySelector('.trip-details');
-      this.addTripDetailsListener(tripDetailsContainer);
-
-      // const tripDetailsContainer = document.querySelector('.trip-details');
-      // tripDetailsContainer.addEventListener('click', (e) => {
-      //   this.handleTripDetailsEvent(e, tripDetailsContainer);
-      // });
+      this.showTrip(tripDetails);
     }
+  }
+
+  async showTrip(tripDetails) {
+    this.view.showTrip(tripDetails);
+
+    const pagination = document.querySelector('.pagination');
+    pagination.addEventListener('click', (event) => {
+      this.handlePagination(event, pagination);
+    });
+
+    this.tripDetailsContainer = document.querySelector('.trip-details');
+    this.addTripDetailsListeners(this.tripDetailsContainer);
+    this.addDestinationListeners();
   }
 
   async handleSubmit(event) {
     event.preventDefault();
 
-    const user = JSON.parse(sessionStorage.getItem('user'));
+    const UID = JSON.parse(sessionStorage.getItem('user'));
     const tripObject = TripsModel.setNewTrip();
-    await TripsModel.setToDatabase(tripObject, user.email);
+    await TripsModel.setToDatabase(tripObject, UID);
 
     this.modal.close();
     this.view.setTripCard(tripObject);
+    this.view.checkNoTrips();
   }
 
   async showUserTrips() {
@@ -84,26 +91,54 @@ export default class Trips {
     }
   }
 
-  addTripDetailsListener(tripDetailsContainer) {
+  handlePagination(event, pagination) {
+    event.preventDefault();
+
+    const currentActive = pagination.querySelector('.active');
+
+    services.switchPagination(event, pagination, currentActive);
+
+    const nextActive = pagination.querySelector('.active');
+
+    if (nextActive !== currentActive) {
+      this.showChosenDestination(pagination, nextActive);
+    }
+  }
+
+  showChosenDestination(pagination, nextActive) {
+    this.view.showDestinationDetails(nextActive);
+
+    this.view.removeClocks();
+    this.view.showClocks();
+
+    this.addDestinationListeners();
+    services.setArrowsDisabled(pagination, nextActive);
+  }
+
+  addTripDetailsListeners(tripDetailsContainer) {
     // ! make separate function for modal activation to avoid code duplicate
     this.modalWindow = document.getElementById('modal1');
     this.modal = Materialize.Modal.getInstance(this.modalWindow);
+    const goBackBtn = tripDetailsContainer.querySelector('.back-btn');
+    const optionsBtn = tripDetailsContainer.querySelector('.options-btn');
     const removeTripBtn = document.getElementById('remove-trip');
     const addDestinationBtn = document.getElementById('add-destination');
-    const map = tripDetailsContainer.querySelector('.map');
-    const sights = tripDetailsContainer.querySelector('.sights');
-    const notes = tripDetailsContainer.querySelector('.notes');
-    const weather = tripDetailsContainer.querySelector('.weather');
-    const todo = tripDetailsContainer.querySelector('.todo');
-    const currentCity = tripDetailsContainer.querySelector('.trip-destination').textContent;
+
+    goBackBtn.addEventListener('click', () => {
+      this.view.goBackToUserTrips();
+    });
+
+    optionsBtn.addEventListener('click', () => {
+      this.view.handleOptionsDropdown();
+    });
 
     removeTripBtn.addEventListener('click', () => {
       this.view.fillRemoveTripModal();
       this.modal.open();
       this.addListenerToCloseBtn();
 
-      const removeModal = document.getElementById('remove-trip-modal');
-      removeModal.addEventListener('click', (event) => {
+      const removeTripModal = document.getElementById('remove-trip-modal');
+      removeTripModal.addEventListener('click', (event) => {
         this.handleTripRemoveModalEvent(event, tripDetailsContainer.id);
       });
     });
@@ -112,32 +147,76 @@ export default class Trips {
       this.view.fillAddDestinationModal();
       this.modal.open();
       this.addListenerToCloseBtn();
+
+      const form = document.getElementById('new-destination-form');
+      form.addEventListener('submit', (event) => {
+        this.handleNewDestinationSubmit(event, tripDetailsContainer.id);
+      });
+    });
+  }
+
+  addDestinationListeners() {
+    const currentCity = this.tripDetailsContainer.querySelector('.trip-destination').textContent;
+    this.map = this.tripDetailsContainer.querySelector('.map');
+    this.sights = this.tripDetailsContainer.querySelector('.sights');
+    this.notes = this.tripDetailsContainer.querySelector('.notes');
+    this.weather = this.tripDetailsContainer.querySelector('.weather');
+    this.todo = this.tripDetailsContainer.querySelector('.todo');
+    this.important = this.tripDetailsContainer.querySelector('.important');
+
+    this.map.addEventListener('click', () => {
+      this.view.showMap(currentCity, this.tripDetailsContainer.id);
     });
 
-    map.addEventListener('click', () => {
-      console.log(currentCity)
-    });
-
-    sights.addEventListener('click', () => {
-      console.log(currentCity);
-      let sights = new Sights;
-      document.querySelector('.main-content-section').innerHTML = '';
+    this.sights.addEventListener('click', () => {
+      const sights = new Sights();
+      this.view.mainContentSection.innerHTML = '';
       sights.createSightsInfo();
       sights.search(currentCity);
-      document.querySelector('#search_form').innerHTML = `${objTranslate.sightsLang['article_' + local]} ${currentCity}`;
+      document.querySelector('#search_form').innerHTML = `${
+        objTranslate.sightsLang[`article_${local}`]
+      } ${currentCity}`;
     });
 
-    notes.addEventListener('click', () => {
-      console.log('notes')
+    this.notes.addEventListener('click', () => {
+      this.view.showNotes(currentCity, this.tripDetailsContainer.id);
     });
 
-    weather.addEventListener('click', () => {
-      console.log(currentCity)
+    this.weather.addEventListener('click', () => {
+      this.view.showWeather(currentCity);
     });
 
-    todo.addEventListener('click', () => {
-      console.log(currentCity)
+    this.todo.addEventListener('click', () => {
+      this.view.showTODO(currentCity, this.tripDetailsContainer.id);
     });
+
+    this.important.addEventListener('click', () => {
+      console.log(currentCity);
+    });
+  }
+
+  async handleNewDestinationSubmit(event, tripId) {
+    event.preventDefault();
+
+    await TripsModel.setNewDestination(tripId);
+    const updatedTrip = await TripsModel.getTripById(tripId);
+    this.view.tripDetailsBlock.remove();
+    this.showTrip(updatedTrip);
+
+    const pagination = document.querySelector('.pagination');
+    const currentActive = pagination.querySelector('.active');
+    currentActive.classList.remove('active');
+    const newDestinationPage = pagination.lastChild.previousSibling;
+    newDestinationPage.classList.add('active');
+
+    this.showChosenDestination(pagination, newDestinationPage);
+
+    // const currentDestination = this.view.tripDetailsBlock.querySelector('.destination-details');
+    // const lastDestination = updatedTrip.tripRoute.length;
+    // currentDestination.remove();
+    // this.view.trip.fillDestination(lastDestination);
+
+    this.modal.close();
   }
 
   async handleTripRemoveModalEvent(event, tripId) {
@@ -162,6 +241,3 @@ export default class Trips {
     });
   }
 }
-
-// OpenTripMap apiKey:
-// 5ae2e3f221c38a28845f05b6d6abeebb861dd05be680cb6c5c452fa0
