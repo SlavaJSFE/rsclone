@@ -1,20 +1,19 @@
 import createDOMElement from './createDOMElement';
 import statement from '../constants/TravelPlaningApp-constants';
 import objTranslate from '../Language_module/commonLang.component';
-// import '../Language_module/languageSwicher';
-// import { local } from '../Language_module/languageSwicher';
-// let local = localStorage.getItem('lang') ? JSON.parse(localStorage.getItem('lang')) : 'ru';
 import { local } from '../constants/language';
 
-console.log(local)
 const services = {
   createHeader() {
     const header = createDOMElement('header', 'header');
-    const canvas = createDOMElement('canvas');
-    canvas.setAttribute('id', 'canvas');
-    header.appendChild(canvas);
 
     return header;
+  },
+
+  createCanvas() {
+    const canvas = createDOMElement('canvas', null, null, null, ['id', 'canvas']);
+
+    return canvas;
   },
 
   createHeaderLinks() {
@@ -41,34 +40,7 @@ const services = {
                             <option value="de">Deutsch</option>
                             <option value="zh">中文</option>
                           </select>`;
-    // document.createElement('select');
-    // langSwitcher.setAttribute('name', '');
-    // langSwitcher.setAttribute('id', '');
-    // langSwitcher.classList.add('langSwitcher');
 
-    // const optionsLang = [];
-    // const languages = {
-    //   ru: objTranslate.commonLang['langSelect1_' + local],
-    //   en: objTranslate.commonLang['langSelect2_' + local],
-    //   pl: objTranslate.commonLang['langSelect3_' + local],
-    //   de: objTranslate.commonLang['langSelect4_' + local],
-    //   zh: objTranslate.commonLang['langSelect5_' + local],
-    // };
-    // let i = 0;
-    // let selectIndex = 0;
-    // for (let key in languages) {
-    //   optionsLang[i] = document.createElement('option');
-    //   optionsLang[i].innerHTML = languages[key];
-    //   optionsLang[i].value = key;
-    //   langSwitcher.appendChild(optionsLang[i]);
-    //   if (local === key) {
-    //     selectIndex = i;
-    //   }
-    //   i += 1;
-    // }
-    // optionsLang[selectIndex].selected = true;
-
-    // language.appendChild(langSwitcher);
     language.innerHTML = langSwitcher;
 
     const options = Array.from(language.querySelectorAll('option'));

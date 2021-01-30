@@ -1,10 +1,10 @@
 import services from './services/appViewServices';
 import createDOMElement from './services/createDOMElement';
-import Map from '../scripts/Map_module/Map';
+import Map from './Map_module/Map';
 import TODO from './TODO_module/TODO';
-import initIcon from '../scripts/TravelIcon_module/initIcon';
+import initIcon from './TravelIcon_module/initIcon';
 import Note from './Notes_module/Notes';
-import { clockInstance } from '../scripts/Clock_module/Clock';
+import { clockInstance } from './Clock_module/Clock';
 
 export default class TravelPlaningAppView {
   constructor(model) {
@@ -24,10 +24,11 @@ export default class TravelPlaningAppView {
 
   createHeader() {
     this.header = services.createHeader();
+    this.canvas = services.createCanvas();
     this.links = services.createHeaderLinks();
     this.modal = services.createModal();
 
-    this.header.append(this.links, this.modal);
+    this.header.append(this.canvas, this.links, this.modal);
 
     this.appWrapper.appendChild(this.header);
   }

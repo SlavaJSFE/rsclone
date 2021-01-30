@@ -24,9 +24,9 @@ export default class TripDetails {
       buttons, ['id', 'add-destination']);
     createDOMElement('i', 'material-icons left', 'add', addDestination);
 
-    const removeTrip = createDOMElement('button', 'btn waves-effect waves-light', 'Remove This Trip',
-      buttons, ['id', 'remove-trip']);
-    createDOMElement('i', 'material-icons left', 'delete', removeTrip);
+    const removeDestination = createDOMElement('button', 'btn waves-effect waves-light', 'Remove Destination',
+      buttons, ['id', 'remove-destination']);
+    createDOMElement('i', 'material-icons left', 'delete', removeDestination);
 
     const firstDestination = 1;
     this.fillDestination(firstDestination);
@@ -37,9 +37,11 @@ export default class TripDetails {
   static createOptionsBtn() {
     const btnWrapper = createDOMElement('div', 'options-btn');
     const content = `<div id="options-dropdown" class="drop-content">
-                      <div class="drop-option">Change trip name</div>
+                      <div class="drop-option" id="change-trip-name">Change trip name</div>
                       <div class="divider"></div>
-                      <div class="drop-option">Change dates</div>
+                      <div class="drop-option" id="change-dates">Change dates</div>
+                      <div class="divider"></div>
+                      <div class="drop-option" id="remove-trip">Remove this trip</div>
                       <div class="tooltip"></div>
                     </div>
                     <div class="btn" data-target="options-dropdown">
