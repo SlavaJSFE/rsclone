@@ -1,10 +1,9 @@
 import 'regenerator-runtime/runtime';
 import objTranslate from '../Language_module/mainPageLang.component';
-import { local } from '../Language_module/languageSwicher';
+import { local } from '../constants/language';
 
 export default class MainPageContent {
-  constructor() {
-  }
+  constructor() {}
 
   static createMainPageContent() {
     const main_content_block = document.querySelector('.main-page-wrapper');
@@ -57,9 +56,15 @@ export default class MainPageContent {
 
     const textInfoMainPage = document.createElement('div');
     textInfoMainPage.classList.add('infoMainPage');
-    const infoMainPage = `<p class="infoMainPage__article">${objTranslate.mainPageLang[`infoMainPage__article_${local}`]}</p>
-													<p class="infoMainPage__articleDescription">${objTranslate.mainPageLang[`infoMainPage__articleDescription_${local}`]}</p>
-													<p class="infoMainPage__articleAdvantages">${objTranslate.mainPageLang[`infoMainPage__articleAdvantages_${local}`]}</p>
+    const infoMainPage = `<p class="infoMainPage__article">${
+      objTranslate.mainPageLang[`infoMainPage__article_${local}`]
+    }</p>
+													<p class="infoMainPage__articleDescription">${
+                            objTranslate.mainPageLang[`infoMainPage__articleDescription_${local}`]
+                          }</p>
+													<p class="infoMainPage__articleAdvantages">${
+                            objTranslate.mainPageLang[`infoMainPage__articleAdvantages_${local}`]
+                          }</p>
 														<ul type="square">
 															<li>${objTranslate.mainPageLang[`infoMainPage__articleAdvantages__li1_${local}`]}</li>
 															<li>${objTranslate.mainPageLang[`infoMainPage__articleAdvantages__li2_${local}`]}</li>
