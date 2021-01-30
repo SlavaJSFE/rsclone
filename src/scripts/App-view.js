@@ -48,7 +48,8 @@ export default class TravelPlaningAppView {
 
   createMainContentSection() {
     this.mainContentSection = createDOMElement('section', 'main-content-section');
-    this.main.appendChild(this.mainContentSection);
+
+    this.main.append(this.mainContentSection);
   }
 
   createSideBar() {

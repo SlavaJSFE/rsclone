@@ -6,7 +6,7 @@ import objTranslate from '../Language_module/commonLang.component';
 // let local = localStorage.getItem('lang') ? JSON.parse(localStorage.getItem('lang')) : 'ru';
 import { local } from '../constants/language';
 
-console.log(local)
+console.log(local);
 const services = {
   createHeader() {
     const header = createDOMElement('header', 'header');
