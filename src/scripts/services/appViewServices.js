@@ -3,11 +3,21 @@ import statement from '../constants/TravelPlaningApp-constants';
 import translate from '../Language_module/commonLang.component';
 import { local } from '../constants/language';
 
+console.log(local);
+
 const services = {
   createHeader() {
     const header = createDOMElement('header', 'header');
 
     return header;
+  },
+
+  createBurger() {
+    const burger = createDOMElement('div', 'burger-menu', [
+      createDOMElement('div', 'burger-inner'),
+    ]);
+
+    return burger;
   },
 
   createCanvas() {
@@ -24,10 +34,20 @@ const services = {
     const logIn = createDOMElement('div', 'btn log-in', translate[`logIn_${local}`], authorization);
     createDOMElement('i', 'material-icons left', 'fingerprint', logIn);
 
-    const logOut = createDOMElement('div', 'log-out btn', translate[`logOut_${local}`], authorization);
+    const logOut = createDOMElement(
+      'div',
+      'log-out btn',
+      translate[`logOut_${local}`],
+      authorization
+    );
     createDOMElement('i', 'material-icons left', 'mood', logOut);
 
-    const singUp = createDOMElement('div', 'btn sign-up', translate[`signUp_${local}`], authorization);
+    const singUp = createDOMElement(
+      'div',
+      'btn sign-up',
+      translate[`signUp_${local}`],
+      authorization
+    );
     createDOMElement('i', 'material-icons left', 'person_add', singUp);
 
     const language = createDOMElement('div', 'language btn', null, linksContainer);
@@ -117,7 +137,10 @@ const services = {
   createNavigation() {
     const navigation = createDOMElement('nav', 'nav');
 
-    const menuItem1 = createDOMElement('div', 'nav-item-block active', null, null, ['id', 'nav-home']);
+    const menuItem1 = createDOMElement('div', 'nav-item-block active', null, null, [
+      'id',
+      'nav-home',
+    ]);
     createDOMElement('i', 'material-icons', 'home', menuItem1);
     createDOMElement('div', 'nav-item home', translate[`main_${local}`], menuItem1);
 
@@ -160,7 +183,7 @@ const services = {
         [createDOMElement('span', 'roman-link', 'Roman')],
         null,
         ['href', statement.roman],
-        ['target', 'blank'],
+        ['target', 'blank']
       ),
       createDOMElement(
         'a',
@@ -168,7 +191,7 @@ const services = {
         [createDOMElement('span', 'maria-link', 'Maria')],
         null,
         ['href', statement.maria],
-        ['target', 'blank'],
+        ['target', 'blank']
       ),
       createDOMElement(
         'a',
@@ -176,7 +199,7 @@ const services = {
         [createDOMElement('span', 'yulia-link', 'Yulia')],
         null,
         ['href', statement.julia],
-        ['target', 'blank'],
+        ['target', 'blank']
       ),
       createDOMElement(
         'a',
@@ -184,7 +207,7 @@ const services = {
         [createDOMElement('span', 'slava-link', 'Slava')],
         null,
         ['href', statement.slava],
-        ['target', 'blank'],
+        ['target', 'blank']
       ),
     ];
     const authors = createDOMElement('div', 'authors', authorsArray);
@@ -195,7 +218,7 @@ const services = {
       null,
       null,
       ['href', statement.rssLink],
-      ['target', 'blank'],
+      ['target', 'blank']
     );
 
     rsschoolLink.appendChild(rssLogo);

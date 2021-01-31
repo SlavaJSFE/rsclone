@@ -51,6 +51,7 @@ export default class TravelPlaningApp {
     const navItemNotes = document.getElementById('nav-notes');
     const navItemSights = document.getElementById('nav-sights');
     const navItemTodo = document.getElementById('nav-todo');
+    const overlay = document.querySelector('.overlay');
 
     this.view.header.addEventListener('click', (event) => this.handleHeaderEvent(event.target));
 
@@ -62,11 +63,20 @@ export default class TravelPlaningApp {
     navItemNotes.addEventListener('click', () => this.fillMainContentSection(navItemNotes));
     navItemSights.addEventListener('click', () => this.fillMainContentSection(navItemSights));
     navItemTodo.addEventListener('click', () => this.fillMainContentSection(navItemTodo));
+    overlay.addEventListener('click', (event) => this.closeOverlay(event));
+  }
+
+  static closeOverlay() {
+    this.view.closeNav();
   }
 
   static handleHeaderEvent(target) {
     this.modalWindow = document.getElementById('modal1');
     this.modal = Materialize.Modal.getInstance(this.modalWindow);
+
+    if (target.classList.value === 'burger-menu' || target.classList.value === 'burger-inner') {
+      this.view.toggleNav();
+    }
 
     if (target === this.logIn || target === this.logIn.children[0]) {
       this.view.fillModalAuth();
@@ -152,26 +162,29 @@ export default class TravelPlaningApp {
       // Banner.createBanner();
       // initBanner();
 
-      // MainPageContent.createMainPageContent();
-
+      MainPageContent.createMainPageContent();
+      this.view.closeNav();
       currentItem.classList.add('active');
     }
 
     if (currentItem.id === 'nav-my-trips') {
       this.view.mainContentSection.innerHTML = '';
       this.tripsComponent.init();
+      this.view.closeNav();
       currentItem.classList.add('active');
     }
 
     if (currentItem.id === 'nav-map') {
       this.view.mainContentSection.innerHTML = '';
       this.view.showMap();
+      this.view.closeNav();
       currentItem.classList.add('active');
     }
 
     if (currentItem.id === 'nav-notes') {
       this.view.mainContentSection.innerHTML = '';
       this.view.showNotes();
+      this.view.closeNav();
       currentItem.classList.add('active');
     }
 
@@ -179,12 +192,14 @@ export default class TravelPlaningApp {
       const sights = new Sights();
       this.view.mainContentSection.innerHTML = '';
       sights.createSearcher();
+      this.view.closeNav();
       currentItem.classList.add('active');
     }
 
     if (currentItem.id === 'nav-todo') {
       this.view.mainContentSection.innerHTML = '';
       this.view.showTODOList();
+      this.view.closeNav();
       currentItem.classList.add('active');
     }
   }

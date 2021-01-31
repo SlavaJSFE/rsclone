@@ -27,6 +27,12 @@ body {
   background: url("../assets/images/map-2153535_1280.jpg");
   background-size: cover;
 }
+
+.app-wrapper {
+  overflow: hidden;
+  height: 100vh;
+}
+
 .header {
   background-color: $secondary-color;
   height: 9vh;
@@ -119,6 +125,7 @@ body {
     text-align: center;
     height: 100%;
     box-shadow: none;
+    transition: 0.4s ease-in-out;
 
     .nav-item-block {
       margin: 0.5rem auto;
@@ -240,6 +247,56 @@ select {
   display: block;
 }
 
+.burger-menu {
+  display: none;
+  padding: 15px;
+  cursor: pointer;
+  transition-delay: 0.12s;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  z-index: 20;
+  .burger-inner {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 4px;
+    background-color: #ffab00;
+    border-radius: 9px;
+
+    &::before,
+    &::after {
+      display: block;
+      content: "";
+      position: absolute;
+      width: 40px;
+      height: 4px;
+      background-color: #ffab00;
+      border-radius: 9px;
+    }
+
+    &::before {
+      transition: top 0.1s ease-out, opacity 0.1s ease-out 0.12s;
+      top: -10px;
+    }
+
+    &::after {
+      transition: 0.2s ease-in-out;
+      bottom: -10px;
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  opacity: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(41, 41, 41, 0.6);
+  pointer-events: none;
+  z-index: 20;
+  transition: opacity 0.4s ease-in;
+  top: 0;
+}
+
 @media (max-width: 916px) {
   .header {
     #canvas {
@@ -264,8 +321,25 @@ select {
 }
 
 @media (max-width: 768px) {
+  .header {
+    .burger-menu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
   .main {
-    grid-template-columns: 10rem 1fr;
+    grid-template-columns: 1fr;
+
+    .nav {
+      z-index: 20;
+      position: absolute;
+      width: 100px;
+      left: -300%;
+      height: 983px;
+    }
+
     .side-bar {
       display: none;
     }
@@ -274,6 +348,10 @@ select {
 
 @media (max-width: 509px) {
   .header {
+    #canvas {
+      display: none;
+    }
+
     .header-links {
       .authorization {
         .btn {
@@ -305,3 +383,31 @@ select {
   }
 }
 // === /Animation ===
+
+.active {
+  cursor: pointer;
+  opacity: 1;
+  pointer-events: all;
+
+  .burger-menu {
+    .burger-inner {
+      transition-delay: 0.12s;
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      transform: rotate(225deg);
+      &::before {
+        transition: top 0.1s ease-out, opacity 0.1s ease-out 0.12s;
+        opacity: 0;
+        top: 0;
+      }
+      &::after {
+        transition: bottom 0.1s ease-out, transform 0.22s cubic-bezier(0.215, 0.61, 0.355, 1) 0.12s;
+        bottom: 0;
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .nav {
+    left: 0;
+  }
+}
