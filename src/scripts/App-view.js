@@ -7,138 +7,157 @@ import Note from './Notes_module/Notes';
 import { clockInstance } from './Clock_module/Clock';
 
 export default class TravelPlaningAppView {
-  constructor(model) {
-    this.model = model;
-  }
+	constructor(model) {
+		this.model = model;
+	}
 
-  init() {
-    this.appWrapper = createDOMElement('div', 'app-wrapper');
-    document.body.prepend(this.appWrapper);
+	init() {
+		this.appWrapper = createDOMElement('div', 'app-wrapper');
 
-    this.createHeader();
-    this.createMain();
-    this.createFooter();
+		// create overlay for burger background
+		this.overlay = createDOMElement('div', 'overlay');
 
-    initIcon();
-  }
+		document.body.prepend(this.overlay, this.appWrapper);
 
-  createHeader() {
-    this.header = services.createHeader();
-    this.canvas = services.createCanvas();
-    this.links = services.createHeaderLinks();
-    this.modal = services.createModal();
+		this.createHeader();
+		this.createMain();
+		this.createFooter();
 
-    this.header.append(this.canvas, this.links, this.modal);
+		initIcon();
+	}
 
-    this.appWrapper.appendChild(this.header);
-  }
+	createHeader() {
+		this.header = services.createHeader();
+		this.burger = services.createBurger();
+		this.canvas = services.createCanvas();
+		this.links = services.createHeaderLinks();
+		this.modal = services.createModal();
 
-  createMain() {
-    this.main = createDOMElement('main', 'main');
-    this.appWrapper.appendChild(this.main);
+		this.header.append(this.burger, this.canvas, this.links, this.modal);
 
-    this.createNavigation();
-    this.createMainContentSection();
-    this.createSideBar();
-  }
+		this.appWrapper.appendChild(this.header);
+	}
 
-  createNavigation() {
-    this.navigation = services.createNavigation();
-    this.main.appendChild(this.navigation);
-  }
+	createMain() {
+		this.main = createDOMElement('main', 'main');
+		this.appWrapper.appendChild(this.main);
 
-  createMainContentSection() {
-    this.mainContentSection = createDOMElement('section', 'main-content-section');
-    this.main.appendChild(this.mainContentSection);
-  }
+		this.createNavigation();
+		this.createMainContentSection();
+		this.createSideBar();
+	}
 
-  createSideBar() {
-    this.sideBar = createDOMElement('aside', 'side-bar z-depth-4');
-    this.main.appendChild(this.sideBar);
+	createNavigation() {
+		this.navigation = services.createNavigation();
+		this.main.appendChild(this.navigation);
+	}
 
-    const clockWidget = createDOMElement('div', 'clock');
-    const currencyWidget = createDOMElement('div', 'currency');
+	createMainContentSection() {
+		this.mainContentSection = createDOMElement(
+			'section',
+			'main-content-section'
+		);
 
-    this.sideBar.append(clockWidget, currencyWidget);
-  }
+		this.main.append(this.mainContentSection);
+	}
 
-  createFooter() {
-    this.footer = services.createFooter();
-    this.appWrapper.appendChild(this.footer);
-  }
+	createSideBar() {
+		this.sideBar = createDOMElement('aside', 'side-bar z-depth-4');
+		this.main.appendChild(this.sideBar);
 
-  showMap() {
-    if (this.isInstanceClock()) {
-      this.removeClocks();
-    }
+		const clockWidget = createDOMElement('div', 'clock');
+		const currencyWidget = createDOMElement('div', 'currency');
 
-    const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
-    const legend = createDOMElement(
-      'div',
-      'legend',
-      [createDOMElement('h3', null, 'Legend')],
-      null,
-      ['id', 'legend']
-    );
-    const searchContainer = createDOMElement('div', 'search-container');
+		this.sideBar.append(clockWidget, currencyWidget);
+	}
 
-    this.mainContentSection.append(mapWidget, legend, searchContainer);
+	createFooter() {
+		this.footer = services.createFooter();
+		this.appWrapper.appendChild(this.footer);
+	}
 
-    const map = new Map();
-    map.staticInitMap();
-  }
+	showMap() {
+		if (this.isInstanceClock()) {
+			this.removeClocks();
+		}
 
-  showNotes() {
-    if (this.isInstanceClock()) {
-      this.removeClocks();
-    }
-    const noteContainer = createDOMElement('div', 'notes-container');
-    this.mainContentSection.appendChild(noteContainer);
-    const note = new Note();
-    note.createNoteContainer();
-  }
+		const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
+		const legend = createDOMElement(
+			'div',
+			'legend',
+			[createDOMElement('h3', null, 'Legend')],
+			null,
+			['id', 'legend']
+		);
+		const searchContainer = createDOMElement('div', 'search-container');
 
-  fillModalAuth() {
-    services.fillModal(this.modal);
-  }
+		this.mainContentSection.append(mapWidget, legend, searchContainer);
 
-  fillModalRegistration() {
-    services.fillModalSignUp(this.modal);
-  }
+		const map = new Map();
+		map.staticInitMap();
+	}
 
-  showTODOList() {
-    if (this.isInstanceClock()) {
-      this.removeClocks();
-    }
-    createDOMElement('div', 'todo-container', null, this.mainContentSection);
-    const todo = new TODO();
-    todo.createTODOElements();
-  }
+	showNotes() {
+		if (this.isInstanceClock()) {
+			this.removeClocks();
+		}
+		const noteContainer = createDOMElement('div', 'notes-container');
+		this.mainContentSection.appendChild(noteContainer);
+		const note = new Note();
+		note.createNoteContainer();
+	}
 
-  changeAuthIcons(user) {
-    this.logIn = this.links.querySelector('.log-in');
-    this.logOut = this.links.querySelector('.log-out');
-    this.singUp = this.links.querySelector('.sign-up');
+	fillModalAuth() {
+		services.fillModal(this.modal);
+	}
 
-    if (user) {
-      this.logOut.classList.remove('hidden');
-      this.logIn.classList.add('hidden');
-      this.singUp.classList.add('hidden');
-    } else {
-      this.logOut.classList.add('hidden');
-      this.logIn.classList.remove('hidden');
-      this.singUp.classList.remove('hidden');
-    }
-  }
+	fillModalRegistration() {
+		services.fillModalSignUp(this.modal);
+	}
 
-  isInstanceClock = () => {
-    const clock = document.querySelector('#clock-container2');
-    return clock ? true : false;
-  };
+	showTODOList() {
+		if (this.isInstanceClock()) {
+			this.removeClocks();
+		}
+		createDOMElement('div', 'todo-container', null, this.mainContentSection);
+		const todo = new TODO();
+		todo.createTODOElements();
+	}
 
-  removeClocks() {
-    const clock = document.querySelector('#clock-container2');
-    clock.remove();
-    clockInstance.stopClock();
-  }
+	changeAuthIcons(user) {
+		this.logIn = this.links.querySelector('.log-in');
+		this.logOut = this.links.querySelector('.log-out');
+		this.singUp = this.links.querySelector('.sign-up');
+
+		if (user) {
+			this.logOut.classList.remove('hidden');
+			this.logIn.classList.add('hidden');
+			this.singUp.classList.add('hidden');
+		} else {
+			this.logOut.classList.add('hidden');
+			this.logIn.classList.remove('hidden');
+			this.singUp.classList.remove('hidden');
+		}
+	}
+
+	isInstanceClock = () => {
+		const clock = document.querySelector('#clock-container2');
+		return clock ? true : false;
+	};
+
+	removeClocks() {
+		const clock = document.querySelector('#clock-container2');
+		clock.remove();
+		clockInstance.stopClock();
+	}
+
+	toggleNav() {
+		this.overlay.classList.toggle('active');
+		this.appWrapper.classList.toggle('active');
+	}
+
+	closeNav() {
+		this.overlay.classList.remove('active');
+		this.appWrapper.classList.remove('active');
+	}
 }

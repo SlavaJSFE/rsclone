@@ -12,7 +12,7 @@ export default class MainPageContent {
     videoContainer.classList.add('videoContainer');
 
     const videoBlock1 = document.createElement('div');
-    videoBlock1.classList.add('videoBlock1');
+    videoBlock1.classList.add('video_content');
     const video1 = document.createElement('video');
     video1.classList.add('video1');
     video1.setAttribute('controls', 'controls');
@@ -22,7 +22,7 @@ export default class MainPageContent {
     source1.setAttribute('type', 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
 
     const videoBlock2 = document.createElement('div');
-    videoBlock2.classList.add('videoBlock2');
+    videoBlock2.classList.add('video_content');
     const video2 = document.createElement('video');
     video2.classList.add('video1');
     video2.setAttribute('controls', 'controls');
@@ -32,7 +32,7 @@ export default class MainPageContent {
     source2.setAttribute('type', 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
 
     const videoBlock3 = document.createElement('div');
-    videoBlock3.classList.add('videoBlock3');
+    videoBlock3.classList.add('video_content');
     const video3 = document.createElement('video');
     video3.classList.add('video1');
     video3.setAttribute('controls', 'controls');
@@ -42,7 +42,7 @@ export default class MainPageContent {
     source3.setAttribute('type', 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
 
     const videoBlock4 = document.createElement('div');
-    videoBlock4.classList.add('videoBlock4');
+    videoBlock4.classList.add('video_content');
     const video4 = document.createElement('video');
     video4.classList.add('video1');
     video4.setAttribute('controls', 'controls');
