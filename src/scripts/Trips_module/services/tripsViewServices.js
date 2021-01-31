@@ -1,8 +1,10 @@
 import createDOMElement from '../../services/createDOMElement';
+import translate from '../../Language_module/tripsLang';
+import { local } from '../../constants/language';
 
 const services = {
   createNewTripBtn() {
-    const button = createDOMElement('button', 'new-trip-btn btn', 'New Trip');
+    const button = createDOMElement('button', 'new-trip-btn btn', translate[`newTrip_${local}`]);
     createDOMElement('i', 'material-icons left', 'add', button);
 
     return button;
@@ -11,32 +13,39 @@ const services = {
   fillModalNewTrip(modal) {
     const modalWindow = modal;
 
+    const createNewTrip = translate[`createNewTrip_${local}`];
+    const tripName = translate[`tripName_${local}`];
+    const your1stDestination = translate[`your1stDestination_${local}`];
+    const startDate = translate[`startDate_${local}`];
+    const endDate = translate[`endDate_${local}`];
+    const createTrip = translate[`createTrip_${local}`];
+
     const modalContent = `<div class="modal-content">
                             <i class="material-icons close" id="close-modal-btn">close</i>
-                            <h4>Create New Trip</h4>
+                            <h4>${createNewTrip}</h4>
                             <form id="new-trip-form">
                               <div class="input-field">
                                 <i class="material-icons prefix">wysiwyg</i>
                                 <input id="trip-name" type="text" required>
-                                <label for="trip-name">Trip Name</label>
+                                <label for="trip-name">${tripName}</label>
                               </div>
                               <div class="input-field">
                                 <i class="material-icons prefix">place</i>
                                 <input id="first-destination" class="autocomplete" type="text" required>
-                                <label for="first-destination">Enter Your First Destination</label>
+                                <label for="first-destination">${your1stDestination}</label>
                               </div>
                               <div class="input-field">
                                 <i class="material-icons prefix">today</i>
                                 <input id="start-date" type="text" class="datepicker">
-                                <label for="start-date">Start Date</label>
+                                <label for="start-date">${startDate}</label>
                               </div>
                               <div class="input-field">
                                 <i class="material-icons prefix">today</i>
                                 <input id="end-date" type="text" class="datepicker">
-                                <label for="end-date">End Date</label>
+                                <label for="end-date">${endDate}</label>
                               </div>
                               <button id="new-trip-submit" class="btn waves-effect waves-light" type="submit" name="action">
-                                Create New Trip
+                                ${createTrip}
                                 <i class="material-icons right">send</i>
                               </button>
                             </form>
@@ -48,9 +57,12 @@ const services = {
   fillModalNotAuthorized(modal) {
     const modalWindow = modal;
 
+    const notAuthorized = translate[`notAuthorized_${local}`];
+    const toBeAbleLogIn = translate[`toBeAbleLogIn_${local}`];
+
     const modalContent = `<div class="modal-content">
-                            <h4>You a not authorized yet!</h4>
-                            <p>To be able to add new trips, please sing in</p>
+                            <h4>${notAuthorized}</h4>
+                            <p>${toBeAbleLogIn}</p>
                             <i class="material-icons close" id="close-modal-btn">close</i>
                           </div>`;
 

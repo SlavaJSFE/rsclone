@@ -78,7 +78,7 @@ export default class TravelPlaningAppView {
       'legend',
       [createDOMElement('h3', null, 'Legend')],
       null,
-      ['id', 'legend']
+      ['id', 'legend'],
     );
     const searchContainer = createDOMElement('div', 'search-container');
 
@@ -133,7 +133,7 @@ export default class TravelPlaningAppView {
 
   isInstanceClock = () => {
     const clock = document.querySelector('#clock-container2');
-    return clock ? true : false;
+    return !!clock;
   };
 
   removeClocks() {
