@@ -207,9 +207,8 @@ export default class Trips {
       this.view.mainContentSection.innerHTML = '';
       sights.createSightsInfo();
       sights.search(this.currentCity);
-      document.querySelector('#search_form').innerHTML = `${
-        objTranslate.sightsLang[`article_${local}`]
-      } ${this.currentCity}`;
+      document.querySelector('#search_form').innerHTML = `${objTranslate.sightsLang[`article_${local}`]
+        } ${this.currentCity}`;
     });
 
     this.notes.addEventListener('click', () => {

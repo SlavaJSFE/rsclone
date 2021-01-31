@@ -18,4 +18,4 @@ const sightsLang = {
   articleDescription_zh: '半徑為1 km的帶有描述的對象',
 }
 
-export default { sightsLang }; 
+export default { sightsLang };

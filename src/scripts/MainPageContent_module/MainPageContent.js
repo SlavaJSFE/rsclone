@@ -3,7 +3,8 @@ import objTranslate from '../Language_module/mainPageLang.component';
 import { local } from '../constants/language';
 
 export default class MainPageContent {
-  constructor() {}
+  constructor() {
+  }
 
   static createMainPageContent() {
     const main_content_block = document.querySelector('.main-page-wrapper');
@@ -12,7 +13,7 @@ export default class MainPageContent {
     videoContainer.classList.add('videoContainer');
 
     const videoBlock1 = document.createElement('div');
-    videoBlock1.classList.add('video_content');
+    videoBlock1.classList.add('videoBlock1');
     const video1 = document.createElement('video');
     video1.classList.add('video1');
     video1.setAttribute('controls', 'controls');
@@ -22,7 +23,7 @@ export default class MainPageContent {
     source1.setAttribute('type', 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
 
     const videoBlock2 = document.createElement('div');
-    videoBlock2.classList.add('video_content');
+    videoBlock2.classList.add('videoBlock2');
     const video2 = document.createElement('video');
     video2.classList.add('video1');
     video2.setAttribute('controls', 'controls');
@@ -32,7 +33,7 @@ export default class MainPageContent {
     source2.setAttribute('type', 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
 
     const videoBlock3 = document.createElement('div');
-    videoBlock3.classList.add('video_content');
+    videoBlock3.classList.add('videoBlock3');
     const video3 = document.createElement('video');
     video3.classList.add('video1');
     video3.setAttribute('controls', 'controls');
@@ -42,7 +43,7 @@ export default class MainPageContent {
     source3.setAttribute('type', 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
 
     const videoBlock4 = document.createElement('div');
-    videoBlock4.classList.add('video_content');
+    videoBlock4.classList.add('videoBlock4');
     const video4 = document.createElement('video');
     video4.classList.add('video1');
     video4.setAttribute('controls', 'controls');
@@ -56,15 +57,9 @@ export default class MainPageContent {
 
     const textInfoMainPage = document.createElement('div');
     textInfoMainPage.classList.add('infoMainPage');
-    const infoMainPage = `<p class="infoMainPage__article">${
-      objTranslate.mainPageLang[`infoMainPage__article_${local}`]
-    }</p>
-													<p class="infoMainPage__articleDescription">${
-                            objTranslate.mainPageLang[`infoMainPage__articleDescription_${local}`]
-                          }</p>
-													<p class="infoMainPage__articleAdvantages">${
-                            objTranslate.mainPageLang[`infoMainPage__articleAdvantages_${local}`]
-                          }</p>
+    const infoMainPage = `<p class="infoMainPage__article">${objTranslate.mainPageLang[`infoMainPage__article_${local}`]}</p>
+													<p class="infoMainPage__articleDescription">${objTranslate.mainPageLang[`infoMainPage__articleDescription_${local}`]}</p>
+													<p class="infoMainPage__articleAdvantages">${objTranslate.mainPageLang[`infoMainPage__articleAdvantages_${local}`]}</p>
 														<ul type="square">
 															<li>${objTranslate.mainPageLang[`infoMainPage__articleAdvantages__li1_${local}`]}</li>
 															<li>${objTranslate.mainPageLang[`infoMainPage__articleAdvantages__li2_${local}`]}</li>
