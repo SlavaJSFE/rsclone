@@ -52,40 +52,52 @@ const services = {
                             <h4>You a not authorized yet!</h4>
                             <p>To be able to add new trips, please sing in</p>
                             <i class="material-icons close" id="close-modal-btn">close</i>
-                            <!-- <h4>Authentication</h4>
-                            <form id="auth-form">
-                              <div class="input-field">
-                                <input id="email" class="validate" type="email" required>
-                                <label for="email">Email</label>
-                              </div>
-                              <div class="input-field">
-                                <input id="password" class="validate" type="password" required>
-                                <label for="password">Password</label>
-                              </div>
-                              <button id="auth-btn" class="btn waves-effect waves-light" type="submit">
-                                Enter
-                                <i class="material-icons right">send</i>
-                              </button>
-                            </form> -->
                           </div>`;
 
     modalWindow.innerHTML = modalContent;
   },
 
-  fillModalAddDestination(modal) {
+  fillModalChangeTripName(modal) {
     const modalWindow = modal;
 
     const modalContent = `<div class="modal-content">
                             <i class="material-icons close" id="close-modal-btn">close</i>
-                            <h4>Add Destination</h4>
-                            <form id="new-destination-form">
+                            <h4>Change Trip Name</h4>
+                            <form id="change-name-form">
                               <div class="input-field">
-                                <i class="material-icons prefix">place</i>
-                                <input id="first-destination" class="autocomplete" type="text" required>
-                                <label for="first-destination">Add Destination</label>
+                                <i class="material-icons prefix">wysiwyg</i>
+                                <input id="change-name-input" class="autocomplete" type="text" required>
+                                <label for="change-name-input">Trip Name</label>
+                              </div>
+                              <button id="change-name-submit" class="btn waves-effect waves-light" type="submit">
+                                Change
+                                <i class="material-icons right">send</i>
+                              </button>
+                            </form>
+                          </div>`;
+
+    modalWindow.innerHTML = modalContent;
+  },
+
+  fillModalChangeDates(modal) {
+    const modalWindow = modal;
+
+    const modalContent = `<div class="modal-content">
+                            <i class="material-icons close" id="close-modal-btn">close</i>
+                            <h4>Change Trip Dates</h4>
+                            <form id="change-dates-form">
+                              <div class="input-field">
+                                <i class="material-icons prefix">today</i>
+                                <input id="change-start-date" type="text" class="datepicker">
+                                <label for="change-start-date">Start Date</label>
+                              </div>
+                              <div class="input-field">
+                                <i class="material-icons prefix">today</i>
+                                <input id="change-end-date" type="text" class="datepicker">
+                                <label for="change-end-date">End Date</label>
                               </div>
                               <button id="new-trip-submit" class="btn waves-effect waves-light" type="submit" name="action">
-                                Add Destination
+                                Change
                                 <i class="material-icons right">send</i>
                               </button>
                             </form>
@@ -103,6 +115,47 @@ const services = {
                             <i class="material-icons close" id="close-modal-btn">close</i>
                             <button id="cancel-remove-trip" class="btn waves-effect waves-light">Cancel</button>
                             <button id="remove-trip-permanently" class="btn waves-effect waves-light" type="submit">
+                              Remove
+                              <i class="material-icons left">delete</i>
+                            </button>
+                          </div>`;
+
+    modalWindow.innerHTML = modalContent;
+  },
+
+  fillModalAddDestination(modal) {
+    const modalWindow = modal;
+
+    const modalContent = `<div class="modal-content">
+                            <i class="material-icons close" id="close-modal-btn">close</i>
+                            <h4>Add Destination</h4>
+                            <form id="new-destination-form">
+                              <div class="input-field">
+                                <i class="material-icons prefix">place</i>
+                                <input id="add-destination" class="autocomplete" type="text" required>
+                                <label for="add-destination">Add Destination</label>
+                              </div>
+                              <button id="new-destination-submit" class="btn waves-effect waves-light" type="submit">
+                                Add Destination
+                                <i class="material-icons right">send</i>
+                              </button>
+                            </form>
+                          </div>`;
+
+    modalWindow.innerHTML = modalContent;
+  },
+
+  fillModalRemoveDestination(modal, currentCity) {
+    const modalWindow = modal;
+
+    const modalContent = `<div class="modal-content" id="remove-destination-modal">
+                            <h4>Remove destination</h4>
+                            <p>Are you sure you want delete page for \n
+                            <span id="place-to-remove">${currentCity}</span>. \n
+                            If you remove it, all your notes and To Do list will be permanently deleted!</p>
+                            <i class="material-icons close" id="close-modal-btn">close</i>
+                            <button id="cancel-remove-destination" class="btn waves-effect waves-light">Cancel</button>
+                            <button id="remove-destination-permanently" class="btn waves-effect waves-light" type="submit">
                               Remove
                               <i class="material-icons left">delete</i>
                             </button>

@@ -1,20 +1,19 @@
 import createDOMElement from './createDOMElement';
 import statement from '../constants/TravelPlaningApp-constants';
-import objTranslate from '../Language_module/commonLang.component';
-// import '../Language_module/languageSwicher';
-// import { local } from '../Language_module/languageSwicher';
-// let local = localStorage.getItem('lang') ? JSON.parse(localStorage.getItem('lang')) : 'ru';
+import translate from '../Language_module/commonLang.component';
 import { local } from '../constants/language';
 
-console.log(local)
 const services = {
   createHeader() {
     const header = createDOMElement('header', 'header');
-    const canvas = createDOMElement('canvas');
-    canvas.setAttribute('id', 'canvas');
-    header.appendChild(canvas);
 
     return header;
+  },
+
+  createCanvas() {
+    const canvas = createDOMElement('canvas', null, null, null, ['id', 'canvas']);
+
+    return canvas;
   },
 
   createHeaderLinks() {
@@ -22,13 +21,13 @@ const services = {
 
     const authorization = createDOMElement('div', 'authorization', null, linksContainer);
 
-    const logIn = createDOMElement('div', 'btn log-in', 'Log In', authorization);
+    const logIn = createDOMElement('div', 'btn log-in', translate[`logIn_${local}`], authorization);
     createDOMElement('i', 'material-icons left', 'fingerprint', logIn);
 
-    const logOut = createDOMElement('div', 'log-out btn', 'Log Out', authorization);
+    const logOut = createDOMElement('div', 'log-out btn', translate[`logOut_${local}`], authorization);
     createDOMElement('i', 'material-icons left', 'mood', logOut);
 
-    const singUp = createDOMElement('div', 'btn sign-up', 'Sing Up', authorization);
+    const singUp = createDOMElement('div', 'btn sign-up', translate[`signUp_${local}`], authorization);
     createDOMElement('i', 'material-icons left', 'person_add', singUp);
 
     const language = createDOMElement('div', 'language btn', null, linksContainer);
@@ -41,34 +40,7 @@ const services = {
                             <option value="de">Deutsch</option>
                             <option value="zh">中文</option>
                           </select>`;
-    // document.createElement('select');
-    // langSwitcher.setAttribute('name', '');
-    // langSwitcher.setAttribute('id', '');
-    // langSwitcher.classList.add('langSwitcher');
 
-    // const optionsLang = [];
-    // const languages = {
-    //   ru: objTranslate.commonLang['langSelect1_' + local],
-    //   en: objTranslate.commonLang['langSelect2_' + local],
-    //   pl: objTranslate.commonLang['langSelect3_' + local],
-    //   de: objTranslate.commonLang['langSelect4_' + local],
-    //   zh: objTranslate.commonLang['langSelect5_' + local],
-    // };
-    // let i = 0;
-    // let selectIndex = 0;
-    // for (let key in languages) {
-    //   optionsLang[i] = document.createElement('option');
-    //   optionsLang[i].innerHTML = languages[key];
-    //   optionsLang[i].value = key;
-    //   langSwitcher.appendChild(optionsLang[i]);
-    //   if (local === key) {
-    //     selectIndex = i;
-    //   }
-    //   i += 1;
-    // }
-    // optionsLang[selectIndex].selected = true;
-
-    // language.appendChild(langSwitcher);
     language.innerHTML = langSwitcher;
 
     const options = Array.from(language.querySelectorAll('option'));
@@ -87,9 +59,13 @@ const services = {
   fillModal(modal) {
     const modalWindow = modal;
 
+    const authentication = translate[`authentication_${local}`];
+    const password = translate[`password_${local}`];
+    const enter = translate[`enter_${local}`];
+
     const modalContent = `<div class="modal-content">
                             <i class="material-icons close" id="close-modal-btn">close</i>
-                            <h4>Authentication</h4>
+                            <h4>${authentication}</h4>
                             <form id="auth-form">
                               <div class="input-field">
                                 <input id="email" class="validate" type="email" required>
@@ -97,10 +73,10 @@ const services = {
                               </div>
                               <div class="input-field">
                                 <input id="password" class="validate" type="password" required>
-                                <label for="password">Password</label>
+                                <label for="password">${password}</label>
                               </div>
                               <button id="auth-btn" class="btn waves-effect waves-light" type="submit">
-                                Enter
+                                ${enter}
                                 <i class="material-icons right">send</i>
                               </button>
                             </form>
@@ -112,9 +88,13 @@ const services = {
   fillModalSignUp(modal) {
     const modalWindow = modal;
 
+    const registration = translate[`registration_${local}`];
+    const password = translate[`password_${local}`];
+    const createAccount = translate[`createAccount_${local}`];
+
     const modalContent = `<div class="modal-content">
                             <i class="material-icons close" id="close-modal-btn">close</i>
-                            <h4>Registration</h4>
+                            <h4>${registration}</h4>
                             <form id="sign-up-form">
                               <div class="input-field">
                                 <input id="email" class="validate" type="email" required>
@@ -122,10 +102,10 @@ const services = {
                               </div>
                               <div class="input-field">
                                 <input id="password" class="validate" type="password" required>
-                                <label for="password">Password</label>
+                                <label for="password">${password}</label>
                               </div>
                               <button id="sign-up-btn" class="btn waves-effect waves-light" type="submit">
-                                Sign Up
+                                ${createAccount}
                                 <i class="material-icons right">send</i>
                               </button>
                             </form>
@@ -137,42 +117,29 @@ const services = {
   createNavigation() {
     const navigation = createDOMElement('nav', 'nav');
 
-    const menuItem1 = createDOMElement('div', 'nav-item-block active', null, null, [
-      'id',
-      'nav-home',
-    ]);
+    const menuItem1 = createDOMElement('div', 'nav-item-block active', null, null, ['id', 'nav-home']);
     createDOMElement('i', 'material-icons', 'home', menuItem1);
-    createDOMElement('div', 'nav-item home', objTranslate.commonLang['main_' + local], menuItem1);
+    createDOMElement('div', 'nav-item home', translate[`main_${local}`], menuItem1);
 
     const menuItem2 = createDOMElement('div', 'nav-item-block', null, null, ['id', 'nav-my-trips']);
     createDOMElement('i', 'material-icons', 'airport_shuttle', menuItem2);
-    createDOMElement(
-      'div',
-      'nav-item my-trips',
-      objTranslate.commonLang['myTrips_' + local],
-      menuItem2
-    );
+    createDOMElement('div', 'nav-item my-trips', translate[`myTrips_${local}`], menuItem2);
 
     const menuItem3 = createDOMElement('div', 'nav-item-block', null, null, ['id', 'nav-map']);
     createDOMElement('i', 'material-icons', 'place', menuItem3);
-    createDOMElement('div', 'nav-item map', objTranslate.commonLang['map_' + local], menuItem3);
+    createDOMElement('div', 'nav-item map', translate[`map_${local}`], menuItem3);
 
     const menuItem4 = createDOMElement('div', 'nav-item-block', null, null, ['id', 'nav-notes']);
     createDOMElement('i', 'material-icons', 'notes', menuItem4);
-    createDOMElement('div', 'nav-item notes', objTranslate.commonLang['notes_' + local], menuItem4);
+    createDOMElement('div', 'nav-item notes', translate[`notes_${local}`], menuItem4);
 
     const menuItem5 = createDOMElement('div', 'nav-item-block', null, null, ['id', 'nav-sights']);
     createDOMElement('i', 'material-icons', 'account_balance', menuItem5);
-    createDOMElement(
-      'div',
-      'nav-item sights',
-      objTranslate.commonLang['sights_' + local],
-      menuItem5
-    );
+    createDOMElement('div', 'nav-item sights', translate[`sights_${local}`], menuItem5);
 
     const menuItem6 = createDOMElement('div', 'nav-item-block', null, null, ['id', 'nav-todo']);
     createDOMElement('i', 'material-icons', 'check_box', menuItem6);
-    createDOMElement('div', 'nav-item todo', objTranslate.commonLang['todo_' + local], menuItem6);
+    createDOMElement('div', 'nav-item todo', translate[`mustVisit_${local}`], menuItem6);
 
     navigation.append(menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6);
 
@@ -193,7 +160,7 @@ const services = {
         [createDOMElement('span', 'roman-link', 'Roman')],
         null,
         ['href', statement.roman],
-        ['target', 'blank']
+        ['target', 'blank'],
       ),
       createDOMElement(
         'a',
@@ -201,7 +168,7 @@ const services = {
         [createDOMElement('span', 'maria-link', 'Maria')],
         null,
         ['href', statement.maria],
-        ['target', 'blank']
+        ['target', 'blank'],
       ),
       createDOMElement(
         'a',
@@ -209,7 +176,7 @@ const services = {
         [createDOMElement('span', 'yulia-link', 'Yulia')],
         null,
         ['href', statement.julia],
-        ['target', 'blank']
+        ['target', 'blank'],
       ),
       createDOMElement(
         'a',
@@ -217,7 +184,7 @@ const services = {
         [createDOMElement('span', 'slava-link', 'Slava')],
         null,
         ['href', statement.slava],
-        ['target', 'blank']
+        ['target', 'blank'],
       ),
     ];
     const authors = createDOMElement('div', 'authors', authorsArray);
@@ -228,7 +195,7 @@ const services = {
       null,
       null,
       ['href', statement.rssLink],
-      ['target', 'blank']
+      ['target', 'blank'],
     );
 
     rsschoolLink.appendChild(rssLogo);
