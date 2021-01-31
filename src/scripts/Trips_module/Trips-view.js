@@ -17,15 +17,19 @@ export default class TripsView {
   }
 
   init() {
+    const burger = createDOMElement('div', 'burger-menu', [
+      createDOMElement('div', 'burger-inner'),
+    ]);
+
     this.myTripsContainer = createDOMElement('div', 'trips-container');
     this.newTripBtn = services.createNewTripBtn();
 
     this.myTripsContainer.append(this.newTripBtn);
-    this.mainContentSection.appendChild(this.myTripsContainer);
+    this.mainContentSection.append(burger, this.myTripsContainer);
   }
 
   renderTripsCards(userTripsArray) {
-    console.log()
+    console.log();
     const trips = userTripsArray;
     if (userTripsArray.length === 0) {
       const noTripsInfo = services.createNoTripsInfo();

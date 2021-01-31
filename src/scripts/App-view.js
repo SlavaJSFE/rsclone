@@ -13,7 +13,11 @@ export default class TravelPlaningAppView {
 
   init() {
     this.appWrapper = createDOMElement('div', 'app-wrapper');
-    document.body.prepend(this.appWrapper);
+
+    // create overlay for burger background
+    const overlay = createDOMElement('div', 'overlay');
+
+    document.body.prepend(overlay, this.appWrapper);
 
     this.createHeader();
     this.createMain();
@@ -140,5 +144,21 @@ export default class TravelPlaningAppView {
     const clock = document.querySelector('#clock-container2');
     clock.remove();
     clockInstance.stopClock();
+  }
+
+  toggleNav() {
+    const overlay = document.querySelector('.overlay');
+    const appWrapper = document.querySelector('.app-wrapper');
+
+    overlay.classList.toggle('active');
+    appWrapper.classList.toggle('active');
+  }
+
+  closeNav() {
+    const overlay = document.querySelector('.overlay');
+    const appWrapper = document.querySelector('.app-wrapper');
+
+    overlay.classList.remove('active');
+    appWrapper.classList.remove('active');
   }
 }

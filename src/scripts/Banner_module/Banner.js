@@ -11,12 +11,8 @@ export default class Banner {
 
     const canvas = createDOMElement('canvas', null, null, null, ['id', 'canvas2']);
 
-    const burger = createDOMElement('div', 'burger-menu', [
-      createDOMElement('div', 'burger-inner'),
-    ]);
-
     bannerContainer.appendChild(canvas);
     mainPageWrapper.appendChild(bannerContainer);
-    mainContentBlock.append(burger, mainPageWrapper);
+    mainContentBlock.append(mainPageWrapper);
   }
 }

@@ -11,8 +11,11 @@ const services = {
   createHeader() {
     const header = createDOMElement('header', 'header');
     const canvas = createDOMElement('canvas');
+    const burger = createDOMElement('div', 'burger-menu', [
+      createDOMElement('div', 'burger-inner'),
+    ]);
     canvas.setAttribute('id', 'canvas');
-    header.appendChild(canvas);
+    header.append(burger, canvas);
 
     return header;
   },
@@ -78,6 +81,13 @@ const services = {
 
     return linksContainer;
   },
+
+  // createBurger() {
+  //   const burger = createDOMElement('div', 'burger-menu', [
+  //     createDOMElement('div', 'burger-inner'),
+  //   ]);
+  //   return burger;
+  // },
 
   createModal() {
     const modal = createDOMElement('div', 'modal', null, null, ['id', 'modal1']);
