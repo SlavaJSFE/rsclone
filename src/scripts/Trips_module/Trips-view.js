@@ -17,15 +17,18 @@ export default class TripsView {
   }
 
   init() {
+    const burger = createDOMElement('div', 'burger-menu', [
+      createDOMElement('div', 'burger-inner'),
+    ]);
+
     this.myTripsContainer = createDOMElement('div', 'trips-container');
     this.newTripBtn = services.createNewTripBtn();
 
     this.myTripsContainer.append(this.newTripBtn);
-    this.mainContentSection.appendChild(this.myTripsContainer);
+    this.mainContentSection.append(burger, this.myTripsContainer);
   }
 
   renderTripsCards(userTripsArray) {
-    console.log()
     const trips = userTripsArray;
     if (userTripsArray.length === 0) {
       const noTripsInfo = services.createNoTripsInfo();
@@ -45,12 +48,24 @@ export default class TripsView {
     services.fillModalNotAuthorized(this.modal);
   }
 
-  fillAddDestinationModal() {
-    services.fillModalAddDestination(this.modal);
+  fillChangeTripNameModal() {
+    services.fillModalChangeTripName(this.modal);
+  }
+
+  fillChangeDatesModal() {
+    services.fillModalChangeDates(this.modal);
   }
 
   fillRemoveTripModal() {
     services.fillModalRemoveTrip(this.modal);
+  }
+
+  fillAddDestinationModal() {
+    services.fillModalAddDestination(this.modal);
+  }
+
+  fillRemoveDestinationModal(currentCity) {
+    services.fillModalRemoveDestination(this.modal, currentCity);
   }
 
   showTrip(tripObject) {

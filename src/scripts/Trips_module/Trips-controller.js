@@ -28,11 +28,7 @@ export default class Trips {
       if (user) {
         this.view.fillNewTripModal();
 
-        const datepicker = document.querySelectorAll('.datepicker');
-        Materialize.Datepicker.init(datepicker, {
-          firstDay: 1,
-          format: 'dd.mm.yyyy',
-        });
+        Trips.activateDatepicker();
 
         this.modal.open();
 
@@ -67,6 +63,7 @@ export default class Trips {
 
     this.tripDetailsContainer = document.querySelector('.trip-details');
     this.addTripDetailsListeners(this.tripDetailsContainer);
+    this.addOptionsListeners(this.tripDetailsContainer);
     this.addDestinationListeners();
   }
 
@@ -116,12 +113,9 @@ export default class Trips {
   }
 
   addTripDetailsListeners(tripDetailsContainer) {
-    // ! make separate function for modal activation to avoid code duplicate
-    this.modalWindow = document.getElementById('modal1');
-    this.modal = Materialize.Modal.getInstance(this.modalWindow);
     const goBackBtn = tripDetailsContainer.querySelector('.back-btn');
     const optionsBtn = tripDetailsContainer.querySelector('.options-btn');
-    const removeTripBtn = document.getElementById('remove-trip');
+    const removeDestinationBtn = document.getElementById('remove-destination');
     const addDestinationBtn = document.getElementById('add-destination');
 
     goBackBtn.addEventListener('click', () => {
@@ -130,17 +124,6 @@ export default class Trips {
 
     optionsBtn.addEventListener('click', () => {
       this.view.handleOptionsDropdown();
-    });
-
-    removeTripBtn.addEventListener('click', () => {
-      this.view.fillRemoveTripModal();
-      this.modal.open();
-      this.addListenerToCloseBtn();
-
-      const removeTripModal = document.getElementById('remove-trip-modal');
-      removeTripModal.addEventListener('click', (event) => {
-        this.handleTripRemoveModalEvent(event, tripDetailsContainer.id);
-      });
     });
 
     addDestinationBtn.addEventListener('click', () => {
@@ -153,10 +136,61 @@ export default class Trips {
         this.handleNewDestinationSubmit(event, tripDetailsContainer.id);
       });
     });
+
+    removeDestinationBtn.addEventListener('click', () => {
+      this.view.fillRemoveDestinationModal(this.currentCity);
+      this.modal.open();
+      this.addListenerToCloseBtn();
+
+      const removeDestinationModal = document.getElementById('remove-destination-modal');
+      removeDestinationModal.addEventListener('click', (event) => {
+        this.handleDestinationRemoveEvent(event, tripDetailsContainer.id);
+      });
+    });
+  }
+
+  addOptionsListeners(tripDetailsContainer) {
+    const changeName = document.getElementById('change-trip-name');
+    const changeDates = document.getElementById('change-dates');
+    const removeTrip = document.getElementById('remove-trip');
+
+    changeName.addEventListener('click', () => {
+      this.view.fillChangeTripNameModal();
+      this.modal.open();
+      this.addListenerToCloseBtn();
+
+      const form = document.getElementById('change-name-form');
+      form.addEventListener('submit', (event) => {
+        this.handleChangeNameSubmit(event, tripDetailsContainer.id);
+      });
+    });
+
+    changeDates.addEventListener('click', () => {
+      this.view.fillChangeDatesModal();
+      Trips.activateDatepicker();
+      this.modal.open();
+      this.addListenerToCloseBtn();
+
+      const form = document.getElementById('change-dates-form');
+      form.addEventListener('submit', (event) => {
+        this.handleChangeDatesSubmit(event, tripDetailsContainer.id);
+      });
+    });
+
+    removeTrip.addEventListener('click', () => {
+      this.view.fillRemoveTripModal();
+      this.modal.open();
+      this.addListenerToCloseBtn();
+
+      const removeTripModal = document.getElementById('remove-trip-modal');
+      removeTripModal.addEventListener('click', (event) => {
+        this.handleTripRemoveEvent(event, tripDetailsContainer.id);
+      });
+    });
   }
 
   addDestinationListeners() {
-    const currentCity = this.tripDetailsContainer.querySelector('.trip-destination').textContent;
+    this.currentCity = this.tripDetailsContainer.querySelector('.trip-destination').textContent;
     this.map = this.tripDetailsContainer.querySelector('.map');
     this.sights = this.tripDetailsContainer.querySelector('.sights');
     this.notes = this.tripDetailsContainer.querySelector('.notes');
@@ -165,34 +199,74 @@ export default class Trips {
     this.important = this.tripDetailsContainer.querySelector('.important');
 
     this.map.addEventListener('click', () => {
-      this.view.showMap(currentCity, this.tripDetailsContainer.id);
+      this.view.showMap(this.currentCity, this.tripDetailsContainer.id);
     });
 
     this.sights.addEventListener('click', () => {
       const sights = new Sights();
       this.view.mainContentSection.innerHTML = '';
       sights.createSightsInfo();
-      sights.search(currentCity);
-      document.querySelector('#search_form').innerHTML = `${
-        objTranslate.sightsLang[`article_${local}`]
-      } ${currentCity}`;
+      sights.search(this.currentCity);
+      document.querySelector('#search_form').innerHTML = `${objTranslate.sightsLang[`article_${local}`]
+        } ${this.currentCity}`;
     });
 
     this.notes.addEventListener('click', () => {
-      this.view.showNotes(currentCity, this.tripDetailsContainer.id);
+      this.view.showNotes(this.currentCity, this.tripDetailsContainer.id);
     });
 
     this.weather.addEventListener('click', () => {
-      this.view.showWeather(currentCity);
+      this.view.showWeather(this.currentCity);
     });
 
     this.todo.addEventListener('click', () => {
-      this.view.showTODO(currentCity, this.tripDetailsContainer.id);
+      this.view.showTODO(this.currentCity, this.tripDetailsContainer.id);
     });
 
     this.important.addEventListener('click', () => {
-      console.log(currentCity);
+      console.log(this.currentCity);
     });
+  }
+
+  async handleChangeNameSubmit(event, tripId) {
+    event.preventDefault();
+
+    await TripsModel.updateTripName(tripId);
+    this.view.mainContentSection.innerHTML = '';
+    this.init();
+
+    const tripDetails = await TripsModel.getTripById(tripId);
+    this.showTrip(tripDetails);
+
+    this.modal.close();
+  }
+
+  async handleChangeDatesSubmit(event, tripId) {
+    event.preventDefault();
+
+    await TripsModel.updateTripDates(tripId);
+    this.view.mainContentSection.innerHTML = '';
+    this.init();
+
+    const tripDetails = await TripsModel.getTripById(tripId);
+    this.showTrip(tripDetails);
+
+    this.modal.close();
+  }
+
+  async handleTripRemoveEvent(event, tripId) {
+    const cancelBtn = document.getElementById('cancel-remove-trip');
+    const removeBtn = document.getElementById('remove-trip-permanently');
+
+    if (event.target === cancelBtn) {
+      this.modal.close();
+    }
+    if (event.target === removeBtn) {
+      await TripsModel.removeTripFromDatabase(tripId);
+      this.view.mainContentSection.innerHTML = '';
+      this.init();
+      this.modal.close();
+    }
   }
 
   async handleNewDestinationSubmit(event, tripId) {
@@ -211,27 +285,35 @@ export default class Trips {
 
     this.showChosenDestination(pagination, newDestinationPage);
 
-    // const currentDestination = this.view.tripDetailsBlock.querySelector('.destination-details');
-    // const lastDestination = updatedTrip.tripRoute.length;
-    // currentDestination.remove();
-    // this.view.trip.fillDestination(lastDestination);
-
     this.modal.close();
   }
 
-  async handleTripRemoveModalEvent(event, tripId) {
-    const cancelBtn = document.getElementById('cancel-remove-trip');
-    const removeBtn = document.getElementById('remove-trip-permanently');
+  async handleDestinationRemoveEvent(event, tripId) {
+    const cancelBtn = document.getElementById('cancel-remove-destination');
+    const removeBtn = document.getElementById('remove-destination-permanently');
 
     if (event.target === cancelBtn) {
       this.modal.close();
     }
     if (event.target === removeBtn) {
-      await TripsModel.removeTripFromDatabase(tripId);
+      await TripsModel.removeDestination(tripId, this.currentCity);
+
       this.view.mainContentSection.innerHTML = '';
       this.init();
+
+      const tripDetails = await TripsModel.getTripById(tripId);
+      this.showTrip(tripDetails);
+
       this.modal.close();
     }
+  }
+
+  static activateDatepicker() {
+    const datepicker = document.querySelectorAll('.datepicker');
+    Materialize.Datepicker.init(datepicker, {
+      firstDay: 1,
+      format: 'dd.mm.yyyy',
+    });
   }
 
   addListenerToCloseBtn() {

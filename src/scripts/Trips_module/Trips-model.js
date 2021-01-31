@@ -61,26 +61,52 @@ export default class TripsModel {
     return data;
   }
 
-  static async setNewDestination(tripId) {
-    const inputNewDestination = document.getElementById('first-destination');
+  static async updateTripName(tripId) {
+    const inputNewName = document.getElementById('change-name-input');
     const UID = JSON.parse(sessionStorage.getItem('user'));
 
-    const response = await fetch(
-      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${tripId}/tripRoute.json`,
-    );
-    const routeArray = await response.json();
-    routeArray.push(inputNewDestination.value);
-
-    // const result = await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${userName}/${tripId}/tripRoute.json`, {
-    await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${tripId}/tripRoute.json`, {
-      method: 'PUT',
-      body: JSON.stringify(routeArray),
-      headers: {
-        'Content-Type': 'application/json',
+    await fetch(
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${tripId}/tripName.json`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(inputNewName.value),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    });
+    );
+  }
 
-    // return result.json();
+  static async updateTripDates(tripId) {
+    const inputStartDate = document.getElementById('change-start-date');
+    const inputEndDate = document.getElementById('change-end-date');
+    const UID = JSON.parse(sessionStorage.getItem('user'));
+
+    if (inputStartDate.value) {
+      await fetch(
+        `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${tripId}/startDate.json`,
+        {
+          method: 'PUT',
+          body: JSON.stringify(inputStartDate.value),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+    }
+
+    if (inputEndDate.value) {
+      await fetch(
+        `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${tripId}/endDate.json`,
+        {
+          method: 'PUT',
+          body: JSON.stringify(inputEndDate.value),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+    }
   }
 
   static async removeTripFromDatabase(id) {
@@ -91,6 +117,43 @@ export default class TripsModel {
     });
     const data = await response.json();
     return data;
+  }
+
+  static async setNewDestination(tripId) {
+    const inputNewDestination = document.getElementById('add-destination');
+    const UID = JSON.parse(sessionStorage.getItem('user'));
+
+    const response = await fetch(
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${tripId}/tripRoute.json`,
+    );
+    const routeArray = await response.json();
+    routeArray.push(inputNewDestination.value);
+
+    await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${tripId}/tripRoute.json`, {
+      method: 'PUT',
+      body: JSON.stringify(routeArray),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
+  static async removeDestination(tripId, destination) {
+    const UID = JSON.parse(sessionStorage.getItem('user'));
+
+    const response = await fetch(
+      `https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${tripId}/tripRoute.json`,
+    );
+    const routeArray = await response.json();
+    const updatedRouteArray = routeArray.filter((place) => place !== destination);
+
+    await fetch(`https://rsclone-833d0-default-rtdb.firebaseio.com/${UID}/${tripId}/tripRoute.json`, {
+      method: 'PUT',
+      body: JSON.stringify(updatedRouteArray),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 }
 

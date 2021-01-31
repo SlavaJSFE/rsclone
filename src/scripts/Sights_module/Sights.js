@@ -134,7 +134,7 @@ export default class Sights {
     a.className = 'list-group-item list-group-item-action';
     a.setAttribute('data-id', item.xid);
     a.innerHTML = `<h5 class="list-group-item-heading">${item.name}</h5>
-                  <p class="list-group-item-text">${this.getCategoryName(item.kinds)}</p>`;
+				<p class="list-group-item-text">${this.getCategoryName(item.kinds)}</p>`;
     a.addEventListener('click', () => {
       document.querySelectorAll('#list a').forEach((i) => {
         i.classList.remove('active');

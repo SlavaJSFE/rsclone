@@ -171,18 +171,15 @@ export default class Map {
     <div class="iw-container">
       <div class="iw-title">${place.name}</div>
       <div class="iw-content">
-        <img class="iw-img" src="${place.preview.source}" height="150px" width="150px" alt="${
-      place.name
-    }"></img>
+        <img class="iw-img" src="${place.preview.source}" height="150px" width="150px" alt="${place.name
+      }"></img>
         <div class="iw-info">${place.wikipedia_extracts.text}</div>
       </div>
       <div class="iw-contacts">
-        <div class="iw-address">Address: ${place.address.city || place.address.town}, ${
-      place.address.country
-    }, ${place.address.postcode}</div>
-        <a href="https://www.wikidata.org/wiki/${
-          place.wikidata
-        }" class="iw-link" target="blank">Link: Wikidata</a>
+        <div class="iw-address">Address: ${place.address.city || place.address.town}, ${place.address.country
+      }, ${place.address.postcode}</div>
+        <a href="https://www.wikidata.org/wiki/${place.wikidata
+      }" class="iw-link" target="blank">Link: Wikidata</a>
       </div>
       <button class="iw-button">Add+</button>
     </div>
