@@ -139,6 +139,13 @@
   }
 }
 
+.weather-back {
+  display: flex;
+  justify-content: center;
+  width: 36px;
+  margin: 10px;
+}
+
 [data-night="false"] {
   color: black;
 }
