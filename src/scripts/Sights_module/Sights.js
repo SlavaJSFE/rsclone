@@ -17,7 +17,8 @@ export default class Sights {
 
   createSightsInfo = () => {
     this.createSearcher();
-  };
+    this.addSearchListener();
+  }
 
   apiGet(method, query) {
     let otmAPI = `https://api.opentripmap.com/0.1/en/places/${method}?apikey=${this.apiKey}`;
@@ -53,6 +54,7 @@ export default class Sights {
   }
 
   firstLoad() {
+    const description = objTranslate.sightsLang[`articleDescription_${local}`];
     if (this.lat && this.lon) {
       this.apiGet(
         'radius',
@@ -62,7 +64,7 @@ export default class Sights {
         this.offset = 0;
         document.querySelector(
           '#info',
-        ).innerHTML += `<p>${this.count} ${objTranslate.sightsLang[`articleDescription_${local}`]}</p>`;
+        ).innerHTML += `<p>${this.count} ${description}</p>`;
         this.loadList();
       });
     }
@@ -162,19 +164,19 @@ export default class Sights {
   }
 
   createSearcher() {
-    const main_content_block = document.querySelector('.main-content-section');
+    const mainContentBlock = document.querySelector('.main-content-section');
 
-    const sights_container = document.createElement('div');
-    sights_container.classList.add('sights-container');
+    const sightsContainer = document.createElement('div');
+    sightsContainer.classList.add('sights-container');
 
-    const form = document.createElement('form');
-    form.setAttribute('id', 'search_form');
-    form.classList.add('input-group');
+    this.form = document.createElement('form');
+    this.form.setAttribute('id', 'search_form');
+    this.form.classList.add('input-group');
 
     const searchInputField = document.createElement('div');
     searchInputField.classList.add('input-field');
 
-    form.appendChild(searchInputField);
+    this.form.appendChild(searchInputField);
 
     const searchInput = document.createElement('input');
     searchInput.setAttribute('id', 'textbox');
@@ -184,8 +186,7 @@ export default class Sights {
     searchInput.classList.add('sights-search');
 
     const searchButton = document.createElement('button');
-    // button.setAttribute('id', 'button-search');
-    searchButton.setAttribute('type', 'button');
+    searchButton.setAttribute('type', 'submit');
     searchButton.classList.add('btn', 'btn-link', 'search');
 
     const searchButtonIcon = document.createElement('i');
@@ -202,50 +203,56 @@ export default class Sights {
     const mainBlockRow = document.createElement('div');
     mainBlockRow.classList.add('rows');
 
-    const mainBlockRow_left = document.createElement('div');
-    mainBlockRow_left.classList.add('col-12', 'col-lg-5');
+    const mainBlockRowLeft = document.createElement('div');
+    mainBlockRowLeft.classList.add('col-12', 'col-lg-5');
     const list = document.createElement('div');
     list.setAttribute('id', 'list');
     list.classList.add('list-group');
-    const mainBlockRow_left_nav = document.createElement('div');
-    mainBlockRow_left_nav.classList.add('text-center');
+    const mainBlockRowLeftNav = document.createElement('div');
+    mainBlockRowLeftNav.classList.add('text-center');
 
-    const mainBlockRow_right = document.createElement('div');
-    mainBlockRow_right.classList.add('col-12', 'col-lg-7');
+    const mainBlockRowRight = document.createElement('div');
+    mainBlockRowRight.classList.add('col-12', 'col-lg-7');
     const poi = document.createElement('div');
     poi.setAttribute('id', 'poi');
 
-    const button_next = document.createElement('button');
-    button_next.setAttribute('id', 'nextButton');
-    button_next.setAttribute('type', 'button');
-    button_next.classList.add('btn', 'btn-primary');
-    button_next.innerHTML = 'button_next';
+    const buttonNext = document.createElement('button');
+    buttonNext.setAttribute('id', 'nextButton');
+    buttonNext.setAttribute('type', 'button');
+    buttonNext.classList.add('btn', 'btn-primary');
+    buttonNext.innerHTML = 'button_next';
 
-    mainBlockRow_left_nav.appendChild(button_next);
+    mainBlockRowLeftNav.appendChild(buttonNext);
 
-    mainBlockRow_left.appendChild(list);
-    mainBlockRow_left.appendChild(mainBlockRow_left_nav);
-    mainBlockRow_right.appendChild(poi);
+    mainBlockRowLeft.appendChild(list);
+    mainBlockRowLeft.appendChild(mainBlockRowLeftNav);
+    mainBlockRowRight.appendChild(poi);
 
-    mainBlockRow.appendChild(mainBlockRow_left);
-    mainBlockRow.appendChild(mainBlockRow_right);
+    mainBlockRow.appendChild(mainBlockRowLeft);
+    mainBlockRow.appendChild(mainBlockRowRight);
 
-    sights_container.appendChild(form);
-    sights_container.appendChild(info);
-    sights_container.appendChild(mainBlockRow);
+    sightsContainer.appendChild(this.form);
+    sightsContainer.appendChild(info);
+    sightsContainer.appendChild(mainBlockRow);
 
-    main_content_block.appendChild(sights_container);
+    mainContentBlock.appendChild(sightsContainer);
+  }
+
+  addSearchListener() {
+    this.form.addEventListener('submit', () => {
+      const city = document.getElementById('textbox').value;
+      if (city) {
+        this.search(city);
+      }
+    });
   }
 
   search(name) {
-    if (name === null) {
-      name = document.querySelector('#textbox').value;
-    }
     this.apiGet('geoname', `name=${name}`).then((data) => {
-      let message = 'Name not found';
+      let message = 'Place not found';
       if (data.status === 'OK') {
-        message = `${data.name},${this.getCountryName(data.country)}`;
-        // console.log(data)
+        message = `${data.name}, ${this.getCountryName(data.country)}`;
+
         this.lon = data.lon;
         this.lat = data.lat;
         this.firstLoad();
@@ -253,7 +260,6 @@ export default class Sights {
       document.querySelector('#info').innerHTML = `<p> ${message}</p > `;
       document.querySelector('#info').classList.add('alert-primary');
     });
-    event.preventDefault();
   }
 
   showNext() {
