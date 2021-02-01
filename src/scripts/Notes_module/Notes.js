@@ -1,4 +1,6 @@
 import createDOMElement from '../services/createDOMElement';
+import translate from '../Language_module/notesLang';
+import { local } from '../constants/language';
 
 export default class Notes {
   constructor(town, id) {
@@ -9,7 +11,9 @@ export default class Notes {
 
   createNoteContainer = () => {
     const notesContainer = document.querySelector('.notes-container');
-    const createBtn = createDOMElement('button', 'btn btn-success btn-create', 'Create Note');
+
+    const createBtn = createDOMElement('button', 'btn btn-success btn-create',
+      translate[`createNote_${local}`]);
     createDOMElement('i', 'material-icons left', 'edit', createBtn);
 
     const notes = createDOMElement('div', 'note-container');
@@ -21,9 +25,9 @@ export default class Notes {
           'notes-textarea',
           null,
           null,
-          ['placeholder', 'Write note...'],
+          ['placeholder', translate[`writeNote_${local}`]],
           ['id', 'note-text'],
-          ['maxlength', '96']
+          ['maxlength', '96'],
         ),
       ]),
       createDOMElement('i', 'material-icons accept-btn', 'check_circle_outline'),

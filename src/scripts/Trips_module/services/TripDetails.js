@@ -1,4 +1,6 @@
 import createDOMElement from '../../services/createDOMElement';
+import translate from '../../Language_module/tripDetailsLang';
+import { local } from '../../constants/language';
 
 export default class TripDetails {
   constructor(tripObject) {
@@ -20,12 +22,12 @@ export default class TripDetails {
 
     const buttons = createDOMElement('div', 'trip-details-buttons', null, tripContainer);
 
-    const addDestination = createDOMElement('button', 'btn waves-effect waves-light', 'Add Destination',
-      buttons, ['id', 'add-destination']);
+    const addDestination = createDOMElement('button', 'btn waves-effect waves-light',
+      translate[`addDestination_${local}`], buttons, ['id', 'add-destination']);
     createDOMElement('i', 'material-icons left', 'add', addDestination);
 
-    const removeDestination = createDOMElement('button', 'btn waves-effect waves-light', 'Remove Destination',
-      buttons, ['id', 'remove-destination']);
+    const removeDestination = createDOMElement('button', 'btn waves-effect waves-light',
+      translate[`removeDestination_${local}`], buttons, ['id', 'remove-destination']);
     createDOMElement('i', 'material-icons left', 'delete', removeDestination);
 
     const firstDestination = 1;
@@ -35,13 +37,17 @@ export default class TripDetails {
   }
 
   static createOptionsBtn() {
+    const changeTripName = translate[`changeTripName_${local}`];
+    const changeDates = translate[`changeDates_${local}`];
+    const removeThisTrip = translate[`removeThisTrip_${local}`];
+
     const btnWrapper = createDOMElement('div', 'options-btn');
     const content = `<div id="options-dropdown" class="drop-content">
-                      <div class="drop-option" id="change-trip-name">Change trip name</div>
+                      <div class="drop-option" id="change-trip-name">${changeTripName}</div>
                       <div class="divider"></div>
-                      <div class="drop-option" id="change-dates">Change dates</div>
+                      <div class="drop-option" id="change-dates">${changeDates}</div>
                       <div class="divider"></div>
-                      <div class="drop-option" id="remove-trip">Remove this trip</div>
+                      <div class="drop-option" id="remove-trip">${removeThisTrip}</div>
                       <div class="tooltip"></div>
                     </div>
                     <div class="btn" data-target="options-dropdown">
@@ -61,6 +67,8 @@ export default class TripDetails {
   }
 
   fillDestinationDetails(city, index) {
+    const tripDates = translate[`tripDates_${local}`];
+
     const wrapper = createDOMElement('div', `destination-details ${city}`, null, null,
       ['id', `destination-${index}`]);
 
@@ -68,32 +76,32 @@ export default class TripDetails {
     createDOMElement('div', 'trip-title', this.trip.tripName, tripDetailsHeader);
     createDOMElement('div', 'trip-destination', city, tripDetailsHeader);
     createDOMElement('div', 'trip-date',
-      `Trip date: <span>${this.trip.startDate}</span> - <span>${this.trip.endDate}</span>`,
+      `${tripDates}: <span>${this.trip.startDate}</span> - <span>${this.trip.endDate}</span>`,
       tripDetailsHeader);
 
     const map = createDOMElement('div', 'trip-icon map', null, wrapper);
     createDOMElement('img', null, null, map, ['src', './assets/images/icons/map.svg']);
-    createDOMElement('span', null, 'Map', map);
+    createDOMElement('span', null, translate[`map_${local}`], map);
 
     const sights = createDOMElement('div', 'trip-icon sights', null, wrapper);
     createDOMElement('img', null, null, sights, ['src', './assets/images/icons/cathedral.svg']);
-    createDOMElement('span', null, 'Sights', sights);
+    createDOMElement('span', null, translate[`sights_${local}`], sights);
 
     const notes = createDOMElement('div', 'trip-icon notes', null, wrapper);
     createDOMElement('img', null, null, notes, ['src', './assets/images/icons/test.svg']);
-    createDOMElement('span', null, 'Notes', notes);
+    createDOMElement('span', null, translate[`notes_${local}`], notes);
 
     const weather = createDOMElement('div', 'trip-icon weather', null, wrapper);
     createDOMElement('img', null, null, weather, ['src', './assets/images/icons/cloudy.svg']);
-    createDOMElement('span', null, 'Weather', weather);
+    createDOMElement('span', null, translate[`weather_${local}`], weather);
 
     const todo = createDOMElement('div', 'trip-icon todo', null, wrapper);
     createDOMElement('img', null, null, todo, ['src', './assets/images/icons/school.svg']);
-    createDOMElement('span', null, 'To Do', todo);
+    createDOMElement('span', null, translate[`mustVisit_${local}`], todo);
 
     const important = createDOMElement('div', 'trip-icon important', null, wrapper);
     createDOMElement('img', null, null, important, ['src', './assets/images/icons/school.svg']);
-    createDOMElement('span', null, 'Important', important);
+    createDOMElement('span', null, translate[`important_${local}`], important);
 
     this.contentWrapper.appendChild(wrapper);
   }
