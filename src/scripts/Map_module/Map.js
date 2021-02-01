@@ -68,7 +68,6 @@ export default class Map {
     const loader = new Loader({
       apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
       version: 'weekly',
-      // !TODO
       language: `${local}`,
     });
 
