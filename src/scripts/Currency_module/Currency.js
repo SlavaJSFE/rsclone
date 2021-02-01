@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime';
 import { getCountriesInfoData, getCurrencyInfoData } from './CurrencyData';
 import createDOMElement from '../services/createDOMElement';
 
@@ -76,7 +75,6 @@ export default class Currency {
     });
   };
 
-  findCountryData = (currencyCode) => {
-    return this.countriesInfoData.find((item) => item.currencies[0].code === currencyCode);
-  };
+  findCountryData = (currencyCode) =>
+    this.countriesInfoData.find((item) => item.currencies[0].code === currencyCode);
 }
