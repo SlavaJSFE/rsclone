@@ -2,7 +2,7 @@ import 'regenerator-runtime/runtime';
 import { getWeatherData } from './WeatherData';
 import createDOMElement from '../services/createDOMElement';
 export default class Weather {
-  constructor() {}
+  constructor() { }
 
   createSearchByCity = (town) => {
     const container = document.querySelector('.weather-container');

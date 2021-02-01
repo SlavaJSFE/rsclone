@@ -401,7 +401,6 @@ export default class Map {
 
 	handleLegend = (event) => {
 		const { target } = event;
-		console.log(target);
 		const legend = document.querySelector('.legend-container');
 
 		target.classList.toggle('reverse-btn');
