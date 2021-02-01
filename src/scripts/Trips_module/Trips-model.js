@@ -10,7 +10,6 @@ export default class TripsModel {
       tripRoute: [inputDestination.value],
       startDate: inputStartDate.value,
       endDate: inputEndDate.value,
-      // placeToVisit: [inputDestination.value],
     };
 
     inputName.innerHTML = '';

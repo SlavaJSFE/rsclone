@@ -72,17 +72,21 @@ const services = {
   fillModalChangeTripName(modal) {
     const modalWindow = modal;
 
+    const changeTripName = translate[`changeTripName_${local}`];
+    const tripName = translate[`tripName_${local}`];
+    const change = translate[`change_${local}`];
+
     const modalContent = `<div class="modal-content">
                             <i class="material-icons close" id="close-modal-btn">close</i>
-                            <h4>Change Trip Name</h4>
+                            <h4>${changeTripName}</h4>
                             <form id="change-name-form">
                               <div class="input-field">
                                 <i class="material-icons prefix">wysiwyg</i>
                                 <input id="change-name-input" class="autocomplete" type="text" required>
-                                <label for="change-name-input">Trip Name</label>
+                                <label for="change-name-input">${tripName}</label>
                               </div>
                               <button id="change-name-submit" class="btn waves-effect waves-light" type="submit">
-                                Change
+                                ${change}
                                 <i class="material-icons right">send</i>
                               </button>
                             </form>
@@ -94,22 +98,27 @@ const services = {
   fillModalChangeDates(modal) {
     const modalWindow = modal;
 
+    const changeTripDates = translate[`changeTripDates_${local}`];
+    const startDate = translate[`startDate_${local}`];
+    const endDate = translate[`endDate_${local}`];
+    const change = translate[`change_${local}`];
+
     const modalContent = `<div class="modal-content">
                             <i class="material-icons close" id="close-modal-btn">close</i>
-                            <h4>Change Trip Dates</h4>
+                            <h4>${changeTripDates}</h4>
                             <form id="change-dates-form">
                               <div class="input-field">
                                 <i class="material-icons prefix">today</i>
                                 <input id="change-start-date" type="text" class="datepicker">
-                                <label for="change-start-date">Start Date</label>
+                                <label for="change-start-date">${startDate}</label>
                               </div>
                               <div class="input-field">
                                 <i class="material-icons prefix">today</i>
                                 <input id="change-end-date" type="text" class="datepicker">
-                                <label for="change-end-date">End Date</label>
+                                <label for="change-end-date">${endDate}</label>
                               </div>
                               <button id="new-trip-submit" class="btn waves-effect waves-light" type="submit" name="action">
-                                Change
+                                ${change}
                                 <i class="material-icons right">send</i>
                               </button>
                             </form>
@@ -121,13 +130,18 @@ const services = {
   fillModalRemoveTrip(modal) {
     const modalWindow = modal;
 
+    const sureWantRemoveTrip = translate[`sureWantRemoveTrip_${local}`];
+    const ifRemoveAllDeleted = translate[`ifRemoveAllDeleted_${local}`];
+    const cancel = translate[`cancel_${local}`];
+    const remove = translate[`remove_${local}`];
+
     const modalContent = `<div class="modal-content" id="remove-trip-modal">
-                            <h4>Are you sure you want remove this trip?</h4>
-                            <p>If you remove the trip, all settings will be permanently deleted!</p>
+                            <h4>${sureWantRemoveTrip}</h4>
+                            <p>${ifRemoveAllDeleted}</p>
                             <i class="material-icons close" id="close-modal-btn">close</i>
-                            <button id="cancel-remove-trip" class="btn waves-effect waves-light">Cancel</button>
+                            <button id="cancel-remove-trip" class="btn waves-effect waves-light">${cancel}</button>
                             <button id="remove-trip-permanently" class="btn waves-effect waves-light" type="submit">
-                              Remove
+                              ${remove}
                               <i class="material-icons left">delete</i>
                             </button>
                           </div>`;
@@ -138,17 +152,20 @@ const services = {
   fillModalAddDestination(modal) {
     const modalWindow = modal;
 
+    const addDestination = translate[`addDestination_${local}`];
+    const add = translate[`add_${local}`];
+
     const modalContent = `<div class="modal-content">
                             <i class="material-icons close" id="close-modal-btn">close</i>
-                            <h4>Add Destination</h4>
+                            <h4>${addDestination}</h4>
                             <form id="new-destination-form">
                               <div class="input-field">
                                 <i class="material-icons prefix">place</i>
                                 <input id="add-destination" class="autocomplete" type="text" required>
-                                <label for="add-destination">Add Destination</label>
+                                <label for="add-destination">${addDestination}</label>
                               </div>
                               <button id="new-destination-submit" class="btn waves-effect waves-light" type="submit">
-                                Add Destination
+                                ${add}
                                 <i class="material-icons right">send</i>
                               </button>
                             </form>
@@ -160,15 +177,20 @@ const services = {
   fillModalRemoveDestination(modal, currentCity) {
     const modalWindow = modal;
 
+    const removeDestination = translate[`removeDestination_${local}`];
+    const sureWantDelete = translate[`sureWantDelete_${local}`];
+    const ifRemovePermDeleted = translate[`ifRemovePermDeleted_${local}`];
+    const cancel = translate[`cancel_${local}`];
+    const remove = translate[`remove_${local}`];
+
     const modalContent = `<div class="modal-content" id="remove-destination-modal">
-                            <h4>Remove destination</h4>
-                            <p>Are you sure you want delete page for \n
-                            <span id="place-to-remove">${currentCity}</span>. \n
-                            If you remove it, all your notes and To Do list will be permanently deleted!</p>
+                            <h4>${removeDestination}</h4>
+                            <p>${sureWantDelete} \n
+                            <span id="place-to-remove">${currentCity}</span> ${ifRemovePermDeleted}</p>
                             <i class="material-icons close" id="close-modal-btn">close</i>
-                            <button id="cancel-remove-destination" class="btn waves-effect waves-light">Cancel</button>
+                            <button id="cancel-remove-destination" class="btn waves-effect waves-light">${cancel}</button>
                             <button id="remove-destination-permanently" class="btn waves-effect waves-light" type="submit">
-                              Remove
+                              ${remove}
                               <i class="material-icons left">delete</i>
                             </button>
                           </div>`;
@@ -210,7 +232,7 @@ const services = {
       ['src', './assets/images/bicycle-4426751_1280.jpg']);
 
     const title = createDOMElement('h2', 'no-trips-title',
-      'You have no trips yet. Create new trip and plan your journey!');
+      translate[`noTripsCreateAndPlanJourney_${local}`]);
 
     infoContainer.append(image, title);
 

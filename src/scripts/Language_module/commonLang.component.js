@@ -73,7 +73,7 @@ const commonLang = {
 
   sights_en: 'Sights',
   sights_ru: '<p style="line-height: 1.5rem">Достоприме-<br>чательности</p>',
-  sights_pl: 'Atrakcje',
+  sights_pl: 'Zabytki',
   sights_de: '<p style="line-height: 1.5rem">Sehens-<br>würdigkeiten</p>',
   sights_zh: '旅遊景點',
 

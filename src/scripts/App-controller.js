@@ -162,7 +162,7 @@ export default class TravelPlaningApp {
       // Banner.createBanner();
       // initBanner();
 
-      MainPageContent.createMainPageContent();
+      // MainPageContent.createMainPageContent();
       this.view.closeNav();
       currentItem.classList.add('active');
     }
