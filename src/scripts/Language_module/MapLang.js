@@ -1,0 +1,92 @@
+const mapLang = {
+  description1_en: 'museums, art galleries',
+  description1_ru: 'музеи, художественные галереи',
+  description1_pl: 'muzea, galerie sztuki',
+  description1_de: 'museen, Kunstgalerien',
+  description1_zh: '博物館，美術館',
+
+  description2_en: 'sculptures,installation',
+  description2_ru: 'скульптуры, инсталляция',
+  description2_pl: 'rzeźby, instalacja',
+  description2_de: 'skulpturen, Installation',
+  description2_zh: '雕塑，裝置',
+
+  description3_en: 'structures',
+  description3_ru: 'структуры',
+  description3_pl: 'struktury',
+  description3_de: 'strukturen',
+  description3_zh: '結構',
+
+  description4_en: 'theatres,music venues',
+  description4_ru: 'структуры',
+  description4_pl: 'teatry, sale muzyczne',
+  description4_de: 'theater, musikveranstaltungsorte',
+  description4_zh: '劇院，音樂廳',
+
+  description5_en: 'fountains',
+  description5_ru: 'фонтаны',
+  description5_pl: 'fontanny',
+  description5_de: 'brunnen',
+  description5_zh: '噴泉',
+
+  description6_en: 'monuments',
+  description6_ru: 'памятники',
+  description6_pl: 'pomniki',
+  description6_de: 'monumente',
+  description6_zh: '古蹟',
+
+  description7_en: 'streets',
+  description7_ru: 'улицы',
+  description7_pl: 'ulice',
+  description7_de: 'straßen',
+  description7_zh: '街道',
+
+  description8_en: 'churches',
+  description8_ru: 'церкви',
+  description8_pl: 'kościoły',
+  description8_de: 'kirchen',
+  description8_zh: '教堂',
+
+  description9_en: 'park,nature conservation areas,nature reserves',
+  description9_ru: 'парк, заповедники, заповедники',
+  description9_pl: 'park, rezerwaty przyrody, rezerwaty przyrody',
+  description9_de: 'park, naturschutzgebiete, naturschutzgebiete',
+  description9_zh: '公園，自然保護區，自然保護區',
+
+  description10_en: 'cathedrals,monasteries,temples',
+  description10_ru: 'соборы, монастыри, храмы',
+  description10_pl: 'katedry, klasztory, świątynie',
+  description10_de: 'kathedralen, klöster, tempel',
+  description10_zh: '大教堂，修道院，寺廟',
+
+  description11_en: 'defensive walls,fortification',
+  description11_ru: 'оборонительные стены, фортификация',
+  description11_pl: 'mury obronne, fortyfikacje',
+  description11_de: 'verteidigungsmauern, befestigung',
+  description11_zh: '防禦牆，防禦工事',
+
+  description12_en: 'synagogues',
+  description12_ru: 'синагоги',
+  description12_pl: 'synagogi',
+  description12_de: 'synagogen',
+  description12_zh: '猶太教堂',
+
+  description13_en: 'mosques',
+  description13_ru: 'мечети',
+  description13_pl: 'meczety',
+  description13_de: 'moscheen',
+  description13_zh: '清真寺',
+
+  description14_en: 'buddhist temples',
+  description14_ru: 'буддийские храмы',
+  description14_pl: 'świątynie buddyjskie',
+  description14_de: 'buddhistische Tempel',
+  description14_zh: '佛教寺廟',
+
+  description15_en: 'cemeteries,war memorials',
+  description15_ru: 'кладбища, военные памятники',
+  description15_pl: 'cmentarze, pomniki wojenne',
+  description15_de: 'friedhöfe, kriegsdenkmäler',
+  description15_zh: '公墓，戰爭紀念館',
+}
+export default mapLang; 

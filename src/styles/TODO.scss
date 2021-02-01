@@ -6,21 +6,21 @@
 
 .todo-container {
   @include font-main;
+  position: relative;
   display: flex;
   flex-direction: column;
-  background-image: url('../assets/images/paper-1074131_1920.jpg');
+  align-items: center;
+  background-image: url("../assets/images/paper-1074131_1920.jpg");
   background-size: cover;
   color: white;
   min-height: 97%;
   margin: 0.7rem 0 0.7rem 0.7rem;
 }
 .todo-header {
-  margin-left: 15%;
 }
 .todo-form {
   display: flex;
   width: 60%;
-  margin-left: 15%;
 
   .input-field {
     display: flex;
@@ -34,14 +34,13 @@
       padding-left: 1.5rem;
       font-size: 1.6rem;
       border: none;
-
     }
 
-    input[type=text]:focus {
-     border-bottom: none;
-     box-shadow: none;
-   }
-  
+    input[type="text"]:focus {
+      border-bottom: none;
+      box-shadow: none;
+    }
+
     .todo-button {
       transition: all 0.3s ease;
     }
@@ -56,12 +55,12 @@
 
 .todoItems-container {
   display: flex;
-  margin-left: 15%;
 
   .todo-list {
     min-width: 30%;
     list-style: none;
   }
+
   .todo {
     margin: 0.5rem;
     font-size: 1.5rem;
@@ -122,4 +121,54 @@
 .completed {
   text-decoration: line-through;
   opacity: 0.5;
+}
+
+.todo-back {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  width: 36px;
+  margin: 10px;
+}
+
+@media (max-width: 800px) {
+  .todoItems-container {
+    .todo-list {
+      .todo {
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .todo-header h2 {
+    font-size: 2rem;
+  }
+  .todo-form {
+    width: 90%;
+    .input-field {
+      .todo-input {
+        font-size: 1.2rem;
+      }
+      .btn {
+        .material-icons {
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+  .todoItems-container {
+    .todo-list {
+      .todo {
+        font-size: 1rem;
+        .btn {
+          .material-icons {
+            font-size: 1.6rem;
+          }
+        }
+      }
+    }
+  }
 }

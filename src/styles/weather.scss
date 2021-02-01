@@ -16,6 +16,7 @@
     text-align: center;
     font-weight: 700;
     font-size: 30px;
+    color: #ffab00;
   }
 
   .city-input {
@@ -38,7 +39,7 @@
 
   .city-name p {
     font-size: 16px;
-    font-weight: 400;
+    font-weight: bold;
   }
 
   .city-name span {
@@ -136,6 +137,13 @@
   p {
     margin-bottom: 1.5rem;
   }
+}
+
+.weather-back {
+  display: flex;
+  justify-content: center;
+  width: 36px;
+  margin: 10px;
 }
 
 [data-night="false"] {

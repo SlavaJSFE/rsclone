@@ -88,3 +88,30 @@
 .open {
   display: block;
 }
+
+.note-back {
+  display: flex;
+  justify-content: center;
+  width: 36px;
+  margin: 10px;
+}
+
+@media (max-width: 920px) {
+  .note-container {
+    .note-content {
+      font-size: 14px;
+      width: 150px;
+      height: 150px;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .note-container {
+    .note-content {
+      font-size: 12px;
+      width: 130px;
+      height: 130px;
+    }
+  }
+}
