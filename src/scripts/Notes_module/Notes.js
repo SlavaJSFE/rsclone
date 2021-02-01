@@ -1,20 +1,20 @@
 import createDOMElement from '../services/createDOMElement';
+import translate from '../Language_module/notesLang';
+import { local } from '../constants/language';
 
 export default class Notes {
   constructor(town, id) {
     this.town = town;
     this.id = id;
     this.isOpen = false;
-    this.target;
   }
 
   createNoteContainer = () => {
     const notesContainer = document.querySelector('.notes-container');
 
-    // const buttonContainer = createDOMElement('div', 'button-container', [
-    const createBtn = createDOMElement('button', 'btn btn-success btn-create', 'Create Note');
+    const createBtn = createDOMElement('button', 'btn btn-success btn-create',
+      translate[`createNote_${local}`]);
     createDOMElement('i', 'material-icons left', 'edit', createBtn);
-    // ]);
 
     const notes = createDOMElement('div', 'note-container');
 
@@ -25,9 +25,9 @@ export default class Notes {
           'notes-textarea',
           null,
           null,
-          ['placeholder', 'Write note...'],
+          ['placeholder', translate[`writeNote_${local}`]],
           ['id', 'note-text'],
-          ['maxlength', '96']
+          ['maxlength', '96'],
         ),
       ]),
       createDOMElement('i', 'material-icons accept-btn', 'check_circle_outline'),
@@ -120,9 +120,9 @@ export default class Notes {
   randomRotateNumber = () => Math.floor(Math.random() * (Math.abs(10 - -10) + 1) + -10);
 
   randomColorNumber() {
-    const RANDOM_COLORS = ['#c2ff3d', '#ff3de8', '#3dc2ff', '#04e022', '#bc83e6', '#ebb328'];
+    this.randomColor = ['#c2ff3d', '#ff3de8', '#3dc2ff', '#04e022', '#bc83e6', '#ebb328'];
 
-    return RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
+    return this.randomColor[Math.floor(Math.random() * this.randomColor.length)];
   }
 
   removeNote = (event) => {
@@ -146,7 +146,6 @@ export default class Notes {
   };
 
   async addNoteToDatabase(note) {
-    let response;
     let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
     let arrayOfNotes = [];
     const UID = JSON.parse(sessionStorage.getItem('user'));
@@ -157,7 +156,7 @@ export default class Notes {
       request += `${UID}/Notes.json`;
     }
 
-    response = await fetch(request);
+    const response = await fetch(request);
 
     const data = await response.json();
     if (!data) {
@@ -179,7 +178,6 @@ export default class Notes {
   }
 
   async getNotesFormDataBase() {
-    let response;
     let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
     const UID = JSON.parse(sessionStorage.getItem('user'));
 
@@ -189,7 +187,7 @@ export default class Notes {
       request += `${UID}/Notes.json`;
     }
 
-    response = await fetch(request);
+    const response = await fetch(request);
 
     const arrayOfNotes = await response.json();
 
@@ -201,7 +199,6 @@ export default class Notes {
   }
 
   async removeNotesFormDataBase(removeNote) {
-    let response;
     let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
     const UID = JSON.parse(sessionStorage.getItem('user'));
 
@@ -211,7 +208,7 @@ export default class Notes {
       request += `${UID}/Notes.json`;
     }
 
-    response = await fetch(request);
+    const response = await fetch(request);
 
     let arrayOfNotes = await response.json();
 

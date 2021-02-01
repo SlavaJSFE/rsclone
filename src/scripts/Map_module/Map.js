@@ -1,9 +1,9 @@
 import { Loader } from '@googlemaps/js-api-loader';
 import MarkerClusterer from '@googlemaps/markerclustererplus';
+import * as _ from 'lodash';
 import { getPlaceCoord, getPlaceData, getXIdData } from './Data';
 import createHTMLMapMarker from './HTMLMapMarker';
-import { getIcon, layerNames } from '../constants/icon_constants';
-import * as _ from 'lodash';
+import { getIcon } from '../constants/icon_constants';
 import createDOMElement from '../services/createDOMElement';
 import { local } from '../constants/language';
 import mapLang from '../Language_module/MapLang';
@@ -40,12 +40,8 @@ export default class Map {
   constructor(town, id) {
     this.town = town;
     this.id = id;
-    this.place_LON;
-    this.place_LAT;
-    this.map;
     this.data = [];
     this.markers = [];
-    this.filterData;
   }
 
   handleApi() {
@@ -73,7 +69,7 @@ export default class Map {
     const loader = new Loader({
       apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
       version: 'weekly',
-      //!TODO
+      // !TODO
       language: `${local}`,
     });
 
@@ -112,6 +108,9 @@ export default class Map {
 
     const backBtn = document.querySelector('.map-back');
     backBtn.addEventListener('click', this.goBackToMenu);
+
+    const legendBtn = document.querySelector('.legend-btn');
+    legendBtn.addEventListener('click', this.handleLegend);
   };
 
   goBackToMenu = () => {
@@ -122,7 +121,7 @@ export default class Map {
   };
 
   createMarker = (place) => {
-    //get coord from api
+    // get coord from api
     const lat = place.point.lat;
     const lng = place.point.lon;
     const coord = new google.maps.LatLng(lat, lng);
@@ -139,16 +138,16 @@ export default class Map {
       html: `<div id="marker" data-category=${index} data-selected='false'><div class="marker-icon">${icon}</div></div>`,
     });
 
-    //array of markers for clusterer
+    // array of markers for clusterer
     this.markers.push(marker);
 
     google.maps.event.addListener(marker, 'click', (event) => {
       getXIdData(place.xid)
-        .then((place) => {
+        .then((places) => {
           // current marker info
           event.stopPropagation();
 
-          this.createInfoWindow(place);
+          this.createInfoWindow(places);
 
           this.infoWindow.open(this.map, marker);
 
@@ -187,7 +186,7 @@ export default class Map {
     `;
 
     this.infoWindow = new google.maps.InfoWindow({
-      content: content,
+      content: `${content}`,
       maxWidth: 350,
     });
   };
@@ -195,7 +194,7 @@ export default class Map {
   createFilterData = (data) => {
     let arr = [];
 
-    //filter duplicate
+    // filter duplicate
     data.forEach((item) => {
       arr.push(_.uniqBy(item, 'name'));
     });
@@ -210,12 +209,12 @@ export default class Map {
       // 'other_churches',
     ];
 
-    //flat in one array, sort by increase and filter bad categories
+    // flat in one array, sort by increase and filter bad categories
     arr = arr
       .flat()
       .sort((a, b) => (a.dist > b.dist ? 1 : -1))
       .filter((item) => {
-        let array = item.kinds.split(',');
+        const array = item.kinds.split(',');
         if (array.some((el) => filterCategories.indexOf(el) >= 0)) {
           return false;
         }
@@ -223,7 +222,7 @@ export default class Map {
       });
 
     // double filter duplicate
-    let uniqArr = _.uniqBy(arr, 'name');
+    const uniqArr = _.uniqBy(arr, 'name');
 
     // filter close dist markers
     let b = uniqArr[0].dist;
@@ -239,14 +238,15 @@ export default class Map {
   createMarkerClusterer = () => {
     const markerCluster = new MarkerClusterer(this.map, this.markers, {
       gridSize: 100,
-      imagePath: `./assets/images/m`,
+      imagePath: './assets/images/m',
     });
 
     this.markers = [];
   };
 
   createLegend = () => {
-    const legend = document.getElementById('legend');
+    const legendBtn = document.querySelector('.legend-btn');
+    const legend = document.querySelector('.legend-container');
 
     legendCategories.forEach((obj, index) => {
       const description = obj.description;
@@ -262,6 +262,7 @@ export default class Map {
       );
     });
 
+    this.map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(legendBtn);
     this.map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(legend);
   };
 
@@ -280,7 +281,7 @@ export default class Map {
           ['placeholder', 'Find your city']
         ),
         createDOMElement('button', 'search-button btn', [
-          createDOMElement('i', 'material-icons', `search`),
+          createDOMElement('i', 'material-icons', 'search'),
         ]),
       ],
       input
@@ -316,7 +317,6 @@ export default class Map {
   };
 
   async addToDataBase(UID, id, placeToVisit) {
-    let response;
     let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
     let arrayOfPlaces = [];
 
@@ -326,7 +326,7 @@ export default class Map {
       request += `${UID}/placeToVisit.json`;
     }
 
-    response = await fetch(request);
+    const response = await fetch(request);
 
     const data = await response.json();
 
@@ -384,6 +384,14 @@ export default class Map {
     });
   };
 
+  handleLegend = (event) => {
+    const { target } = event;
+    const legend = document.querySelector('.legend-container');
+
+    target.classList.toggle('reverse-btn');
+    legend.classList.toggle('active-legend');
+  };
+
   staticInitMap = () => {
     const loader = new Loader({
       apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
@@ -408,6 +416,9 @@ export default class Map {
 
       const button = document.querySelector('.search-button');
       button.addEventListener('click', this.handleSearchButton);
+
+      const legendBtn = document.querySelector('.legend-btn');
+      legendBtn.addEventListener('click', this.handleLegend);
     });
   };
 }
