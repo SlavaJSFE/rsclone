@@ -120,7 +120,6 @@ export default class TODO {
   };
 
   async setPlacesToDataBase(placeToVisit) {
-    let response;
     let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
     let arrayOfPlaces = [];
     const UID = JSON.parse(sessionStorage.getItem('user'));
@@ -131,7 +130,7 @@ export default class TODO {
       request += `${UID}/placeToVisit.json`;
     }
 
-    response = await fetch(request);
+    const response = await fetch(request);
 
     const data = await response.json();
     if (!data) {
@@ -153,7 +152,6 @@ export default class TODO {
   }
 
   async getPlacesFormDataBase() {
-    let response;
     let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
     const UID = JSON.parse(sessionStorage.getItem('user'));
 
@@ -163,7 +161,7 @@ export default class TODO {
       request += `${UID}/placeToVisit.json`;
     }
 
-    response = await fetch(request);
+    const response = await fetch(request);
 
     const arrayOfPlaces = await response.json();
 
@@ -175,7 +173,6 @@ export default class TODO {
   }
 
   async removeFromDatabase(placeToVisit) {
-    let response;
     let request = 'https://rsclone-833d0-default-rtdb.firebaseio.com/';
     const UID = JSON.parse(sessionStorage.getItem('user'));
 
@@ -185,7 +182,7 @@ export default class TODO {
       request += `${UID}/placeToVisit.json`;
     }
 
-    response = await fetch(request);
+    const response = await fetch(request);
 
     let arrayOfPlaces = await response.json();
 

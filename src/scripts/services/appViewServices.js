@@ -167,7 +167,7 @@ const services = {
         [createDOMElement('span', 'roman-link', 'Roman')],
         null,
         ['href', statement.roman],
-        ['target', 'blank']
+        ['target', 'blank'],
       ),
       createDOMElement(
         'a',
@@ -175,7 +175,7 @@ const services = {
         [createDOMElement('span', 'maria-link', 'Maria')],
         null,
         ['href', statement.maria],
-        ['target', 'blank']
+        ['target', 'blank'],
       ),
       createDOMElement(
         'a',
@@ -183,7 +183,7 @@ const services = {
         [createDOMElement('span', 'yulia-link', 'Yulia')],
         null,
         ['href', statement.julia],
-        ['target', 'blank']
+        ['target', 'blank'],
       ),
       createDOMElement(
         'a',
@@ -191,7 +191,7 @@ const services = {
         [createDOMElement('span', 'slava-link', 'Slava')],
         null,
         ['href', statement.slava],
-        ['target', 'blank']
+        ['target', 'blank'],
       ),
     ];
     const authors = createDOMElement('div', 'authors', authorsArray);
@@ -202,7 +202,7 @@ const services = {
       null,
       null,
       ['href', statement.rssLink],
-      ['target', 'blank']
+      ['target', 'blank'],
     );
 
     rsschoolLink.appendChild(rssLogo);

@@ -1,9 +1,7 @@
-import 'regenerator-runtime/runtime';
 import { getWeatherData } from './WeatherData';
 import createDOMElement from '../services/createDOMElement';
-export default class Weather {
-  constructor() {}
 
+export default class Weather {
   createSearchByCity = (town) => {
     const container = document.querySelector('.weather-container');
 
@@ -80,9 +78,8 @@ export default class Weather {
   isDayTime = (icon) => {
     if (icon.includes('d')) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   };
 
   createWeatherApp = (city) => {

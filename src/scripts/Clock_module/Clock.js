@@ -7,11 +7,7 @@ import createDOMElement from '../services/createDOMElement';
 
 export default class Clock {
   constructor() {
-    this.town;
     this.degree = 6;
-    this.id;
-    this.diff;
-    this.timer;
   }
 
   async getLocationInfo() {
@@ -31,7 +27,7 @@ export default class Clock {
   }
 
   createTitle = (container) => {
-    let titleText = this.town;
+    const titleText = this.town;
     createDOMElement('div', 'clock-title', `${titleText}`, container);
   };
 
@@ -77,29 +73,29 @@ export default class Clock {
     const min = document.querySelector(`#mn${this.id}`);
     const sec = document.querySelector(`#sc${this.id}`);
 
-    let date = new Date();
+    const date = new Date();
 
-    let hh = (date.getHours() + this.diff) * 30;
-    let mn = date.getMinutes() * this.degree;
-    let sc = date.getSeconds() * this.degree;
+    const hh = (date.getHours() + this.diff) * 30;
+    const mn = date.getMinutes() * this.degree;
+    const sc = date.getSeconds() * this.degree;
 
     hour.style.transform = `rotateZ(${hh + mn / 12}deg)`;
     min.style.transform = `rotateZ(${mn}deg)`;
     sec.style.transform = `rotateZ(${sc}deg)`;
 
-    this.changeClockView(hh);
+    this.changeClockView(date.getHours());
   }
 
   renderNumericClock() {
     const numberClock = document.querySelector(`#numClock${this.id}`);
-    let date = new Date();
+    const date = new Date();
 
     let hh = date.getHours() + this.diff;
     if (hh > 24) {
-      hh = hh - 24;
+      hh -= 24;
     }
-    let mn = date.getMinutes();
-    let sc = date.getSeconds();
+    const mn = date.getMinutes();
+    const sc = date.getSeconds();
 
     numberClock.innerHTML = `${this.addZeros(hh)}<span>:</span>${this.addZeros(
       mn
@@ -117,9 +113,7 @@ export default class Clock {
     clearInterval(this.timer);
   }
 
-  addZeros = (n) => {
-    return (parseInt(n, 10) < 10 ? '0' : '') + n;
-  };
+  addZeros = (n) => (parseInt(n, 10) < 10 ? '0' : '') + n;
 
   changeClockView = (hour) => {
     const tableBody = document.querySelector(`#body${this.id}`);

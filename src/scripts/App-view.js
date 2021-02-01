@@ -81,14 +81,15 @@ export default class TravelPlaningAppView {
     const mapWidget = createDOMElement('div', 'map', null, null, ['id', 'map']);
     const legend = createDOMElement(
       'div',
-      'legend',
+      'legend-container',
       [createDOMElement('h3', null, 'Legend')],
-      null,
-      ['id', 'legend'],
+      null
     );
     const searchContainer = createDOMElement('div', 'search-container');
 
-    this.mainContentSection.append(mapWidget, legend, searchContainer);
+    const legendBtn = createDOMElement('div', 'legend-btn');
+
+    this.mainContentSection.append(mapWidget, legendBtn, legend, searchContainer);
 
     const map = new Map();
     map.staticInitMap();
@@ -137,24 +138,24 @@ export default class TravelPlaningAppView {
     }
   }
 
-	isInstanceClock = () => {
-	  const clock = document.querySelector('#clock-container2');
-	  return !!clock;
-	};
+  isInstanceClock = () => {
+    const clock = document.querySelector('#clock-container2');
+    return clock ? true : false;
+  };
 
-	removeClocks() {
-	  const clock = document.querySelector('#clock-container2');
-	  clock.remove();
-	  clockInstance.stopClock();
-	}
+  removeClocks() {
+    this.clock = document.querySelector('#clock-container2');
+    this.clock.remove();
+    clockInstance.stopClock();
+  }
 
-	toggleNav() {
-		this.overlay.classList.toggle('active');
-		this.appWrapper.classList.toggle('active');
-	}
+  toggleNav() {
+    this.overlay.classList.toggle('active');
+    this.appWrapper.classList.toggle('active');
+  }
 
-	closeNav() {
-		this.overlay.classList.remove('active');
-		this.appWrapper.classList.remove('active');
-	}
+  closeNav() {
+    this.overlay.classList.remove('active');
+    this.appWrapper.classList.remove('active');
+  }
 }
