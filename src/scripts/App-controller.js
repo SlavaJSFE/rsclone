@@ -7,9 +7,9 @@ import Trips from './Trips_module/Trips-controller';
 import Sights from './Sights_module/Sights';
 import './Sights_module/EventsSights';
 import services from './services/appControllerServices';
-// import Banner from './Banner_module/Banner';
-// import initBanner from './Banner_module/initBanner';
-// import MainPageContent from './MainPageContent_module/MainPageContent';
+import Banner from './Banner_module/Banner';
+import initBanner from './Banner_module/initBanner';
+import MainPageContent from './MainPageContent_module/MainPageContent';
 
 export default class TravelPlaningApp {
   static init() {
@@ -149,6 +149,9 @@ export default class TravelPlaningApp {
     const currentLanguage = langSwitcher.value;
 
     services.changeLanguage(currentLanguage);
+    if (this.view.isInstanceClock()) {
+      this.view.removeClocks();
+    }
     this.view.appWrapper.remove();
     TravelPlaningApp.init();
   }
@@ -159,10 +162,13 @@ export default class TravelPlaningApp {
 
     if (currentItem.id === 'nav-home') {
       this.view.mainContentSection.innerHTML = '';
-      // Banner.createBanner();
-      // initBanner();
+      if (this.view.isInstanceClock()) {
+        this.view.removeClocks();
+      }
+      Banner.createBanner();
+      initBanner();
 
-      // MainPageContent.createMainPageContent();
+      MainPageContent.createMainPageContent();
       this.view.closeNav();
       currentItem.classList.add('active');
     }
