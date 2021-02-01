@@ -239,7 +239,8 @@ export default class Sights {
   }
 
   addSearchListener() {
-    this.form.addEventListener('submit', () => {
+    this.form.addEventListener('submit', (event) => {
+      event.preventDefault();
       const city = document.getElementById('textbox').value;
       if (city) {
         this.search(city);
