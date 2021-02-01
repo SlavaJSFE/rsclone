@@ -251,8 +251,8 @@ export default class Map {
     const legend = document.querySelector('.legend-container');
 
     legendCategories.forEach((obj, index) => {
-      const { description } = obj.description;
-      const { icon } = obj.icon;
+      const description = obj.description;
+      const icon = obj.icon;
       createDOMElement(
         'div',
         'legend',
