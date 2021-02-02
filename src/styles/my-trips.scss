@@ -74,19 +74,19 @@ $main-color: white;
       display: none;
       position: absolute;
       top: 4.5rem;
-      right: 0px;
+      right: 0;
       font-size: 1.6rem;
-      border-radius: 5px;
+      border-radius: 0.5rem;
       background-color: #ffa000e7;
-      min-width: 160px;
+      width: max-content;
       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 
       .tooltip {
         width: 10px;
         height: 10px;
         position: absolute;
-        top: -5px;
-        right: 13px;
+        top: -0.5rem;
+        right: 1.3rem;
         transform: rotate(45deg);
         background-color: #ffa000e7;
         z-index: 1
@@ -95,7 +95,7 @@ $main-color: white;
         position: relative;
         padding: 1.5rem;
         user-select: none;
-        border-radius: 5px;
+        border-radius: 0.5rem;
         z-index: 2;
       }
       .drop-option:hover {
@@ -143,24 +143,20 @@ $main-color: white;
     .trip-icon {
       display: grid;
       justify-content: center;
-      width: 60%;
-      max-width: 15rem;
+      width: 15rem;
       justify-self: center;
       align-self: end;
       font-size: 2rem;
-      // background-color: #ffa000;
       background-image: url('../assets/images/paper-1074131_640.jpg');
       padding: 2rem;
       border-radius: 2.5rem 0;
       user-select: none;
+      margin: 0;
 
       img {
         width: 100%;
         max-width: 5rem;
         justify-self: center;
-      }
-      .notes {
-        margin: 0;
       }
     }
     .trip-icon:hover {

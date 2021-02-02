@@ -6,6 +6,7 @@ import createHTMLMapMarker from './HTMLMapMarker';
 import { getIcon } from '../constants/icon_constants';
 import createDOMElement from '../services/createDOMElement';
 import { local } from '../constants/language';
+import mapLang from '../Language_module/MapLang';
 
 const requests = [
   'historic_architecture',
@@ -18,21 +19,21 @@ const requests = [
 ];
 
 const legendCategories = [
-  { description: 'museums, art galleries', icon: '🏛️' },
-  { description: 'sculptures,installation', icon: '🖼️' },
-  { description: 'structures', icon: '🏡' },
-  { description: 'theatres,music venues', icon: '🎭' },
-  { description: 'fountains', icon: '⛲' },
-  { description: 'monuments', icon: '🗿' },
-  { description: 'streets', icon: '🛣️' },
-  { description: 'churches', icon: '⛪' },
-  { description: 'park,nature conservation areas,nature reserves', icon: '🏞️' },
-  { description: 'cathedrals,monasteries,temples', icon: '🛐' },
-  { description: 'defensive walls,fortification', icon: '🏰' },
-  { description: 'synagogues', icon: '🕍' },
-  { description: 'mosques', icon: '🕌' },
-  { description: 'buddhist temples', icon: '☸️' },
-  { description: 'cemeteries,war memorials', icon: '⚱️' },
+  { description: mapLang['description1_' + local], icon: '🏛️' },
+  { description: mapLang['description2_' + local], icon: '🖼️' },
+  { description: mapLang['description3_' + local], icon: '🏡' },
+  { description: mapLang['description4_' + local], icon: '🎭' },
+  { description: mapLang['description5_' + local], icon: '⛲' },
+  { description: mapLang['description6_' + local], icon: '🗿' },
+  { description: mapLang['description7_' + local], icon: '🛣️' },
+  { description: mapLang['description8_' + local], icon: '⛪' },
+  { description: mapLang['description9_' + local], icon: '🏞️' },
+  { description: mapLang['description10_' + local], icon: '🛐' },
+  { description: mapLang['description11_' + local], icon: '🏰' },
+  { description: mapLang['description12_' + local], icon: '🕍' },
+  { description: mapLang['description13_' + local], icon: '🕌' },
+  { description: mapLang['description14_' + local], icon: '☸️' },
+  { description: mapLang['description15_' + local], icon: '⚱️' },
 ];
 
 export default class Map {
@@ -68,7 +69,6 @@ export default class Map {
     const loader = new Loader({
       apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
       version: 'weekly',
-      // !TODO
       language: `${local}`,
     });
 
@@ -170,18 +170,15 @@ export default class Map {
     <div class="iw-container">
       <div class="iw-title">${place.name}</div>
       <div class="iw-content">
-        <img class="iw-img" src="${place.preview.source}" height="150px" width="150px" alt="${
-      place.name
-    }"></img>
+        <img class="iw-img" src="${place.preview.source}" height="150px" width="150px" alt="${place.name
+      }"></img>
         <div class="iw-info">${place.wikipedia_extracts.text}</div>
       </div>
       <div class="iw-contacts">
-        <div class="iw-address">Address: ${place.address.city || place.address.town}, ${
-      place.address.country
-    }, ${place.address.postcode}</div>
-        <a href="https://www.wikidata.org/wiki/${
-          place.wikidata
-        }" class="iw-link" target="blank">Link: Wikidata</a>
+        <div class="iw-address">Address: ${place.address.city || place.address.town}, ${place.address.country
+      }, ${place.address.postcode}</div>
+        <a href="https://www.wikidata.org/wiki/${place.wikidata
+      }" class="iw-link" target="blank">Link: Wikidata</a>
       </div>
       <button class="iw-button">Add+</button>
     </div>
@@ -251,8 +248,8 @@ export default class Map {
     const legend = document.querySelector('.legend-container');
 
     legendCategories.forEach((obj, index) => {
-      const { description } = obj.description;
-      const { icon } = obj.icon;
+      const description = obj.description;
+      const icon = obj.icon;
       createDOMElement(
         'div',
         'legend',

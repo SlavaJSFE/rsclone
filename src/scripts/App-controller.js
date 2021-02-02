@@ -149,6 +149,9 @@ export default class TravelPlaningApp {
     const currentLanguage = langSwitcher.value;
 
     services.changeLanguage(currentLanguage);
+    if (this.view.isInstanceClock()) {
+      this.view.removeClocks();
+    }
     this.view.appWrapper.remove();
     TravelPlaningApp.init();
   }
@@ -159,6 +162,9 @@ export default class TravelPlaningApp {
 
     if (currentItem.id === 'nav-home') {
       this.view.mainContentSection.innerHTML = '';
+      if (this.view.isInstanceClock()) {
+        this.view.removeClocks();
+      }
       Banner.createBanner();
       initBanner();
 
@@ -191,7 +197,7 @@ export default class TravelPlaningApp {
     if (currentItem.id === 'nav-sights') {
       const sights = new Sights();
       this.view.mainContentSection.innerHTML = '';
-      sights.createSearcher();
+      sights.createSightsInfo();
       this.view.closeNav();
       currentItem.classList.add('active');
     }
