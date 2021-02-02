@@ -327,6 +327,7 @@ select {
 @media (max-width: 916px) {
   .header {
     #canvas {
+      width: 50% !important;
       flex-grow: 1;
     }
     .header-icons-span {
@@ -347,6 +348,7 @@ select {
 
 @media (max-width: 768px) {
   .header {
+    padding: 0 5px;
     .burger-menu {
       display: flex;
       justify-content: center;
@@ -387,7 +389,7 @@ select {
   }
 }
 
-@media (max-width: 509px) {
+@media (max-width: 573px) {
   .header {
     #canvas {
       display: none;

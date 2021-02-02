@@ -42,6 +42,11 @@ export default class Map {
     this.id = id;
     this.data = [];
     this.markers = [];
+    this.mapLoader = new Loader({
+      apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
+      version: 'weekly',
+      language: `${local}`,
+    });
   }
 
   handleApi() {
@@ -64,13 +69,12 @@ export default class Map {
   }
 
   initMap() {
-    const loader = new Loader({
-      apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
-      version: 'weekly',
-      language: `${local}`,
-    });
+    // loader.language = `${local}`;
+    // console.log(loader);
+    // console.log(location.search);
+    // delete google.maps
 
-    loader.load().then(() => {
+    this.mapLoader.load().then(() => {
       // coord of current town
       this.location = new google.maps.LatLng(this.place_LAT, this.place_LON);
 
@@ -351,7 +355,6 @@ export default class Map {
     event.preventDefault();
     const search = document.querySelector('.search-input');
     const value = search.value.toLowerCase();
-    // this.town = search.value.toLowerCase();
 
     getPlaceCoord(value).then((coord) => {
       this.place_LON = coord.lon;
@@ -390,13 +393,7 @@ export default class Map {
   };
 
   staticInitMap = () => {
-    const loader = new Loader({
-      apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
-      version: 'weekly',
-      language: `${local}`,
-    });
-
-    loader.load().then(() => {
+    this.mapLoader.load().then(() => {
       // coord of current town
       this.location = new google.maps.LatLng(53.893009, 27.567444);
 

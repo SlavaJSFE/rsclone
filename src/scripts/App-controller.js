@@ -158,9 +158,13 @@ export default class TravelPlaningApp {
     const currentLanguage = langSwitcher.value;
 
     services.changeLanguage(currentLanguage);
+
     if (this.view.isInstanceClock()) {
       this.view.removeClocks();
     }
+
+    window.location.reload();
+
     this.view.appWrapper.remove();
     TravelPlaningApp.init();
   }
