@@ -19,21 +19,21 @@ const requests = [
 ];
 
 const legendCategories = [
-  { description: mapLang['description1_' + local], icon: '🏛️' },
-  { description: mapLang['description2_' + local], icon: '🖼️' },
-  { description: mapLang['description3_' + local], icon: '🏡' },
-  { description: mapLang['description4_' + local], icon: '🎭' },
-  { description: mapLang['description5_' + local], icon: '⛲' },
-  { description: mapLang['description6_' + local], icon: '🗿' },
-  { description: mapLang['description7_' + local], icon: '🛣️' },
-  { description: mapLang['description8_' + local], icon: '⛪' },
-  { description: mapLang['description9_' + local], icon: '🏞️' },
-  { description: mapLang['description10_' + local], icon: '🛐' },
-  { description: mapLang['description11_' + local], icon: '🏰' },
-  { description: mapLang['description12_' + local], icon: '🕍' },
-  { description: mapLang['description13_' + local], icon: '🕌' },
-  { description: mapLang['description14_' + local], icon: '☸️' },
-  { description: mapLang['description15_' + local], icon: '⚱️' },
+  { description: mapLang[`description1_${local}`], icon: '🏛️' },
+  { description: mapLang[`description2_${local}`], icon: '🖼️' },
+  { description: mapLang[`description3_${local}`], icon: '🏡' },
+  { description: mapLang[`description4_${local}`], icon: '🎭' },
+  { description: mapLang[`description5_${local}`], icon: '⛲' },
+  { description: mapLang[`description6_${local}`], icon: '🗿' },
+  { description: mapLang[`description7_${local}`], icon: '🛣️' },
+  { description: mapLang[`description8_${local}`], icon: '⛪' },
+  { description: mapLang[`description9_${local}`], icon: '🏞️' },
+  { description: mapLang[`description10_${local}`], icon: '🛐' },
+  { description: mapLang[`description11_${local}`], icon: '🏰' },
+  { description: mapLang[`description12_${local}`], icon: '🕍' },
+  { description: mapLang[`description13_${local}`], icon: '🕌' },
+  { description: mapLang[`description14_${local}`], icon: '☸️' },
+  { description: mapLang[`description15_${local}`], icon: '⚱️' },
 ];
 
 export default class Map {
@@ -57,11 +57,9 @@ export default class Map {
         }
         this.place_LON = coord.lon;
         this.place_LAT = coord.lat;
-        const promiseArr = requests.map((request) => {
-          return getPlaceData(this.place_LON, this.place_LAT, request).then((data) => {
-            this.data.push(data);
-          });
-        });
+        const promiseArr = requests.map((request) => getPlaceData(this.place_LON, this.place_LAT, request).then((data) => {
+          this.data.push(data);
+        }));
         // after all async response handle next method
         Promise.all(promiseArr).then(() => this.initMap());
       })
@@ -125,7 +123,7 @@ export default class Map {
 
   createMarker = (place) => {
     // get coord from api
-    const lat = place.point.lat;
+    const { lat } = place.point;
     const lng = place.point.lon;
     const coord = new google.maps.LatLng(lat, lng);
 
@@ -170,24 +168,25 @@ export default class Map {
   };
 
   createInfoWindow = (place) => {
+    const address = mapLang[`address_${local}`];
+    const more = mapLang[`more_${local}`];
+    const add = mapLang[`add_${local}`];
+
     const content = `
     <div class="iw-container">
       <div class="iw-title">${place.name}</div>
       <div class="iw-content">
-        <img class="iw-img" src="${place.preview.source}" height="150px" width="150px" alt="${
-      place.name
+        <img class="iw-img" src="${place.preview.source}" height="150px" width="150px" alt="${place.name
     }"></img>
         <div class="iw-info">${place.wikipedia_extracts.text}</div>
       </div>
       <div class="iw-contacts">
-        <div class="iw-address">Address: ${place.address.city || place.address.town}, ${
-      place.address.country
+        <div class="iw-address">${address}: ${place.address.city || place.address.town}, ${place.address.country
     }, ${place.address.postcode}</div>
-        <a href="https://www.wikidata.org/wiki/${
-          place.wikidata
-        }" class="iw-link" target="blank">Link: Wikidata</a>
+        <a href="https://www.wikidata.org/wiki/${place.wikidata
+      }" class="iw-link" target="blank">${more}: Wikidata</a>
       </div>
-      <button class="iw-button">Add+</button>
+      <button class="iw-button">${add}+</button>
     </div>
     `;
 
@@ -255,8 +254,8 @@ export default class Map {
     const legend = document.querySelector('.legend-container');
 
     legendCategories.forEach((obj, index) => {
-      const description = obj.description;
-      const icon = obj.icon;
+      const { description } = obj;
+      const { icon } = obj;
       createDOMElement(
         'div',
         'legend',
@@ -264,7 +263,7 @@ export default class Map {
           createDOMElement('div', 'legend-icon', `${icon}`, null, ['data-category', `${index}`]),
           createDOMElement('div', 'legend-description', `${description}`),
         ],
-        legend
+        legend,
       );
     });
 
@@ -284,13 +283,13 @@ export default class Map {
           null,
           null,
           ['type', 'search'],
-          ['placeholder', 'Find your city']
+          ['placeholder', mapLang[`findYourCity_${local}`]],
         ),
         createDOMElement('button', 'search-button btn', [
           createDOMElement('i', 'material-icons', 'search'),
         ]),
       ],
-      input
+      input,
     );
 
     this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
@@ -303,7 +302,7 @@ export default class Map {
       'div',
       'btn back-btn map-back',
       [createDOMElement('i', 'material-icons', 'arrow_back')],
-      backBtn
+      backBtn,
     );
 
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(backBtn);
@@ -338,11 +337,9 @@ export default class Map {
 
     if (!data) {
       arrayOfPlaces.push(placeToVisit);
-    } else {
-      if (!data.includes(placeToVisit)) {
-        data.push(placeToVisit);
-        arrayOfPlaces = data;
-      }
+    } else if (!data.includes(placeToVisit)) {
+      data.push(placeToVisit);
+      arrayOfPlaces = data;
     }
 
     await fetch(request, {
@@ -371,11 +368,9 @@ export default class Map {
       this.map.setCenter(pos);
       this.map.getCenter();
 
-      const promiseArr = requests.map((request) => {
-        return getPlaceData(this.place_LON, this.place_LAT, request).then((data) => {
-          this.data.push(data);
-        });
-      });
+      const promiseArr = requests.map((request) => getPlaceData(this.place_LON, this.place_LAT, request).then((data) => {
+        this.data.push(data);
+      }));
 
       Promise.all(promiseArr).then(() => {
         this.createFilterData(this.data);

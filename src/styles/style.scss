@@ -1,4 +1,4 @@
-// @import 'materialize-css/sass/materialize.scss';
+@import 'materialize-css/sass/materialize.scss';
 @import "currency.scss";
 @import "clock.scss";
 @import "map.scss";
@@ -167,11 +167,32 @@ body {
   }
 
   .side-bar {
+    position: relative;
+    display: grid;
+    grid-template-rows: 30% 70%;
     background-color: #ffa000e7;
     color: white;
-    overflow: hidden;
     margin: 0.7rem;
     border-radius: 0.5rem;
+
+    .sidebar-label {
+      display: none;
+      position: absolute;
+      top: 3rem;
+      left: -3rem;
+      width: 3rem;
+      height: max-content;
+      writing-mode: vertical-lr;
+      text-orientation: upright;
+      background-color: #ffa000e7;
+      padding: 0.5rem;
+      border-radius: 0.5rem 0 0 0.5rem;
+      font-size: 1.4rem;
+    }
+    .sidebar-label:hover {
+      cursor: pointer;
+      background-color: #ff6d00;
+    }
   }
 }
 
@@ -297,26 +318,30 @@ select {
   top: 0;
 }
 
+@media (max-width: 1023px) {
+  .main .nav .nav-item-block {
+    margin: 0;
+  }
+}
+
 @media (max-width: 916px) {
   .header {
     #canvas {
       width: 50% !important;
       flex-grow: 1;
     }
-    .header-links {
-      flex-direction: column;
-
-      .authorization {
-        display: flex;
-        .btn {
-          padding: 0;
-          font-size: 12px;
-          margin: 0 10px 0 0;
-        }
-      }
-      .language {
-        padding: 0;
-      }
+    .header-icons-span {
+      font-size: 1.2rem;
+    }
+  }
+  .main .nav .nav-item-block {
+    .nav-item {
+      line-height: 0.8rem;
+      padding-bottom: 0.4rem;
+    }
+    i {
+      font-size: 3rem;
+      height: 4.5rem;
     }
   }
 }
@@ -329,36 +354,37 @@ select {
       justify-content: center;
       align-items: center;
     }
-    .btn {
-      .material-icons {
-        font-size: 2rem;
-      }
+    .authorization {
+      display: flex;
     }
-    .header-links {
-      .authorization {
-        display: flex;
-        .btn {
-          padding: 0;
-          font-size: 12px;
-          margin: 0 5px 0 0;
-        }
-      }
+    .header-icons-span {
+      display: none;
     }
   }
 
   .main {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
 
     .nav {
       z-index: 20;
       position: absolute;
-      width: 100px;
+      width: 10rem;
       left: -300%;
-      height: 983px;
+      height: 83%;
     }
 
     .side-bar {
       display: none;
+      position: absolute;
+      top: 2.7rem;
+      right: 0;
+
+      .sidebar-label {
+        display: block;
+      }
+    }
+    .side-bar.active {
+      display: grid;
     }
   }
 }
@@ -373,9 +399,21 @@ select {
       .authorization {
         .btn {
           font-size: 10px;
-          margin: 0 5px 0 0;
+          margin: 0;
+          i {
+            margin-right: 0;
+          }
         }
       }
+    }
+  }
+  .trip-details .destination-details {
+    grid-template-columns: repeat(2, 1fr);
+
+    .trip-details-header {
+      margin-top: 5rem;
+      grid-column: span 2;
+
     }
   }
   .footer {

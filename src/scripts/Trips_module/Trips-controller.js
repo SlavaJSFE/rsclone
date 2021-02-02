@@ -2,7 +2,7 @@ import Materialize from 'materialize-css';
 import TripsView from './Trips-view';
 import TripsModel from './Trips-model';
 import Sights from '../Sights_module/Sights';
-import objTranslate from '../Language_module/sightsLang.component';
+import translate from '../Language_module/sightsLang.component';
 import { local } from '../constants/language';
 import services from './services/tripsControllerServices';
 
@@ -207,8 +207,8 @@ export default class Trips {
       this.view.mainContentSection.innerHTML = '';
       sights.createSightsInfo();
       sights.search(this.currentCity);
-      document.querySelector('#search_form').innerHTML = `${objTranslate.sightsLang[`article_${local}`]
-        } ${this.currentCity}`;
+      document.querySelector('#search_form').innerHTML = `${translate[`article_${local}`]} \n
+      ${this.currentCity}`;
     });
 
     this.notes.addEventListener('click', () => {

@@ -153,6 +153,13 @@ const services = {
     return navigation;
   },
 
+  createSideBarLabel() {
+    const sideBarLabel = createDOMElement('div', 'sidebar-label');
+    createDOMElement('p', null, 'SIDEBAR', sideBarLabel);
+
+    return sideBarLabel;
+  },
+
   createFooter() {
     const footer = createDOMElement('footer', 'footer');
     const githubLogo = createDOMElement('img', 'gh-logo', null, null, [

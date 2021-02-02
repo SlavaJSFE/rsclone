@@ -5,22 +5,25 @@ $main-color: white;
   grid-template-columns: repeat(3, 1fr);
   gap: 4rem;
   margin: 4rem;
-  overflow: auto;
   height: 80%;
 
+  .card.small {
+    height: 32rem;
+  }
   .card-content {
     font-size: 1.6rem;
     padding: 1rem 2rem !important;
-    max-height: unset !important;
+    max-height: 60% !important;
   }
   .card-action {
     font-size: 1.6rem;
     padding: 2rem;
   }
   .new-trip-btn {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
+    position: fixed;
+    right: 28rem;
+    bottom: 11%;
+    z-index: 1;
   }
   .submit-btn {
     margin: 10px;
@@ -166,7 +169,7 @@ $main-color: white;
   .pagination {
     background-color: rgba($color: #272142, $alpha: 0.7);
     text-align: center;
-    margin: 1rem auto;
+    margin: 2rem auto;
     width: max-content;
     border-radius: 16px;
 
@@ -187,6 +190,113 @@ $main-color: white;
 
     button {
       margin: 0 2rem;
+    }
+  }
+}
+
+@media (min-width: 1536px) {
+  .trips-container {
+    gap: 6rem;
+    margin: 4rem;
+
+    .card.small {
+      max-width: 42rem;
+      height: 35rem;
+      justify-self: center;
+    }
+  }
+  .trip-details .destination-details .trip-icon {
+    width: 23rem;
+
+    img {
+      width: 100%;
+      max-width: 10rem;
+      justify-self: center;
+    }
+  }
+  .trip-details .pagination {
+    margin: 3rem auto;
+  }
+}
+
+@media (max-width: 1279px) {
+  .trips-container {
+      gap: 2rem;
+      margin: 2rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .main {
+    grid-template-columns: 10rem 1fr 22rem !important ;
+  }
+  .trips-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+    margin: 4rem;
+  }
+  .trip-details .destination-details .trip-icon {
+    width: 11rem;
+    font-size: 1.6rem;
+
+    img {
+      width: 100%;
+      max-width: 3rem;
+      justify-self: center;
+    }
+  }
+  .trip-details .trip-details-buttons button {
+    margin: 0 0.5rem;
+  }
+}
+
+@media (max-width: 940px) {
+  .main {
+    grid-template-columns: 10rem 1fr 20rem !important ;
+  }
+  .trip-details {
+    .trip-details-buttons button {
+      margin: 0.5rem;
+    }
+    .destination-details {
+      gap: 1.5rem;
+
+      .trip-details-header .trip-title {
+        font-size: 2.6rem;
+      }
+    }
+    .pagination {
+      margin: 1rem auto;
+    }
+  }
+}
+
+@media (max-width: 879px) {
+  .trip-title {
+    grid-column: span 1 !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .trips-container {
+    
+    .new-trip-btn {
+      right: 3.5rem;
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  .trips-container {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    margin: 4rem;
+
+    .card.small {
+      max-width: 42rem;
+      // height: 35rem;
+      justify-self: center;
+      max-width: 35rem;
     }
   }
 }

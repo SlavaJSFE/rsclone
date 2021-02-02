@@ -14,7 +14,6 @@ export default class TravelPlaningAppView {
   init() {
     this.appWrapper = createDOMElement('div', 'app-wrapper');
 
-    // create overlay for burger background
     this.overlay = createDOMElement('div', 'overlay');
 
     document.body.prepend(this.overlay, this.appWrapper);
@@ -59,13 +58,14 @@ export default class TravelPlaningAppView {
   }
 
   createSideBar() {
-    this.sideBar = createDOMElement('aside', 'side-bar z-depth-4');
+    this.sideBar = createDOMElement('aside', 'side-bar z-depth-6');
     this.main.appendChild(this.sideBar);
 
     const clockWidget = createDOMElement('div', 'clock');
     const currencyWidget = createDOMElement('div', 'currency');
+    const sideBarLabel = services.createSideBarLabel();
 
-    this.sideBar.append(clockWidget, currencyWidget);
+    this.sideBar.append(clockWidget, currencyWidget, sideBarLabel);
   }
 
   createFooter() {
@@ -83,7 +83,7 @@ export default class TravelPlaningAppView {
       'div',
       'legend-container',
       [createDOMElement('h3', null, 'Legend')],
-      null
+      null,
     );
     const searchContainer = createDOMElement('div', 'search-container');
 
@@ -140,7 +140,7 @@ export default class TravelPlaningAppView {
 
   isInstanceClock = () => {
     const clock = document.querySelector('#clock-container2');
-    return clock ? true : false;
+    return !!clock;
   };
 
   removeClocks() {

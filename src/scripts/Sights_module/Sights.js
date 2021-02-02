@@ -1,6 +1,6 @@
 import 'regenerator-runtime/runtime';
 import { isoCountries, layerNames } from './constants';
-import objTranslate from '../Language_module/sightsLang.component';
+import translate from '../Language_module/sightsLang.component';
 import { local } from '../constants/language';
 
 export default class Sights {
@@ -54,7 +54,7 @@ export default class Sights {
   }
 
   firstLoad() {
-    const description = objTranslate.sightsLang[`articleDescription_${local}`];
+    const description = translate[`articleDescription_${local}`];
     if (this.lat && this.lon) {
       this.apiGet(
         'radius',
@@ -110,6 +110,9 @@ export default class Sights {
   }
 
   loadList() {
+    const next = translate[`next_${local}`];
+    const textOf = translate[`textOf_${local}`];
+
     if (this.lon && this.lat) {
       this.apiGet(
         'radius',
@@ -125,7 +128,7 @@ export default class Sights {
           nextBtn.style.visibility = 'hidden';
         } else {
           nextBtn.style.visibility = 'visible';
-          nextBtn.innerText = `Next (${this.offset + this.pageLength} of ${this.count})`;
+          nextBtn.innerText = `${next} (${this.offset + this.pageLength} ${textOf} ${this.count})`;
         }
       });
     }
@@ -136,7 +139,7 @@ export default class Sights {
     a.className = 'list-group-item list-group-item-action';
     a.setAttribute('data-id', item.xid);
     a.innerHTML = `<h5 class="list-group-item-heading">${item.name}</h5>
-				<p class="list-group-item-text">${this.getCategoryName(item.kinds)}</p>`;
+      <p class="list-group-item-text">${this.getCategoryName(item.kinds)}</p>`;
     a.addEventListener('click', () => {
       document.querySelectorAll('#list a').forEach((i) => {
         i.classList.remove('active');
@@ -149,6 +152,8 @@ export default class Sights {
   }
 
   onShowPOI(data) {
+    const showMoreAt = translate[`showMoreAt_${local}`]
+
     const poi = document.querySelector('#poi');
     poi.innerHTML = '';
     if (data.preview) {
@@ -160,7 +165,7 @@ export default class Sights {
         ? data.info.descr
         : 'No description';
 
-    poi.innerHTML += `<p> <a target="_blank" href="${data.otm}">Show more at OpenTripMap</a></p> `;
+    poi.innerHTML += `<p> <a target="_blank" href="${data.otm}">${showMoreAt} OpenTripMap</a></p> `;
   }
 
   createSearcher() {
@@ -181,7 +186,7 @@ export default class Sights {
     const searchInput = document.createElement('input');
     searchInput.setAttribute('id', 'textbox');
     searchInput.setAttribute('type', 'search');
-    searchInput.setAttribute('placeholder', objTranslate.sightsLang[`inputPlaceholder_${local}`]);
+    searchInput.setAttribute('placeholder', translate[`inputPlaceholder_${local}`]);
     searchInput.setAttribute('aria-describedby', 'button-search');
     searchInput.classList.add('sights-search');
 
@@ -250,7 +255,7 @@ export default class Sights {
 
   search(name) {
     this.apiGet('geoname', `name=${name}`).then((data) => {
-      let message = 'Place not found';
+      let message = translate[`placeNotFound_${local}`];
       if (data.status === 'OK') {
         message = `${data.name}, ${this.getCountryName(data.country)}`;
 

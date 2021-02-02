@@ -5,7 +5,7 @@ const mapLang = {
   description1_de: 'museen, Kunstgalerien',
   description1_zh: '博物館，美術館',
 
-  description2_en: 'sculptures,installation',
+  description2_en: 'sculptures, installation',
   description2_ru: 'скульптуры, инсталляция',
   description2_pl: 'rzeźby, instalacja',
   description2_de: 'skulpturen, Installation',
@@ -17,8 +17,8 @@ const mapLang = {
   description3_de: 'strukturen',
   description3_zh: '結構',
 
-  description4_en: 'theatres,music venues',
-  description4_ru: 'структуры',
+  description4_en: 'theatres, music venues',
+  description4_ru: 'театры, музыкальные площадки',
   description4_pl: 'teatry, sale muzyczne',
   description4_de: 'theater, musikveranstaltungsorte',
   description4_zh: '劇院，音樂廳',
@@ -47,19 +47,19 @@ const mapLang = {
   description8_de: 'kirchen',
   description8_zh: '教堂',
 
-  description9_en: 'park,nature conservation areas,nature reserves',
-  description9_ru: 'парк, заповедники, заповедники',
-  description9_pl: 'park, rezerwaty przyrody, rezerwaty przyrody',
-  description9_de: 'park, naturschutzgebiete, naturschutzgebiete',
-  description9_zh: '公園，自然保護區，自然保護區',
+  description9_en: 'parks, nature reserves',
+  description9_ru: 'парки, заповедники',
+  description9_pl: 'parki, rezerwaty przyrody',
+  description9_de: 'parks, naturschutzgebiete',
+  description9_zh: '公園，自然保護區',
 
-  description10_en: 'cathedrals,monasteries,temples',
+  description10_en: 'cathedrals, monasteries, temples',
   description10_ru: 'соборы, монастыри, храмы',
   description10_pl: 'katedry, klasztory, świątynie',
   description10_de: 'kathedralen, klöster, tempel',
   description10_zh: '大教堂，修道院，寺廟',
 
-  description11_en: 'defensive walls,fortification',
+  description11_en: 'defensive walls, fortification',
   description11_ru: 'оборонительные стены, фортификация',
   description11_pl: 'mury obronne, fortyfikacje',
   description11_de: 'verteidigungsmauern, befestigung',
@@ -83,10 +83,35 @@ const mapLang = {
   description14_de: 'buddhistische Tempel',
   description14_zh: '佛教寺廟',
 
-  description15_en: 'cemeteries,war memorials',
+  description15_en: 'cemeteries, war memorials',
   description15_ru: 'кладбища, военные памятники',
   description15_pl: 'cmentarze, pomniki wojenne',
   description15_de: 'friedhöfe, kriegsdenkmäler',
   description15_zh: '公墓，戰爭紀念館',
-}
-export default mapLang; 
+
+  address_en: 'Address',
+  address_ru: 'Адрес',
+  address_pl: 'Adres',
+  address_de: '',
+  address_zh: '',
+
+  more_en: 'More',
+  more_ru: 'Подробнее',
+  more_pl: 'Więcej',
+  more_de: '',
+  more_zh: '',
+
+  add_en: 'Add',
+  add_ru: 'Добавить',
+  add_pl: 'Dodaj',
+  add_de: '',
+  add_zh: '',
+
+  findYourCity_en: 'Find your city',
+  findYourCity_ru: 'Введите название города',
+  findYourCity_pl: 'Wpisz nazwę miasta',
+  findYourCity_de: '',
+  findYourCity_zh: '',
+};
+
+export default mapLang;

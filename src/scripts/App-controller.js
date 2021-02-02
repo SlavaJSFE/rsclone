@@ -37,7 +37,7 @@ export default class TravelPlaningApp {
   static addConstDOMElements() {
     this.logIn = this.view.header.querySelector('.log-in');
     this.logOut = this.view.header.querySelector('.log-out');
-    this.singUp = this.view.header.querySelector('.sign-up');
+    this.signUp = this.view.header.querySelector('.sign-up');
 
     const modal = document.querySelectorAll('.modal');
     Materialize.Modal.init(modal, { opacity: 0.6 });
@@ -52,6 +52,7 @@ export default class TravelPlaningApp {
     const navItemSights = document.getElementById('nav-sights');
     const navItemTodo = document.getElementById('nav-todo');
     const overlay = document.querySelector('.overlay');
+    const sideBarLabel = document.querySelector('.sidebar-label');
 
     this.view.header.addEventListener('click', (event) => this.handleHeaderEvent(event.target));
 
@@ -63,7 +64,9 @@ export default class TravelPlaningApp {
     navItemNotes.addEventListener('click', () => this.fillMainContentSection(navItemNotes));
     navItemSights.addEventListener('click', () => this.fillMainContentSection(navItemSights));
     navItemTodo.addEventListener('click', () => this.fillMainContentSection(navItemTodo));
+
     overlay.addEventListener('click', (event) => this.closeOverlay(event));
+    sideBarLabel.addEventListener('click', this.handleSideBarLabelEvent);
   }
 
   static closeOverlay() {
@@ -78,7 +81,9 @@ export default class TravelPlaningApp {
       this.view.toggleNav();
     }
 
-    if (target === this.logIn || target === this.logIn.children[0]) {
+    if (target === this.logIn
+        || target === this.logIn.children[0]
+        || target === this.logIn.children[1]) {
       this.view.fillModalAuth();
       this.modal.open();
 
@@ -90,13 +95,17 @@ export default class TravelPlaningApp {
       this.addCloseListener();
     }
 
-    if (target === this.logOut || target === this.logOut.children[0]) {
+    if (target === this.logOut
+        || target === this.logOut.children[0]
+        || target === this.logOut.children[1]) {
       this.model.removeUserFromSessionStorage();
       this.checkMyTripsActive();
       this.view.changeAuthIcons();
     }
 
-    if (target === this.singUp || target === this.singUp.children[0]) {
+    if (target === this.signUp
+      || target === this.signUp.children[0]
+      || target === this.signUp.children[1]) {
       this.modal.open();
       this.view.fillModalRegistration();
 
@@ -233,5 +242,10 @@ export default class TravelPlaningApp {
     closeModalBtn.addEventListener('click', () => {
       this.modal.close();
     });
+  }
+
+  static handleSideBarLabelEvent() {
+    const sideBar = document.querySelector('.side-bar');
+    sideBar.classList.toggle('active');
   }
 }
