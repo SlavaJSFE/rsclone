@@ -4,16 +4,18 @@
   font-family: "Architects Daughter", cursive;
 }
 
-.notes-container {
+.note-container {
   @include font-main;
   width: 95%;
   margin: auto;
+  text-align: center;
 }
 
 .btn-create {
-  position: absolute;
-  bottom: 2rem;
-  right: 2rem;
+  position: fixed;
+  right: 28rem;
+  bottom: 11%;
+  z-index: 1;
 }
 
 .notes {
@@ -103,6 +105,12 @@
       width: 150px;
       height: 150px;
     }
+  }
+}
+
+@media (max-width: 767px) {
+  .btn-create {
+    right: 3.5rem;
   }
 }
 

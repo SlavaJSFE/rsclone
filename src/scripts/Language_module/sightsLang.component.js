@@ -16,6 +16,30 @@ const sightsLang = {
   articleDescription_pl: 'obiektów z opisem w promieniu 1km',
   articleDescription_de: 'Objekte mit Beschreibung in einem Radius von 1 km',
   articleDescription_zh: '半徑為1 km的帶有描述的對象',
+
+  placeNotFound_en: 'Place Not Found',
+  placeNotFound_ru: 'Город не найден',
+  placeNotFound_pl: 'Nie udało się znaleźć tego miejsca',
+  placeNotFound_de: '',
+  placeNotFound_zh: '',
+
+  showMoreAt_en: 'Show more at',
+  showMoreAt_ru: 'Смотреть больше на',
+  showMoreAt_pl: 'Więcej na',
+  showMoreAt_de: '',
+  showMoreAt_zh: '',
+
+  next_en: 'Next',
+  next_ru: 'Следующие',
+  next_pl: 'Następne',
+  next_de: '',
+  next_zh: '',
+
+  textOf_en: 'of',
+  textOf_ru: 'из',
+  textOf_pl: 'z',
+  textOf_de: '',
+  textOf_zh: '',
 };
 
-export default { sightsLang };
+export default sightsLang;

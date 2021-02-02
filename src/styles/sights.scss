@@ -28,6 +28,17 @@ $orange-color: #ffab00;
     input[type=search]:focus {
         border-radius: 1.7rem !important;
     }
+    .btn-link {
+      padding: 5px;
+      text-decoration: none;
+      width: 100%;
+      max-width: 5.5rem;
+    
+      i {
+        font-size: 3rem;
+        line-height: 2.8rem;
+      }
+    }
   } 
 }
 
@@ -61,17 +72,6 @@ $orange-color: #ffab00;
 
 .border-0 {
     border: 0!important;
-}
-
-.btn-link {
-  padding: 5px;
-  text-decoration: none;
-  width: 5.5rem;
-
-  i {
-    font-size: 3rem;
-    line-height: 2.8rem;
-  }
 }
 
 .input-group>.input-group-prepend>.btn{

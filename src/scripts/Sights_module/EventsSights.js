@@ -4,22 +4,6 @@ import ContextMenu from './ContextMenu';
 
 const sights = new Sights();
 
-// document.querySelector('body').addEventListener('click', (event) => {
-//   const buttonSearch = event.target.closest('.search');
-
-//   if (buttonSearch !== null) {
-//     sights.search(null);
-//   }
-// });
-
-// document.querySelector('body').addEventListener('keydown', (event) => {
-//   const buttonSearch = event.target.closest('.search');
-
-//   if (buttonSearch !== null || event.keyCode === 13) {
-//     sights.search(null);
-//   }
-// });
-
 document.querySelector('body').addEventListener('click', (event) => {
   const nextButton = event.target.closest('#nextButton');
   if (nextButton !== null) {

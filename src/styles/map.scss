@@ -137,7 +137,7 @@ $color_purple: #ef2fa2;
   font-weight: bold;
   display: flex;
   align-items: center;
-  margin: 5px 0;
+  margin: 3px 0;
 
   &-icon {
     text-align: center;
@@ -178,7 +178,7 @@ $color_purple: #ef2fa2;
     padding: 0 15px !important;
     border: none !important;
     margin: 0 !important;
-    width: unset !important;
+    // width: unset !important;
     height: unset !important;
     box-shadow: none !important;
   }
@@ -186,6 +186,8 @@ $color_purple: #ef2fa2;
   .search-button {
     padding: 5px;
     cursor: pointer;
+    width: 100%;
+    max-width: 55px;
     transition: 0.2s ease-in-out;
 
     i {
@@ -209,9 +211,14 @@ $color_purple: #ef2fa2;
 }
 
 @media (max-width: 420px) {
+  .gm-control-active {
+    display: none;
+  }
   .search-container {
+    left: 50px !important;
+
     .search-location {
-      width: 150px;
+      width: 75vw;
     }
     .search-input {
       width: 100% !important;
