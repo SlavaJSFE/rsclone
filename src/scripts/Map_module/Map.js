@@ -42,6 +42,11 @@ export default class Map {
     this.id = id;
     this.data = [];
     this.markers = [];
+    this.mapLoader = new Loader({
+      apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
+      version: 'weekly',
+      language: `${local}`,
+    });
   }
 
   handleApi() {
@@ -66,13 +71,12 @@ export default class Map {
   }
 
   initMap() {
-    const loader = new Loader({
-      apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
-      version: 'weekly',
-      language: `${local}`,
-    });
+    // loader.language = `${local}`;
+    // console.log(loader);
+    // console.log(location.search);
+    // delete google.maps
 
-    loader.load().then(() => {
+    this.mapLoader.load().then(() => {
       // coord of current town
       this.location = new google.maps.LatLng(this.place_LAT, this.place_LON);
 
@@ -170,15 +174,18 @@ export default class Map {
     <div class="iw-container">
       <div class="iw-title">${place.name}</div>
       <div class="iw-content">
-        <img class="iw-img" src="${place.preview.source}" height="150px" width="150px" alt="${place.name
-      }"></img>
+        <img class="iw-img" src="${place.preview.source}" height="150px" width="150px" alt="${
+      place.name
+    }"></img>
         <div class="iw-info">${place.wikipedia_extracts.text}</div>
       </div>
       <div class="iw-contacts">
-        <div class="iw-address">Address: ${place.address.city || place.address.town}, ${place.address.country
-      }, ${place.address.postcode}</div>
-        <a href="https://www.wikidata.org/wiki/${place.wikidata
-      }" class="iw-link" target="blank">Link: Wikidata</a>
+        <div class="iw-address">Address: ${place.address.city || place.address.town}, ${
+      place.address.country
+    }, ${place.address.postcode}</div>
+        <a href="https://www.wikidata.org/wiki/${
+          place.wikidata
+        }" class="iw-link" target="blank">Link: Wikidata</a>
       </div>
       <button class="iw-button">Add+</button>
     </div>
@@ -351,7 +358,6 @@ export default class Map {
     event.preventDefault();
     const search = document.querySelector('.search-input');
     const value = search.value.toLowerCase();
-    // this.town = search.value.toLowerCase();
 
     getPlaceCoord(value).then((coord) => {
       this.place_LON = coord.lon;
@@ -392,13 +398,7 @@ export default class Map {
   };
 
   staticInitMap = () => {
-    const loader = new Loader({
-      apiKey: 'AIzaSyCVAtIn3L1lUn2_Tj580p_7iWaSwflyRZw',
-      version: 'weekly',
-      language: `${local}`,
-    });
-
-    loader.load().then(() => {
+    this.mapLoader.load().then(() => {
       // coord of current town
       this.location = new google.maps.LatLng(53.893009, 27.567444);
 
