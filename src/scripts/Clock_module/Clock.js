@@ -75,6 +75,8 @@ export default class Clock {
 
     const date = new Date();
 
+    this.changeClockView(date.getHours() + this.diff);
+
     const hh = (date.getHours() + this.diff) * 30;
     const mn = date.getMinutes() * this.degree;
     const sc = date.getSeconds() * this.degree;
@@ -83,7 +85,7 @@ export default class Clock {
     min.style.transform = `rotateZ(${mn}deg)`;
     sec.style.transform = `rotateZ(${sc}deg)`;
 
-    this.changeClockView(date.getHours());
+    return this;
   }
 
   renderNumericClock() {
@@ -91,9 +93,11 @@ export default class Clock {
     const date = new Date();
 
     let hh = date.getHours() + this.diff;
+
     if (hh > 24) {
       hh -= 24;
     }
+
     const mn = date.getMinutes();
     const sc = date.getSeconds();
 

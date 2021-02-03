@@ -188,9 +188,9 @@ export default class TripsView {
   }
 
   showClocks() {
-    const tripDetailsContainer = document.querySelector('.trip-destination');
-    if (tripDetailsContainer.innerHTML !== 'Minsk') {
-      clockInstance.createClockView(tripDetailsContainer.innerHTML, 2).launchClock();
+    this.tripDetailsContainer = document.querySelector('.trip-destination');
+    if (this.tripDetailsContainer.innerHTML !== 'Minsk') {
+      clockInstance.createClockView(this.tripDetailsContainer.innerHTML, 2).launchClock();
     }
   }
 }
