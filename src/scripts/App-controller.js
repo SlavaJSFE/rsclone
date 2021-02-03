@@ -7,9 +7,9 @@ import Trips from './Trips_module/Trips-controller';
 import Sights from './Sights_module/Sights';
 import './Sights_module/EventsSights';
 import services from './services/appControllerServices';
-import Banner from './Banner_module/Banner';
-import initBanner from './Banner_module/initBanner';
-import MainPageContent from './MainPageContent_module/MainPageContent';
+// import Banner from './Banner_module/Banner';
+// import initBanner from './Banner_module/initBanner';
+// import MainPageContent from './MainPageContent_module/MainPageContent';
 
 export default class TravelPlaningApp {
   static init() {
@@ -184,10 +184,10 @@ export default class TravelPlaningApp {
       if (this.view.isInstanceClock()) {
         this.view.removeClocks();
       }
-      Banner.createBanner();
-      initBanner();
+      // Banner.createBanner();
+      // initBanner();
 
-      MainPageContent.createMainPageContent();
+      // MainPageContent.createMainPageContent();
       this.view.closeNav();
       currentItem.classList.add('active');
     }

@@ -88,7 +88,7 @@ export default class TripDetails {
     createDOMElement('span', null, translate[`sights_${local}`], sights);
 
     const notes = createDOMElement('div', 'trip-icon notes', null, wrapper);
-    createDOMElement('img', null, null, notes, ['src', './assets/images/icons/test.svg']);
+    createDOMElement('img', null, null, notes, ['src', './assets/images/icons/post-it.svg']);
     createDOMElement('span', null, translate[`notes_${local}`], notes);
 
     const weather = createDOMElement('div', 'trip-icon weather', null, wrapper);
@@ -96,11 +96,11 @@ export default class TripDetails {
     createDOMElement('span', null, translate[`weather_${local}`], weather);
 
     const todo = createDOMElement('div', 'trip-icon todo', null, wrapper);
-    createDOMElement('img', null, null, todo, ['src', './assets/images/icons/school.svg']);
+    createDOMElement('img', null, null, todo, ['src', './assets/images/icons/test.svg']);
     createDOMElement('span', null, translate[`mustVisit_${local}`], todo);
 
     const important = createDOMElement('div', 'trip-icon important', null, wrapper);
-    createDOMElement('img', null, null, important, ['src', './assets/images/icons/school.svg']);
+    createDOMElement('img', null, null, important, ['src', './assets/images/icons/report.svg']);
     createDOMElement('span', null, translate[`important_${local}`], important);
 
     this.contentWrapper.appendChild(wrapper);

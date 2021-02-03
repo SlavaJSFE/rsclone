@@ -193,6 +193,32 @@ $main-color: white;
     }
   }
 }
+.important-container {
+  display: flex;
+  height: 100%;
+
+  .back-btn {
+    position: absolute;
+    width: 3.6rem;
+    text-align: center;
+    padding: 0;
+    top: 1rem;
+    left: 1rem;
+  }
+}
+.important-photo {
+  background-color: #ffffff;
+  padding: 1rem;
+  margin: auto;
+  width: 55rem;
+}
+.important-img {
+  width: 100%;
+}
+.important-description {
+  font-size: 2.4rem;
+  text-align: center;
+}
 
 @media (min-width: 1536px) {
   .trips-container {
@@ -216,6 +242,12 @@ $main-color: white;
   }
   .trip-details .pagination {
     margin: 3rem auto;
+  }
+  .important-photo {
+    width: 60rem;
+  }
+  .important-description {
+    font-size: 3rem;
   }
 }
 
@@ -248,11 +280,21 @@ $main-color: white;
   .trip-details .trip-details-buttons button {
     margin: 0 0.5rem;
   }
+  .important-photo {
+    width: 50rem;
+  }
+  .important-description {
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 940px) {
   .main {
     grid-template-columns: 10rem 1fr 20rem !important ;
+  }  
+  .trips-container .no-trips {
+    width: 40rem;
+    height: 35rem;
   }
   .trip-details {
     .trip-details-buttons button {
@@ -269,17 +311,26 @@ $main-color: white;
       margin: 1rem auto;
     }
   }
+  .important-photo {
+    width: 36rem;
+  }
+  .important-description {
+    font-size: 1.8rem;
+  }
 }
 
 @media (max-width: 879px) {
+  .trips-container .no-trips {
+    width: 35rem;
+    height: 32rem;
+  }
   .trip-title {
     grid-column: span 1 !important;
   }
 }
 
 @media (max-width: 767px) {
-  .trips-container {
-    
+  .trips-container {    
     .new-trip-btn {
       right: 3.5rem;
     }
@@ -292,11 +343,21 @@ $main-color: white;
     gap: 4rem;
     margin: 4rem;
 
+    .no-trips {
+      width: 25rem;
+      height: 27rem;
+    }
     .card.small {
       max-width: 42rem;
       // height: 35rem;
       justify-self: center;
       max-width: 35rem;
     }
+  }
+  .important-photo {
+    width: 30rem;
+  }
+  .important-description {
+    font-size: 1.6rem;
   }
 }

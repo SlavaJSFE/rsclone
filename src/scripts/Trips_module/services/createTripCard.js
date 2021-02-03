@@ -7,16 +7,16 @@ export default function createTripCard(tripObject) {
   const dates = translate[`dates_${local}`];
   const details = translate[`details_${local}`];
 
-  let tripRoute = '';
+  let tripsPlaces = '';
   tripObject.tripRoute.forEach((place) => {
-    tripRoute = `${tripRoute + place} - `;
+    tripsPlaces = `${tripsPlaces + place} - `;
   });
-  const routeArr = tripRoute.slice(0, -3);
+  const routeArr = tripsPlaces.slice(0, -3);
 
   const tripCardContainer = createDOMElement('div', 'card small');
 
   const cardImage = createDOMElement('div', 'card-image', null, tripCardContainer);
-  createDOMElement('img', null, null, cardImage, ['src', 'http://lorempixel.com/400/200/nature']);
+  createDOMElement('img', null, null, cardImage, ['src', './assets/images/architecture-3095716_640.jpg']);
   createDOMElement('span', 'card-title', tripObject.tripName, cardImage);
 
   const cardContent = createDOMElement('div', 'card-content', null, tripCardContainer);
