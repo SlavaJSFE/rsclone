@@ -16,7 +16,7 @@ export default class Clock {
 
     const townInfo = await response.json();
 
-    const res = await fetch(`http://api.timezonedb.com/v2.1/get-time-zone?key=1IENVIEJ7OK0&format=json&by=position&lat=${townInfo.lat}&lng=${townInfo.lon}
+    const res = await fetch(`https://api.timezonedb.com/v2.1/get-time-zone?key=1IENVIEJ7OK0&format=json&by=position&lat=${townInfo.lat}&lng=${townInfo.lon}
     `);
 
     const timezone = await res.json();
