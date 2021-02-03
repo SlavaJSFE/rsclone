@@ -18,6 +18,7 @@ export default class Sights {
   createSightsInfo = () => {
     this.createSearcher();
     this.addSearchListener();
+    this.addBackBtnListener();
   }
 
   apiGet(method, query) {
@@ -169,7 +170,15 @@ export default class Sights {
   }
 
   createSearcher() {
+    // this.tripDetailsBlock.classList.add('hidden');
+
     const mainContentBlock = document.querySelector('.main-content-section');
+
+    const backBtn = document.createElement('div');
+    backBtn.classList.add('btn', 'back-btn', 'sigths-back');
+    const backBtnIcon = document.createElement('i');
+    backBtnIcon.classList.add('material-icons');
+    backBtnIcon.textContent = 'arrow_back';
 
     const sightsContainer = document.createElement('div');
     sightsContainer.classList.add('sights-container');
@@ -236,6 +245,9 @@ export default class Sights {
     mainBlockRow.appendChild(mainBlockRowLeft);
     mainBlockRow.appendChild(mainBlockRowRight);
 
+    backBtn.appendChild(backBtnIcon);
+
+    sightsContainer.append(backBtn);
     sightsContainer.appendChild(this.form);
     sightsContainer.appendChild(info);
     sightsContainer.appendChild(mainBlockRow);
@@ -252,6 +264,16 @@ export default class Sights {
       }
     });
   }
+
+  addBackBtnListener() {
+    const backBtn = document.querySelector('.sigths-back');
+    backBtn.addEventListener('click', this.goBackToMenu);
+  }
+
+  goBackToMenu = () => {
+    document.querySelector('.trip-details').classList.remove('hidden');
+    document.querySelector('.sights-container').remove();
+  };
 
   search(name) {
     this.apiGet('geoname', `name=${name}`).then((data) => {
