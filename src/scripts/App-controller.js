@@ -7,9 +7,9 @@ import Trips from './Trips_module/Trips-controller';
 import Sights from './Sights_module/Sights';
 import './Sights_module/EventsSights';
 import services from './services/appControllerServices';
-// import Banner from './Banner_module/Banner';
-// import initBanner from './Banner_module/initBanner';
-// import MainPageContent from './MainPageContent_module/MainPageContent';
+import Banner from './Banner_module/Banner';
+import initBanner from './Banner_module/initBanner';
+import MainPageContent from './MainPageContent_module/MainPageContent';
 
 export default class TravelPlaningApp {
   static init() {
@@ -82,9 +82,9 @@ export default class TravelPlaningApp {
     }
 
     if (
-      target === this.logIn ||
-      target === this.logIn.children[0] ||
-      target === this.logIn.children[1]
+      target === this.logIn
+      || target === this.logIn.children[0]
+      || target === this.logIn.children[1]
     ) {
       this.view.fillModalAuth();
       this.modal.open();
@@ -98,19 +98,18 @@ export default class TravelPlaningApp {
     }
 
     if (
-      target === this.logOut ||
-      target === this.logOut.children[0] ||
-      target === this.logOut.children[1]
+      target === this.logOut
+      || target === this.logOut.children[0]
+      || target === this.logOut.children[1]
     ) {
       this.model.removeUserFromSessionStorage();
       this.checkMyTripsActive();
       this.view.changeAuthIcons();
     }
 
-    if (
-      target === this.signUp ||
-      target === this.signUp.children[0] ||
-      target === this.signUp.children[1]
+    if (target === this.signUp
+      || target === this.signUp.children[0]
+      || target === this.signUp.children[1]
     ) {
       this.modal.open();
       this.view.fillModalRegistration();
@@ -184,10 +183,10 @@ export default class TravelPlaningApp {
       if (this.view.isInstanceClock()) {
         this.view.removeClocks();
       }
-      // Banner.createBanner();
-      // initBanner();
+      Banner.createBanner();
+      initBanner();
 
-      // MainPageContent.createMainPageContent();
+      MainPageContent.createMainPageContent();
       this.view.closeNav();
       currentItem.classList.add('active');
     }
