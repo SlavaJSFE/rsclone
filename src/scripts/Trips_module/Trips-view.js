@@ -127,7 +127,7 @@ export default class TripsView {
       'div',
       'legend-container',
       [createDOMElement('h3', null, 'Legend')],
-      null
+      null,
     );
     const searchContainer = createDOMElement('div', 'search-container');
     const backBtn = createDOMElement('div', 'map_btn-container');
