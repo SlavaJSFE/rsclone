@@ -18,6 +18,8 @@ export default class Sights {
   createSightsInfo = () => {
     this.createSearcher();
     this.addSearchListener();
+    this.addBackBtnListener();
+    this.addNextButtonListener();
   }
 
   apiGet(method, query) {
@@ -152,8 +154,7 @@ export default class Sights {
   }
 
   onShowPOI(data) {
-    const showMoreAt = translate[`showMoreAt_${local}`]
-
+    const showMoreAt = translate[`showMoreAt_${local}`];
     const poi = document.querySelector('#poi');
     poi.innerHTML = '';
     if (data.preview) {
@@ -170,6 +171,12 @@ export default class Sights {
 
   createSearcher() {
     const mainContentBlock = document.querySelector('.main-content-section');
+
+    const backBtn = document.createElement('div');
+    backBtn.classList.add('btn', 'back-btn', 'sigths-back');
+    const backBtnIcon = document.createElement('i');
+    backBtnIcon.classList.add('material-icons');
+    backBtnIcon.textContent = 'arrow_back';
 
     const sightsContainer = document.createElement('div');
     sightsContainer.classList.add('sights-container');
@@ -213,8 +220,8 @@ export default class Sights {
     const list = document.createElement('div');
     list.setAttribute('id', 'list');
     list.classList.add('list-group');
-    const mainBlockRowLeftNav = document.createElement('div');
-    mainBlockRowLeftNav.classList.add('text-center');
+    this.mainBlockRowLeftNav = document.createElement('div');
+    this.mainBlockRowLeftNav.classList.add('text-center');
 
     const mainBlockRowRight = document.createElement('div');
     mainBlockRowRight.classList.add('col-12', 'col-lg-7');
@@ -227,15 +234,18 @@ export default class Sights {
     buttonNext.classList.add('btn', 'btn-primary');
     buttonNext.innerHTML = 'button_next';
 
-    mainBlockRowLeftNav.appendChild(buttonNext);
+    this.mainBlockRowLeftNav.appendChild(buttonNext);
 
     mainBlockRowLeft.appendChild(list);
-    mainBlockRowLeft.appendChild(mainBlockRowLeftNav);
+    mainBlockRowLeft.appendChild(this.mainBlockRowLeftNav);
     mainBlockRowRight.appendChild(poi);
 
     mainBlockRow.appendChild(mainBlockRowLeft);
     mainBlockRow.appendChild(mainBlockRowRight);
 
+    backBtn.appendChild(backBtnIcon);
+
+    sightsContainer.append(backBtn);
     sightsContainer.appendChild(this.form);
     sightsContainer.appendChild(info);
     sightsContainer.appendChild(mainBlockRow);
@@ -246,12 +256,31 @@ export default class Sights {
   addSearchListener() {
     this.form.addEventListener('submit', (event) => {
       event.preventDefault();
-      const city = document.getElementById('textbox').value;
+      const city = document.querySelector('#textbox').value;
       if (city) {
         this.search(city);
       }
     });
   }
+
+  addNextButtonListener() {
+    this.mainBlockRowLeftNav.addEventListener('click', () => {
+      const nextButton = document.querySelector('#nextButton').innerHTML;
+      if (nextButton) {
+        this.showNext();
+      }
+    });
+  }
+
+  addBackBtnListener() {
+    const backBtn = document.querySelector('.sigths-back');
+    backBtn.addEventListener('click', this.goBackToMenu);
+  }
+
+  goBackToMenu = () => {
+    document.querySelector('.trip-details').classList.remove('hidden');
+    document.querySelector('.sights-container').remove();
+  };
 
   search(name) {
     this.apiGet('geoname', `name=${name}`).then((data) => {

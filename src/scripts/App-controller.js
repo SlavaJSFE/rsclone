@@ -82,8 +82,8 @@ export default class TravelPlaningApp {
     }
 
     if (target === this.logIn
-        || target === this.logIn.children[0]
-        || target === this.logIn.children[1]) {
+      || target === this.logIn.children[0]
+      || target === this.logIn.children[1]) {
       this.view.fillModalAuth();
       this.modal.open();
 
@@ -96,8 +96,8 @@ export default class TravelPlaningApp {
     }
 
     if (target === this.logOut
-        || target === this.logOut.children[0]
-        || target === this.logOut.children[1]) {
+      || target === this.logOut.children[0]
+      || target === this.logOut.children[1]) {
       this.model.removeUserFromSessionStorage();
       this.checkMyTripsActive();
       this.view.changeAuthIcons();
@@ -213,6 +213,7 @@ export default class TravelPlaningApp {
       sights.createSightsInfo();
       this.view.closeNav();
       currentItem.classList.add('active');
+      document.querySelector('.sigths-back').classList.add('hidden');
     }
 
     if (currentItem.id === 'nav-todo') {
