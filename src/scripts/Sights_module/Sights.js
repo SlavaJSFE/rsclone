@@ -20,7 +20,7 @@ export default class Sights {
     this.addSearchListener();
     this.addBackBtnListener();
     this.addNextButtonListener();
-  }
+  };
 
   apiGet(method, query) {
     let otmAPI = `https://api.opentripmap.com/0.1/en/places/${method}?apikey=${this.apiKey}`;
@@ -60,13 +60,11 @@ export default class Sights {
     if (this.lat && this.lon) {
       this.apiGet(
         'radius',
-        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=count`,
+        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=count`
       ).then((data) => {
         this.count = data.count;
         this.offset = 0;
-        document.querySelector(
-          '#info',
-        ).innerHTML += `<p>${this.count} ${description}</p>`;
+        document.querySelector('#info').innerHTML += `<p>${this.count} ${description}</p>`;
         this.loadList();
       });
     }
@@ -118,7 +116,7 @@ export default class Sights {
     if (this.lon && this.lat) {
       this.apiGet(
         'radius',
-        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=json`,
+        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=json`
       ).then((data) => {
         const list = document.querySelector('#list');
         list.innerHTML = '';
@@ -148,7 +146,9 @@ export default class Sights {
       });
       a.classList.add('active');
       const xid = a.getAttribute('data-id');
-      this.apiGet(`xid/${xid}`).then((data) => { this.onShowPOI(data); });
+      this.apiGet(`xid/${xid}`).then((data) => {
+        this.onShowPOI(data);
+      });
     });
     return a;
   }
@@ -163,8 +163,8 @@ export default class Sights {
     poi.innerHTML += data.wikipedia_extracts
       ? data.wikipedia_extracts.html
       : data.info
-        ? data.info.descr
-        : 'No description';
+      ? data.info.descr
+      : 'No description';
 
     poi.innerHTML += `<p> <a target="_blank" href="${data.otm}">${showMoreAt} OpenTripMap</a></p> `;
   }
@@ -173,7 +173,7 @@ export default class Sights {
     const mainContentBlock = document.querySelector('.main-content-section');
 
     const backBtn = document.createElement('div');
-    backBtn.classList.add('btn', 'back-btn', 'sigths-back');
+    backBtn.classList.add('btn', 'back-btn', 'sights-back');
     const backBtnIcon = document.createElement('i');
     backBtnIcon.classList.add('material-icons');
     backBtnIcon.textContent = 'arrow_back';
@@ -273,7 +273,7 @@ export default class Sights {
   }
 
   addBackBtnListener() {
-    const backBtn = document.querySelector('.sigths-back');
+    const backBtn = document.querySelector('.sights-back');
     backBtn.addEventListener('click', this.goBackToMenu);
   }
 
