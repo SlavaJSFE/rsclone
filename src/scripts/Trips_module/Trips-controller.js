@@ -203,8 +203,8 @@ export default class Trips {
     });
 
     this.sights.addEventListener('click', () => {
+      document.querySelector('.trip-details').classList.add('hidden');
       const sights = new Sights();
-      this.view.mainContentSection.innerHTML = '';
       sights.createSightsInfo();
       sights.search(this.currentCity);
       document.querySelector('#search_form').innerHTML = `${translate[`article_${local}`]} \n

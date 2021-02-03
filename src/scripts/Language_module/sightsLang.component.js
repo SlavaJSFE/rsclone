@@ -20,26 +20,26 @@ const sightsLang = {
   placeNotFound_en: 'Place Not Found',
   placeNotFound_ru: 'Город не найден',
   placeNotFound_pl: 'Nie udało się znaleźć tego miejsca',
-  placeNotFound_de: '',
-  placeNotFound_zh: '',
+  placeNotFound_de: 'ort nicht gefunden',
+  placeNotFound_zh: '找不到地方',
 
   showMoreAt_en: 'Show more at',
   showMoreAt_ru: 'Смотреть больше на',
   showMoreAt_pl: 'Więcej na',
-  showMoreAt_de: '',
-  showMoreAt_zh: '',
+  showMoreAt_de: 'Mehr anzeigen bei',
+  showMoreAt_zh: '顯示更多',
 
   next_en: 'Next',
   next_ru: 'Следующие',
   next_pl: 'Następne',
-  next_de: '',
-  next_zh: '',
+  next_de: 'Nächster',
+  next_zh: '下一個',
 
   textOf_en: 'of',
   textOf_ru: 'из',
   textOf_pl: 'z',
-  textOf_de: '',
-  textOf_zh: '',
+  textOf_de: 'von',
+  textOf_zh: '的',
 };
 
 export default sightsLang;

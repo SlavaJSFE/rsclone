@@ -18,7 +18,9 @@ export default class Sights {
   createSightsInfo = () => {
     this.createSearcher();
     this.addSearchListener();
-  }
+    this.addBackBtnListener();
+    this.addNextButtonListener();
+  };
 
   apiGet(method, query) {
     let otmAPI = `https://api.opentripmap.com/0.1/en/places/${method}?apikey=${this.apiKey}`;
@@ -58,13 +60,11 @@ export default class Sights {
     if (this.lat && this.lon) {
       this.apiGet(
         'radius',
-        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=count`,
+        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=count`
       ).then((data) => {
         this.count = data.count;
         this.offset = 0;
-        document.querySelector(
-          '#info',
-        ).innerHTML += `<p>${this.count} ${description}</p>`;
+        document.querySelector('#info').innerHTML += `<p>${this.count} ${description}</p>`;
         this.loadList();
       });
     }
@@ -116,7 +116,7 @@ export default class Sights {
     if (this.lon && this.lat) {
       this.apiGet(
         'radius',
-        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=json`,
+        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=json`
       ).then((data) => {
         const list = document.querySelector('#list');
         list.innerHTML = '';
@@ -146,14 +146,15 @@ export default class Sights {
       });
       a.classList.add('active');
       const xid = a.getAttribute('data-id');
-      this.apiGet(`xid/${xid}`).then((data) => { this.onShowPOI(data); });
+      this.apiGet(`xid/${xid}`).then((data) => {
+        this.onShowPOI(data);
+      });
     });
     return a;
   }
 
   onShowPOI(data) {
-    const showMoreAt = translate[`showMoreAt_${local}`]
-
+    const showMoreAt = translate[`showMoreAt_${local}`];
     const poi = document.querySelector('#poi');
     poi.innerHTML = '';
     if (data.preview) {
@@ -162,14 +163,20 @@ export default class Sights {
     poi.innerHTML += data.wikipedia_extracts
       ? data.wikipedia_extracts.html
       : data.info
-        ? data.info.descr
-        : 'No description';
+      ? data.info.descr
+      : 'No description';
 
     poi.innerHTML += `<p> <a target="_blank" href="${data.otm}">${showMoreAt} OpenTripMap</a></p> `;
   }
 
   createSearcher() {
     const mainContentBlock = document.querySelector('.main-content-section');
+
+    const backBtn = document.createElement('div');
+    backBtn.classList.add('btn', 'back-btn', 'sights-back');
+    const backBtnIcon = document.createElement('i');
+    backBtnIcon.classList.add('material-icons');
+    backBtnIcon.textContent = 'arrow_back';
 
     const sightsContainer = document.createElement('div');
     sightsContainer.classList.add('sights-container');
@@ -213,8 +220,8 @@ export default class Sights {
     const list = document.createElement('div');
     list.setAttribute('id', 'list');
     list.classList.add('list-group');
-    const mainBlockRowLeftNav = document.createElement('div');
-    mainBlockRowLeftNav.classList.add('text-center');
+    this.mainBlockRowLeftNav = document.createElement('div');
+    this.mainBlockRowLeftNav.classList.add('text-center');
 
     const mainBlockRowRight = document.createElement('div');
     mainBlockRowRight.classList.add('col-12', 'col-lg-7');
@@ -227,15 +234,18 @@ export default class Sights {
     buttonNext.classList.add('btn', 'btn-primary');
     buttonNext.innerHTML = 'button_next';
 
-    mainBlockRowLeftNav.appendChild(buttonNext);
+    this.mainBlockRowLeftNav.appendChild(buttonNext);
 
     mainBlockRowLeft.appendChild(list);
-    mainBlockRowLeft.appendChild(mainBlockRowLeftNav);
+    mainBlockRowLeft.appendChild(this.mainBlockRowLeftNav);
     mainBlockRowRight.appendChild(poi);
 
     mainBlockRow.appendChild(mainBlockRowLeft);
     mainBlockRow.appendChild(mainBlockRowRight);
 
+    backBtn.appendChild(backBtnIcon);
+
+    sightsContainer.append(backBtn);
     sightsContainer.appendChild(this.form);
     sightsContainer.appendChild(info);
     sightsContainer.appendChild(mainBlockRow);
@@ -246,12 +256,31 @@ export default class Sights {
   addSearchListener() {
     this.form.addEventListener('submit', (event) => {
       event.preventDefault();
-      const city = document.getElementById('textbox').value;
+      const city = document.querySelector('#textbox').value;
       if (city) {
         this.search(city);
       }
     });
   }
+
+  addNextButtonListener() {
+    this.mainBlockRowLeftNav.addEventListener('click', () => {
+      const nextButton = document.querySelector('#nextButton').innerHTML;
+      if (nextButton) {
+        this.showNext();
+      }
+    });
+  }
+
+  addBackBtnListener() {
+    const backBtn = document.querySelector('.sights-back');
+    backBtn.addEventListener('click', this.goBackToMenu);
+  }
+
+  goBackToMenu = () => {
+    document.querySelector('.trip-details').classList.remove('hidden');
+    document.querySelector('.sights-container').remove();
+  };
 
   search(name) {
     this.apiGet('geoname', `name=${name}`).then((data) => {

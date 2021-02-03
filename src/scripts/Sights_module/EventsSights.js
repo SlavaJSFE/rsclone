@@ -1,15 +1,5 @@
 import 'regenerator-runtime/runtime';
-import Sights from './Sights';
 import ContextMenu from './ContextMenu';
-
-const sights = new Sights();
-
-document.querySelector('body').addEventListener('click', (event) => {
-  const nextButton = event.target.closest('#nextButton');
-  if (nextButton !== null) {
-    sights.showNext();
-  }
-});
 
 (function () {
   function clickInsideElement(e, className) {
@@ -171,10 +161,3 @@ document.querySelector('body').addEventListener('click', (event) => {
   }
   initMenuFunction();
 })();
-
-document.querySelector('body').addEventListener('click', (event) => {
-  const buttonClose = event.target.closest('.close');
-  if (buttonClose !== null) {
-    document.querySelector('#myModal').style.display = 'none';
-  }
-});

@@ -83,7 +83,7 @@ export default class TravelPlaningAppView {
       'div',
       'legend-container',
       [createDOMElement('h3', null, 'Legend')],
-      null,
+      null
     );
     const searchContainer = createDOMElement('div', 'search-container');
 
