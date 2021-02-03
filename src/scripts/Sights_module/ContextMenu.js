@@ -1,6 +1,7 @@
 import 'regenerator-runtime/runtime';
 import objTranslate from '../Language_module/contextMenuLang.component';
 import { local } from '../constants/language';
+import Sights from './Sights';
 
 export default class ContextMenu {
   static createContextMenu() {
@@ -42,15 +43,23 @@ export default class ContextMenu {
 
   static zoomPictureSights() {
     const appWrapper = document.querySelector('.app-wrapper');
-    const zoom = document.createElement('div');
-    zoom.classList.add('zoom');
+    this.zoom = document.createElement('div');
+    this.zoom.classList.add('zoom');
     const zoombar = `<div id="myModal" class="modalSights">
                       <span class="close">&times;</span>
                       <img class="modal-content" id="img01">
                       <div id="caption"></div>
                     </div>`;
 
-    zoom.innerHTML = zoombar;
-    appWrapper.appendChild(zoom);
+    this.zoom.innerHTML = zoombar;
+    appWrapper.appendChild(this.zoom);
+
+    this.addButtonCloseFullScreenImgListener();
+  }
+
+  static addButtonCloseFullScreenImgListener() {
+    this.zoom.addEventListener('click', () => {
+      document.querySelector('#myModal').style.display = 'none';
+    });
   }
 }
