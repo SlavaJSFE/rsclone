@@ -32,11 +32,12 @@ export default class TripsView {
     if (userTripsArray.length === 0) {
       const noTripsInfo = services.createNoTripsInfo();
       this.myTripsContainer.appendChild(noTripsInfo);
+    } else {
+      trips.forEach((trip) => {
+        const tripCard = createTripCard(trip);
+        this.myTripsContainer.appendChild(tripCard);
+      });
     }
-    trips.forEach((trip) => {
-      const tripCard = createTripCard(trip);
-      this.myTripsContainer.appendChild(tripCard);
-    });
   }
 
   fillNewTripModal() {
@@ -179,6 +180,18 @@ export default class TripsView {
 
     const todo = new TODO(town, id);
     todo.createTODOElements();
+  }
+
+  showImportantPage() {
+    this.tripDetailsBlock.classList.add('hidden');
+
+    this.importantContent = services.createImportantContent();
+    this.mainContentSection.appendChild(this.importantContent);
+  }
+
+  goBackToDetails() {
+    this.importantContent.remove();
+    this.tripDetailsBlock.classList.remove('hidden');
   }
 
   removeClocks() {

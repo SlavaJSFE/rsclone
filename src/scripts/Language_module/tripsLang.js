@@ -130,6 +130,12 @@ const tripLang = {
   noTripsCreateAndPlanJourney_pl: 'Nie masz jeszcze podróży. Stwóż podróż i zaplanuj swoją przygodę!',
   noTripsCreateAndPlanJourney_de: 'Sie haben noch keine Reisen. Erstellen Sie eine neue Reise und planen Sie Ihre Reise!',
   noTripsCreateAndPlanJourney_zh: '您還沒有旅行。 創建新行程併計劃您的行程！',
+
+  ifYouTravelDoNotForgetPassport_en: 'If you are traveling abroad, don\'t forget your passport!',
+  ifYouTravelDoNotForgetPassport_ru: 'Если вы выезжаете за границу, не забудьте взять ваш пасспорт!',
+  ifYouTravelDoNotForgetPassport_pl: 'Jeżeli podróżujesz za granicę, nie zapomnij wziąć paszport!',
+  ifYouTravelDoNotForgetPassport_de: 'Wenn Sie ins Ausland reisen, vergessen Sie Ihren Reisepass nicht!',
+  ifYouTravelDoNotForgetPassport_zh: '如果您出国旅行，请不要忘记护照！',
 };
 
 export default tripLang;

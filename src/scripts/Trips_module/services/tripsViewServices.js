@@ -238,6 +238,20 @@ const services = {
 
     return infoContainer;
   },
+
+  createImportantContent() {
+    const importantContainer = createDOMElement('div', 'important-container');
+
+    const goBackBtn = createDOMElement('div', 'btn back-btn', null, importantContainer);
+    createDOMElement('i', 'material-icons', 'arrow_back', goBackBtn);
+
+    const photo = createDOMElement('div', 'important-photo', null, importantContainer);
+    createDOMElement('img', 'important-img', null, photo, ['src', './assets/images/passport-2642170_640.jpg']);
+    createDOMElement('p', 'important-description',
+      translate[`ifYouTravelDoNotForgetPassport_${local}`], photo);
+
+    return importantContainer;
+  },
 };
 
 export default services;

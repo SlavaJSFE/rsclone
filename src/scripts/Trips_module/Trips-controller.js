@@ -224,7 +224,11 @@ export default class Trips {
     });
 
     this.important.addEventListener('click', () => {
-      console.log(this.currentCity);
+      this.view.showImportantPage();
+      const goBackBtn = this.view.importantContent.querySelector('.back-btn');
+      goBackBtn.addEventListener('click', () => {
+        this.view.goBackToDetails();
+      });
     });
   }
 

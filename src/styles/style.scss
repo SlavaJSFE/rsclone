@@ -335,12 +335,10 @@ select {
     }
   }
   .main .nav .nav-item-block {
-    .nav-item {
-      line-height: 0.8rem;
-      padding-bottom: 0.4rem;
+    .nav-item {      
+      padding-bottom: 0.2rem;
     }
     i {
-      font-size: 3rem;
       height: 4.5rem;
     }
   }
@@ -370,7 +368,7 @@ select {
       position: absolute;
       width: 10rem;
       left: -300%;
-      height: 83%;
+      height: 91%;
     }
 
     .side-bar {
