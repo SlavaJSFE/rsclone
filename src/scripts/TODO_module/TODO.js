@@ -1,4 +1,6 @@
 import createDOMElement from '../services/createDOMElement';
+import translate from '../Language_module/todoLang';
+import { local } from '../constants/language';
 
 export default class TODO {
   constructor(town, id) {
@@ -12,8 +14,8 @@ export default class TODO {
     createDOMElement(
       'header',
       'todo-header',
-      [createDOMElement('h2', null, 'Places to visit')],
-      container
+      [createDOMElement('h2', null, translate[`placesToVisit_${local}`])],
+      container,
     );
 
     createDOMElement(
@@ -27,14 +29,14 @@ export default class TODO {
             null,
             null,
             ['type', 'text'],
-            ['placeholder', 'Add your TODO item']
+            ['placeholder', translate[`addYourTodoItem_${local}`]],
           ),
           createDOMElement(
             'button',
             'todo-button btn',
             [createDOMElement('i', 'material-icons', 'add')],
             null,
-            ['type', 'submit']
+            ['type', 'submit'],
           ),
         ]),
         createDOMElement('div', 'select', [
@@ -47,18 +49,18 @@ export default class TODO {
               createDOMElement('option', null, 'Uncompleted', null, ['value', 'uncompleted']),
             ],
             null,
-            ['name', 'todos']
+            ['name', 'todos'],
           ),
         ]),
       ],
-      container
+      container,
     );
 
     createDOMElement(
       'div',
       'todoItems-container',
       [createDOMElement('ul', 'todo-list')],
-      container
+      container,
     );
 
     this.setListeners();
@@ -107,7 +109,7 @@ export default class TODO {
           createDOMElement('i', 'material-icons', 'delete'),
         ]),
       ],
-      todoList
+      todoList,
     );
 
     todoInput.value = '';
@@ -135,11 +137,9 @@ export default class TODO {
     const data = await response.json();
     if (!data) {
       arrayOfPlaces.push(placeToVisit);
-    } else {
-      if (!data.includes(placeToVisit)) {
-        data.push(placeToVisit);
-        arrayOfPlaces = data;
-      }
+    } else if (!data.includes(placeToVisit)) {
+      data.push(placeToVisit);
+      arrayOfPlaces = data;
     }
 
     await fetch(request, {

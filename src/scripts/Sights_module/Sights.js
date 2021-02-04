@@ -60,7 +60,7 @@ export default class Sights {
     if (this.lat && this.lon) {
       this.apiGet(
         'radius',
-        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=count`
+        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=count`,
       ).then((data) => {
         this.count = data.count;
         this.offset = 0;
@@ -116,7 +116,7 @@ export default class Sights {
     if (this.lon && this.lat) {
       this.apiGet(
         'radius',
-        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=json`
+        `radius=1000&limit=${this.pageLength}&offset=${this.offset}&lon=${this.lon}&lat=${this.lat}&rate=2&format=json`,
       ).then((data) => {
         const list = document.querySelector('#list');
         list.innerHTML = '';
@@ -163,8 +163,8 @@ export default class Sights {
     poi.innerHTML += data.wikipedia_extracts
       ? data.wikipedia_extracts.html
       : data.info
-      ? data.info.descr
-      : 'No description';
+        ? data.info.descr
+        : 'No description';
 
     poi.innerHTML += `<p> <a target="_blank" href="${data.otm}">${showMoreAt} OpenTripMap</a></p> `;
   }

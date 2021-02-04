@@ -1,5 +1,7 @@
 import { getCountriesInfoData, getCurrencyInfoData } from './CurrencyData';
 import createDOMElement from '../services/createDOMElement';
+import translate from '../Language_module/todoLang';
+import { local } from '../constants/language';
 
 const CURRENCY_RATES = ['EUR', 'RUB', 'BYN', 'GBP', 'AUD', 'BRL', 'CNY', 'CAD', 'JPY'];
 
@@ -26,14 +28,14 @@ export default class Currency {
 
   createCurrencyTitle = () => {
     const table = document.querySelector('.currency');
-
+    const exchangeRate = translate[`exchangeRate_${local}`];
     const data = this.currencyData.date.slice(0, 10);
 
     createDOMElement(
       'div',
       'currency-title',
-      `${this.currencyData.base} exchange rate ${data}`,
-      table
+      `${this.currencyData.base} ${exchangeRate} ${data}`,
+      table,
     );
   };
 
@@ -67,14 +69,13 @@ export default class Currency {
           createDOMElement(
             'div',
             'currency-rate',
-            `${Number(this.currencyData.rates[currencyCode]).toFixed(2)}`
+            `${Number(this.currencyData.rates[currencyCode]).toFixed(2)}`,
           ),
         ],
-        tableBody
+        tableBody,
       );
     });
   };
 
-  findCountryData = (currencyCode) =>
-    this.countriesInfoData.find((item) => item.currencies[0].code === currencyCode);
+  findCountryData = (currencyCode) => this.countriesInfoData.find((item) => item.currencies[0].code === currencyCode);
 }
