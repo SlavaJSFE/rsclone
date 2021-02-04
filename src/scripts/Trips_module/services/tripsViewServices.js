@@ -139,11 +139,13 @@ const services = {
                             <h4>${sureWantRemoveTrip}</h4>
                             <p>${ifRemoveAllDeleted}</p>
                             <i class="material-icons close" id="close-modal-btn">close</i>
-                            <button id="cancel-remove-trip" class="btn waves-effect waves-light">${cancel}</button>
-                            <button id="remove-trip-permanently" class="btn waves-effect waves-light" type="submit">
-                              ${remove}
-                              <i class="material-icons left">delete</i>
-                            </button>
+                            <div class="two-modal-buttons">
+                              <button id="cancel-remove-trip" class="btn waves-effect waves-light">${cancel}</button>
+                              <button id="remove-trip-permanently" class="btn waves-effect waves-light" type="submit">
+                                ${remove}
+                                <i class="material-icons left">delete</i>
+                              </button>
+                            </div>
                           </div>`;
 
     modalWindow.innerHTML = modalContent;
@@ -188,11 +190,13 @@ const services = {
                             <p>${sureWantDelete} \n
                             <span id="place-to-remove">${currentCity}</span> ${ifRemovePermDeleted}</p>
                             <i class="material-icons close" id="close-modal-btn">close</i>
-                            <button id="cancel-remove-destination" class="btn waves-effect waves-light">${cancel}</button>
-                            <button id="remove-destination-permanently" class="btn waves-effect waves-light" type="submit">
-                              ${remove}
-                              <i class="material-icons left">delete</i>
-                            </button>
+                            <div class="two-modal-buttons">
+                              <button id="cancel-remove-destination" class="btn waves-effect waves-light">${cancel}</button>
+                              <button id="remove-destination-permanently" class="btn waves-effect waves-light" type="submit">
+                                ${remove}
+                                <i class="material-icons left">delete</i>
+                              </button>
+                            </div>
                           </div>`;
 
     modalWindow.innerHTML = modalContent;

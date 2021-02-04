@@ -111,6 +111,32 @@ body {
       color: #ffab00;
     }
   }
+  .modal-content {
+    display: grid;
+    max-width: 350px;
+    padding: 2.4rem 0;
+
+    h4 {
+      text-align: center;
+    }
+    p {
+      font-size: 1.6rem;
+    }
+    label {
+      font-size: 1.4rem;
+    }
+    form {
+      display: grid;
+    }
+    .btn {
+      margin-top: 2rem;
+      justify-self: end;
+    }
+    .two-modal-buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 }
 
 .main {
