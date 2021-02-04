@@ -6,19 +6,19 @@ import ContextMenu from './ContextMenu';
     let el = e.srcElement || e.target;
     if (el.classList.contains(className)) {
       return el;
-    } else {
-      while ((el = el.parentNode)) {
-        if (el.classList && el.classList.contains(className)) {
-          return el;
-        }
+    }
+    while ((el = el.parentNode)) {
+      if (el.classList && el.classList.contains(className)) {
+        return el;
       }
     }
+
     return false;
   }
 
   function getPosition(e) {
-    let posx = 0,
-      posy = 0;
+    let posx = 0;
+    let posy = 0;
     if (!e) e = window.event;
     if (e.pageX || e.pageY) {
       posx = e.pageX;
@@ -33,15 +33,16 @@ import ContextMenu from './ContextMenu';
     };
   }
 
-  let taskItemClassName = 'imgSights';
-  let contextMenuLinkClassName = 'context-menu__link',
-    contextMenuActive = 'context-menu--active';
-  let taskItemInContext, clickCoords, clickCoordsX, clickCoordsY, menu;
-  let menuState = 0,
-    menuWidth,
-    menuHeight,
-    windowWidth,
-    windowHeight;
+  const taskItemClassName = 'imgSights';
+  const contextMenuLinkClassName = 'context-menu__link';
+  const contextMenuActive = 'context-menu--active';
+  let taskItemInContext; let clickCoords; let clickCoordsX; let clickCoordsY; let
+    menu;
+  let menuState = 0;
+  let menuWidth;
+  let menuHeight;
+  let windowWidth;
+  let windowHeight;
 
   function initMenuFunction() {
     contextListener();
@@ -51,7 +52,7 @@ import ContextMenu from './ContextMenu';
   }
 
   function contextListener() {
-    document.addEventListener('contextmenu', function (e) {
+    document.addEventListener('contextmenu', (e) => {
       taskItemInContext = clickInsideElement(e, taskItemClassName);
 
       if (taskItemInContext) {
@@ -69,14 +70,14 @@ import ContextMenu from './ContextMenu';
   }
 
   function clickListener() {
-    document.addEventListener('click', function (e) {
-      let clickeElIsLink = clickInsideElement(e, contextMenuLinkClassName);
+    document.addEventListener('click', (e) => {
+      const clickeElIsLink = clickInsideElement(e, contextMenuLinkClassName);
 
       if (clickeElIsLink) {
         e.preventDefault();
         menuItemListener(clickeElIsLink);
       } else {
-        let button = e.which || e.button;
+        const button = e.which || e.button;
         if (button === 1) {
           toggleMenuOff();
         }
@@ -123,15 +124,15 @@ import ContextMenu from './ContextMenu';
     windowHeight = window.innerHeight;
 
     if (windowWidth - clickCoordsX < menuWidth) {
-      menu.style.left = windowWidth - menuWidth - 0 + 'px';
+      menu.style.left = `${windowWidth - menuWidth - 0}px`;
     } else {
-      menu.style.left = clickCoordsX - 0 + 'px';
+      menu.style.left = `${clickCoordsX - 0}px`;
     }
 
     if (Math.abs(windowHeight - clickCoordsY) < menuHeight) {
-      menu.style.top = windowHeight - menuHeight - 0 + 'px';
+      menu.style.top = `${windowHeight - menuHeight - 0}px`;
     } else {
-      menu.style.top = clickCoordsY - 0 + 'px';
+      menu.style.top = `${clickCoordsY - 0}px`;
     }
   }
 
@@ -160,4 +161,4 @@ import ContextMenu from './ContextMenu';
     toggleMenuOff();
   }
   initMenuFunction();
-})();
+}());
